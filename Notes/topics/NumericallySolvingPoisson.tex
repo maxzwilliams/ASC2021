@@ -25,10 +25,10 @@ We wish to solve for the streamfunction $\psi$ given the voricity $\omega$ (equa
 \end{equation}
 
 \begin{equation}
-	\omega = \nabla \times \psi
+	\omega = \Delta \times \psi
 	\label{vorticity equation}
 \end{equation}
-
+We will do this numerically.
 
 \section*{Finite Difference Approximation of derivatives}
 Given a function $f:R\rightarrow R$, the taylor series about the point $x\pm \delta x$ is given by equation \ref{taylor}:
@@ -48,8 +48,44 @@ where $f^{(n)}(x)$ is the $n^{th}$ derivative of $f$ evaluated at $x$. By rearan
 	\label{second order central difference}
 \end{equation}
 
-\section*{The Jacobi Method}
-We suppose that we know the vorticity $\omega$ in the domain $\mathcal{D}$ and have a guess $\psi$ for the streamfunction. 
+\section*{The Jacobi Method and its extensions In 2D spherical polars}
+We discritize our domain $\mathcal{D}$ splitting it into points $(r_i, \phi_j) = (i \Delta r, j \Delta \phi mod 2 \pi)$, $i \in \{0, 1, ..., \frac{R}{\Delta r} \}$, $j \in \{ 0,1, ...,, \frac{2 \pi - 1}{\Delta \phi}\}$. For simplisty we denote $f_{i,j}$ to mean $f$ at location $(r_i, \phi_j)$. Equation \ref{Poisson} is then:
+\begin{equation}
+	\frac{1}{r} \frac{\partial \psi}{\partial r} + \frac{\partial^2 \psi}{\partial r^2} + \frac{1}{r^2} \frac{\partial^2 \psi}{\partial \phi^2} = -\omega
+	\label{Poisson in spherical polar}
+\end{equation}
+Applying equations \ref{first order central difference} and \ref{second order central difference} to equation \ref{Poisson in spherical polar} and rearanging for $\phi_{i,j}$ we derive:
+\begin{equation}
+	\psi_{i,j}^{*} = \frac{(\delta r \delta \psi)^2}{2 ( {\delta \psi}^2 + \frac{ {\delta r}^2}{{r_i}^2})} ( \frac{1}{r_i} (\frac{\psi_{i,j+1}-\psi_{i-1,j}}{2 \delta r}) +w_{i,j} + \frac{\psi_{i+1,j} + \psi_{i-1,j}}{ {\delta r}^2 } + \frac{1}{ {r_i}^2 } \frac{\psi_{i,j+1} + \psi_{i,j-1}}{ {\delta \phi}^2 }  ).
+	\label{updated streamfunction}
+\end{equation}
+We define the error $\epsilon$ by:
+\begin{equation}
+	\epsilon = \sum_{\mathcal{D}} \mid  	\psi_{i,j} - \frac{(\delta r \delta \psi)^2}{2 ( {\delta \psi}^2 + \frac{ {\delta r}^2}{{r_i}^2})} ( \frac{1}{r_i} (\frac{\psi_{i,j+1}-\psi_{i-1,j}}{2 \delta r}) +w_{i,j} + \frac{\psi_{i+1,j} + \psi_{i-1,j}}{ {\delta r}^2 } + \frac{1}{ {r_i}^2 } \frac{\psi_{i,j+1} + \psi_{i,j-1}}{ {\delta \phi}^2 }  )  \mid
+\end{equation}
+We now perform the following algorithm.
+\newline
+\begin{enumerate}
+	\item pick an error $\epsilon' > 0$. When the error $\epsilon < \epsilon'$ the program will terminate.
+	\item Guess a solution $\psi_{i,j}$ for all points in $\mathcal{D}$
+	\item compute $\psi_{i,j}^{*}$ using equation \ref{updated streamfunction}
+	\item set $\psi_{i,j} = \psi_{i,j}^{*}$
+	\item compute $\epsilon$, if $\epsilon < \epsilon'$ then terminate and return $\psi_{i,j}$, else repeat step 1.  
+\end{enumerate}
+
+Several extensions can be made to this method. The first, dubbed the Gauss-Seidel Method, replaces $\psi_{i,j}$ by $\psi_{i,j}^{*}$ immediately and means you only need to store one streamfunction for each point rather than two. The second extension is the Successive Over-Relaxation method, (SOR). The SOR method introduces a new parameter $\beta$ that modulates how much of the previous guess contributes to the updated guess. It amounts to replacing equation \ref{updated streamfunction} in step 3 to equation \ref{SOR equation}.
+
+\begin{equation}
+	\psi_{i,j}^{*} = (1- \beta)\psi_{i,j} +  \beta \frac{(\delta r \delta \psi)^2}{2 ( {\delta \psi}^2 + \frac{ {\delta r}^2}{{r_i}^2})} ( \frac{1}{r_i} (\frac{\psi_{i,j+1}-\psi_{i-1,j}}{2 \delta r}) +w_{i,j} + \frac{\psi_{i+1,j} + \psi_{i-1,j}}{ {\delta r}^2 } + \frac{1}{ {r_i}^2 } \frac{\psi_{i,j+1} + \psi_{i,j-1}}{ {\delta \phi}^2 }  ).
+	\label{SOR equation}
+\end{equation}
+
+
+
+
+
+
+
 
 \end{document}
 
