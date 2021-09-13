@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper, total={8in, 10.5in}]{geometry}
+\usepackage{rotating}
+\usepackage{afterpage}
+
+
+
+\title{Numerically Solving Poissons Equation}
+\author{Maximilian Williams}
+\date{September 2021}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{Description of the problem}
+
+We wish to solve for the streamfunction $\psi$ given the voricity $\omega$ (equation \ref{vortivity equation}) in a discritized domain $\mathcal{D}$ in equation \ref{Poisson}.
+\begin{equation}
+	\Delta^2 \psi = -\omega
+	\label{Poisson}
+\end{equation}
+
+\begin{equation}
+	\omega = \nabla \times \psi
+	\label{vorticity equation}
+\end{equation}
+
+
+\section*{Finite Difference Approximation of derivatives}
+Given a function $f:R\rightarrow R$, the taylor series about the point $x\pm \delta x$ is given by equation \ref{taylor}:
+\begin{equation}
+	f(x \pm \delta x) = f(x) \pm  f^{(1)}(x) \delta x + \frac{1}{2!} f^{(2)}(x) {\delta x}^2 + \mathcal{O}({\delta x}^3),
+	\label{taylor}
+\end{equation}
+where $f^{(n)}(x)$ is the $n^{th}$ derivative of $f$ evaluated at $x$. By rearanging for $f^{(1)}(x)$ and $f^{(2)}(x)$ in the $x+\delta$ and $x-\delta$ variations of equation \ref{taylor}, the first and second order central finite difference is obtained:
+
+\begin{equation}
+	f^{(1)}(x) = \frac{f(x+\delta x) - f(x - \delta x)}{2 \delta x} + \mathcal{O}{\delta x}
+	\label{first order central difference}
+\end{equation}
+
+\begin{equation}
+	f^{(2)}(x) = \frac{f(x+\delta x) - 2 f(x) + f(x - \delta x)}{ {\delta x}^2 } + \mathcal{O}{\delta x}^2
+	\label{second order central difference}
+\end{equation}
+
+\section*{The Jacobi Method}
+We suppose that we know the vorticity $\omega$ in the domain $\mathcal{D}$ and have a guess $\psi$ for the streamfunction. 
+
+\end{document}
+
+
