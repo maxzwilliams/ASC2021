@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper, total={8in, 10.5in}]{geometry}
+\usepackage{rotating}
+\usepackage{afterpage}
+\usepackage{url}
+
+
+
+
+\title{Convection In A Box}
+\author{Maximilian Williams}
+\date{June 2021}
+
+\begin{document}
+
+\maketitle
+
+\section*{The Problem}
+We will consider convection of a slow moving fluid in a box with a heat source on the bottom layer. We will format this problem using streamfunctions with the aim of solving it numerically,
+
+\section*{The bousinesque Approximation}
+In the bousinique approximation we assume density flucations are small. This leads us to considering only density flucations when they are multiplies by a gravity term.
+\newline
+We begin with the NSE, equation \ref{NSE}. We approximate the density by
+\begin{equation}
+	\rho = \rho_0 + \rho',
+	\label{b density}
+\end{equation}
+where $\rho_0$ is a constant reference density and $\rho' << \rho_0$ is a pertibuation that depends on space. We similary split pressure up by equation \ref{b pressure}. 
+\begin{equation}
+	p = p_0 + p'
+	\label{b pressure}
+\end{equation}
+Applying equation \ref{b density} and \ref{b pressure}, the Navier-Stokes equation reads:
+\begin{equation}
+	(\rho_0 + \rho') \frac{\partial \vec{u}}{\partial t} + (\rho_0 + \rho') (\vec{u} \cdot \nabla) \vec{u} = (\rho_0 + \rho') \vec{g} - \nabla (p_0 + p') + \mu \nabla^2 \vec{u}
+	\label{b equation 1}
+\end{equation}
+By assuming $\vec{u}$ is also first order, equation \ref{b equation 1} to zeroth order produces:
+\begin{equation}
+	\rho_0 \vec{g} = \nabla p_0,
+\end{equation}
+and so to first order:
+
+\begin{equation}
+	\frac{\partial \vec{u}}{\partial t} + (\vec{u} \cdot \nabla) \vec{u} =  \frac{\rho'}{\rho_0}\vec{g} - \frac{\nabla p'}{\rho_0} + \nu \nabla^2 \vec{u},
+	\label{b equation 2}
+\end{equation}
+where $\mu = \rho \nu$. 
+\newline
+And thats the bousinesque equation.
+
+\section*{Equations}
+The navier stokes equation (equation \ref{NSE}) describes the conservation of momentum for an incompressable fluid.
+\begin{equation}
+	\rho \frac{\partial \vec{u}}{\partial t} + \rho (\vec{u} \cdot \nabla) \vec{u} = \rho \vec{g} - \ \rho {\nabla p} + \mu \nabla^2 \vec{u}
+	\label{NSE}
+\end{equation}
+The density $\rho$ is assumed to be a function of temperature $T$ and governed by equation \ref{equation of state}
+
+\begin{equation}
+	\rho = \rho_0 (1- \alpha (T - T_0)),
+	\label{equation of state}
+\end{equation}
+where $\alpha$ is a coeffeicnet of thermal expansion and $\rho_0$ and $T_0$ are refernece densities and temperatures. The temperature is non constant, and modelled using equation \ref{advection-diffusion}
+\begin{equation}
+	\frac{\partial T}{\partial t} + (\vec{u} \cdot \nabla) T = \kappa \nabla^2 T + \frac{Q}{C_p},
+	\label{ade}
+\end{equation}
+where $\kappa$ is the diffusion constant, $C_p$ the specific heat capacity per volume and $Q$ a heat source.
+\newline
+We apply the creeping flow approximation first, giving:
+\begin{equation}
+	\rho \frac{\partial \vec{u}}{\partial t} = \rho \vec{g} - {\nabla p} + \mu \nabla^2 \vec{u}
+	\label{NSE slow}
+\end{equation}
+Next we apply the bousinesque approximation giving:
+\begin{equation}
+	\frac{\partial \vec{u}}{\partial t} = \frac{\rho'}{\rho} \vec{g} -   \frac{\nabla p'}{\rho_0} + \nu \nabla^2 \vec{u}
+	\label{NSE slow + b}
+\end{equation}
+We now aim to numerically solve equations \ref{NSE slow + b}, \ref{ade} and \ref{equation of state} using a finite difference scheme.
+
+\section*{Finite Difference Schemes}
+pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
