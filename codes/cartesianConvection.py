@@ -7,73 +7,108 @@ import time
 import copy
 import math
 
-Re = 100
-dt = 0.001
 
-n = 17
-
-sf = [[0 for x in range(n)] for y in range(ny)] ## streamfunction
-vt = [[0 for x in range(n)] for y in range(ny)] ## vorticity
-w =  [[0 for x in range(n)] for y in range(ny)] ## temp storage for another field
-
-h=1/(n-1) ## we assume that n and ny are the same here
-
-timeSteps = math.floor(1/dt * 1.2)
-
-errorStandard = 0.001
-Beta=0.5
-t = 0
-
-solverIterations = 1000
-for timeStep in range(timeSteps):
+def updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega):
+	"""
+	Function that finds the streamfunction using the SOR method in cartesian coordiantes
 	
-	for solverIteration in range(solverIterations):
-		w = copy.deepcopy(sf)
-		
-		
-		oldsf = copy.deepcopy(sf)
-		for i in range(1, n-1):
-			for j in range(1, ny-1):
-				sf[i][j]=0.25*Beta*(oldsf[i+1][j]+oldsf[i-1][j]+oldsf[i][j+1]+oldsf[i][j-1]+h*h*vt[i][j])+ (1.0-Beta)*oldsf[i][j];
+	Parameters:
+		vorticity (n lists of size n): vorticity at each point in the domein
+		streamfunction (n lists of size n): streamfunction at each point in the domain
+		n (int): size of the domain
+		iterations (int): number of iterations used for the SOR solver
+		epsilon (float): acceptable error in streamfunction solution
+	 	omega (float64): SOR parameter
+	 
+	 Returns:
+	 	streamfunction: new streamfunction
+	"""
+	
+	for iteration in range(iterations):
+		oldstreamfunction = copy.deepcopy(streamfunction)
+		for i in range(1,n-1):
+			for j in range(1,n-1):
+				streamfunction[i][j] = 0.25*omega*(oldstreamfunction[i+1][j]+oldstreamfunction[i-1][j]+oldstreamfunction[i][j+1]+oldstreamfunction[i][j-1]+h*h*vorticity[i][j])+ (1.0-omega)*oldstreamfunction[i][j]
 				
-		totalError = 0
+		epsilonDash = 0
 		for i in range(n):
-			for j in range(ny):
-				totalError = totalError + abs(w[i][j] - sf[i][j])
-		if (totalError < errorStandard):
-			print("converged")
+			for j in range(n):
+				epsilonDash += abs(oldstreamfunction[i][j] - streamfunction[i][j])
+				
+		if (epsilonDash < epsilon):
 			break;
-			
-	## here we update the vorticity on the boundries
+		if (iteration == iterations-1):
+			raise Exception("when solving for streamfunction the method did not converge")
+		
+	return streamfunction
+	
+	
+def updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Ttop):
+	"""
+	Function that updates the temperature field
+	"""
+	
+	update = [[0 for i in range(n)] for j in range(n)]
+	newTemperature = [[0 for i in range(n)] for j in range(n)]
 	
 	for i in range(1, n-1):
-		vt[i][0] = -2*sf[i][1]/(h**2)
-		
-		vt[i][ny-1] = -2*sf[i][ny-2]/(h**2)
-		
-		vt[0][i] = -2*sf[1][i]/(h**2)
-		
-		vt[n-1][i]=  -2*sf[n-2][i]/(h**2) 
-	
-	
-	
-	## here we update the vorticity
-	for i in range(1, n-1):
-		for j in range(1, ny-1):
-			w[i][j]=-0.25*((sf[i][j+1]-sf[i][j-1])*(vt[i+1][j]-vt[i-1][j])-(sf[i+1][j]-sf[i-1][j])*(vt[i][j+1]-vt[i][j-1]))/(h*h)+visc*(vt[i+1][j]+vt[i-1][j]+vt[i][j+1]+vt[i][j-1]-4.0*vt[i][j])/(h*h)
-
-	for i in range(1,n-1):
-		for j in range(1, ny-1):
-			vt[i][j] = vt[i][j] + dt*w[i][j]
+		for j in range(1, n-1):
+			term1 = (streamfunction[i][j+1] - streamfunction[i][j-1])/(2 h) * (temperature[i+1][j] - temperature[i-1][j])/(2*h)
+			term2 = - (streamfunction[i+1][j] - streamfunction[i-1][j])/(2*h) * (temperature[i][j+1] - temperature[i][j-1])/(2*h)
+			term3 = kappa * (  (temperature[i+1][j] - 2*temperature[i][j] + temperature[i-1][j])/(h**2) + (temperature[i][j+1] - 2*temperature[i][j] + temperature[i][j-1])/(h**2)  )
+			term4 = heat[i][j]/Cp
 			
-	t += dt
+			update[i][j] = term1 + term2 + term3 + term4
+			
+			newTemperature[i][j] = temperature[i][j] + dt*update[i][j]
+			
+			
+	## what sort of boundry conditions should I do??
+	
+	## I will hold the surface at a constant temperature
+	for i in range(n):
+		newTemperature[i][n-1] = Ttop
+	
+	## I will have the left, right and bottom sides as insulating
+	for i in range(1, n-1):
+		newTemperature[0][i] = newTemperature[1][i]
+		newTemperature[n-1][i] = newTemperature[n-2][i]
+		newTemperature[i][0] = newTemperature[i][1]
+		
+	newTemperature[0][0] = 0.5*( newTemperature[0][1] + newTemperature[1][0] )
+	newTemperature[n-1][0] = 0.5*( newTemperature[n-2][0] + newTemperature[n-1][1] )
+	
+	
+	newTemperature[0][n-1] = 0.5 * (newTemperature[0][n-2] + newTemperature[1][n-1])
+	newTemperature[n-1][n-1] = 0.5 * (newTemperature[n-1][n-2] + newTemperature[n-2][n-1])
+	
+	## now I need to do the surface:
+	## I will hold the surface at a constant temperature		
+	return newTemperature[i][j]
+	
+## now we need to write something that updates the vorticity equation for creeping flow
+
 
 	
-	plt.contour(vt)
-	plt.savefig("vts//file"+str(timeStep)+".png")
-	plt.clf()
+			
 	
-	plt.contour(sf)
-	plt.savefig("sfs//file"+str(timeStep)+".png")
-	plt.clf()
+	
+	
+	
+	
+	
+	
+
+	
+	
+			
+			
+
+				
+				
+	
+		
+	
+	
+	
 

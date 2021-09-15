@@ -37,7 +37,7 @@ for timeStep in range(timeSteps):
 		for i in range(1, nx-1):
 			for j in range(1, ny-1):
 				##sf[i][j] = 0.25*Beta*(sf[i+1][j] + sf[i-1][j]+sf[i][j+1] + sf[i][j-1] + h**2 *vt[i][j]) + (1-Beta)*sf[i][j]
-				sf[i][j]=0.25*Beta*(oldsf[i+1][j]+oldsf[i-1][j]+oldsf[i][j+1]+oldsf[i][j-1]+h*h*vt[i][j])+ (1.0-Beta)*oldsf[i][j];
+				sf[i][j]=0.25*Beta*(oldsf[i+1][j]+oldsf[i-1][j]+oldsf[i][j+1]+oldsf[i][j-1]+h*h*vt[i][j])+ (1.0-Beta)*oldsf[i][j]
 				
 		totalError = 0
 		for i in range(nx):
