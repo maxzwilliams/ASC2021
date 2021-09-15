@@ -8,7 +8,7 @@ import copy
 import math
 
 
-def updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega):
+def updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega,h):
 	"""
 	Function that finds the streamfunction using the SOR method in cartesian coordiantes
 	
@@ -43,7 +43,7 @@ def updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omeg
 	return streamfunction
 	
 	
-def updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Ttop):
+def updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Touter, dt):
 	"""
 	Function that updates the temperature field
 	"""
@@ -51,9 +51,19 @@ def updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Ttop):
 	update = [[0 for i in range(n)] for j in range(n)]
 	newTemperature = [[0 for i in range(n)] for j in range(n)]
 	
+	for i in range(n):
+		temperature[0][i] = Touter
+		newTemperature[0][i] = Touter
+		temperature[n-1][i] = Touter
+		newTemperature[n-1][i] = Touter
+		temperature[i][0] = Touter
+		newTemperature[n-1][i] = Touter
+	
+	
+	
 	for i in range(1, n-1):
 		for j in range(1, n-1):
-			term1 = (streamfunction[i][j+1] - streamfunction[i][j-1])/(2 h) * (temperature[i+1][j] - temperature[i-1][j])/(2*h)
+			term1 = (streamfunction[i][j+1] - streamfunction[i][j-1])/(2*h) * (temperature[i+1][j] - temperature[i-1][j])/(2*h)
 			term2 = - (streamfunction[i+1][j] - streamfunction[i-1][j])/(2*h) * (temperature[i][j+1] - temperature[i][j-1])/(2*h)
 			term3 = kappa * (  (temperature[i+1][j] - 2*temperature[i][j] + temperature[i-1][j])/(h**2) + (temperature[i][j+1] - 2*temperature[i][j] + temperature[i][j-1])/(h**2)  )
 			term4 = heat[i][j]/Cp
@@ -65,28 +75,112 @@ def updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Ttop):
 			
 	## what sort of boundry conditions should I do??
 	
-	## I will hold the surface at a constant temperature
-	for i in range(n):
-		newTemperature[i][n-1] = Ttop
-	
-	## I will have the left, right and bottom sides as insulating
-	for i in range(1, n-1):
-		newTemperature[0][i] = newTemperature[1][i]
-		newTemperature[n-1][i] = newTemperature[n-2][i]
-		newTemperature[i][0] = newTemperature[i][1]
-		
-	newTemperature[0][0] = 0.5*( newTemperature[0][1] + newTemperature[1][0] )
-	newTemperature[n-1][0] = 0.5*( newTemperature[n-2][0] + newTemperature[n-1][1] )
-	
-	
-	newTemperature[0][n-1] = 0.5 * (newTemperature[0][n-2] + newTemperature[1][n-1])
-	newTemperature[n-1][n-1] = 0.5 * (newTemperature[n-1][n-2] + newTemperature[n-2][n-1])
+
 	
 	## now I need to do the surface:
 	## I will hold the surface at a constant temperature		
-	return newTemperature[i][j]
+	return newTemperature
 	
 ## now we need to write something that updates the vorticity equation for creeping flow
+
+def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0,h,n,dt):
+	newVorticity = [[0 for i in range(n)] for j in range(n)]
+	update = [[0 for i in range(n)] for j in range(n)]	
+	## Now we need to look at eh bounrdy conditions.
+	for i in range(1, n-1):
+		vorticity[i][0] = -2*streamfunction[i][1]/(h**2)
+		
+		vorticity[i][n-1] = -2*streamfunction[i][n-2]/(h**2)
+		
+		vorticity[0][i] = -2*streamfunction[1][i]/(h**2)
+		
+		vorticity[n-1][i]=  -2*streamfunction[n-2][i]/(h**2) 
+		
+		newVorticity[i][0] = -2*streamfunction[i][1]/(h**2)
+		
+		newVorticity[i][n-1] = -2*streamfunction[i][n-2]/(h**2)
+		
+		newVorticity[0][i] = -2*streamfunction[1][i]/(h**2)
+		
+		newVorticity[n-1][i]=  -2*streamfunction[n-2][i]/(h**2) 
+		
+		
+
+	for i in range(1, n-1):
+		for j in range(1, n-1):
+			update[i][j] = g*alpha/rho0 * ( temperature[i+1][j] - temperature[i-1][j])/(2*h) + nu*( (vorticity[i+1][j] - 2*vorticity[i][j] + vorticity[i-1][j]  )/(h**2) + (vorticity[i][j+1] -2*vorticity[i][j] + vorticity[i][j-1])/(h**2) ) 
+			
+	
+	for i in range(1, n-1):
+		for j in range(1, n-1):
+			newVorticity[i][j] = vorticity[i][j] + dt*update[i][j]
+			
+
+		
+	return  newVorticity
+	
+	
+	
+def main():
+
+	## function that ties everything together
+	n = 30
+	timesteps = 10000
+	dt = 0.001
+	
+	iterations = 1000
+	epsilon = 0.01
+	omega=0.5
+	
+	h = 1/(n-1)
+	Cp=1
+	kappa=1
+	Touter=0
+	rho0=1000
+	alpha=0.01
+	nu=0.0005
+	g=10
+	t = 0
+	
+	
+		
+	
+	temperature = [[0 for i in range(n)] for i in range(n)]
+	streamfunction = [[0 for i in range(n)] for i in range(n)]
+	vorticity = [[0 for i in range(n)] for i in range(n)]
+	
+	heat = [[0 for i in range(n)] for i in range(n)]
+	
+	for i in range(n):
+		heat[i][3] =  1
+	
+	for timestep in range(timesteps):
+		print("loop: " + str(timestep))
+		
+		streamfunction = updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega,h)
+		
+		temperature = updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Touter,dt)
+		
+		vorticity = updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0,h,n,dt)
+		
+		t = t + dt
+		plt.contour(vorticity)
+		plt.savefig("vts//file"+str(timestep)+".png")
+		plt.clf()
+		
+		plt.contour(streamfunction)
+		plt.savefig("sfs//file"+str(timestep)+".png")
+		plt.clf()
+		
+		
+main()
+		
+		
+
+	
+	
+	
+			
 
 
 	
