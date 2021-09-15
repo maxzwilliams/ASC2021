@@ -83,11 +83,56 @@ Next we apply the bousinesque approximation giving:
 \end{equation}
 We now aim to numerically solve equations \ref{NSE slow + b}, \ref{ade} and \ref{equation of state} using a finite difference scheme.
 
-\section*{Streamfunction-vorticity formulation}
-We consider the problem in 2D cartesian co-ordinates (x,y). We define the streamfunction $\psi$ such that for velocities $u$ and  $v$ in the $x$ and $y$ direction that:
+\section*{Streamfunction-vorticity formulation in cartesian coorindates}
+We consider the problem in 2D cartesian co-ordinates (x,y) with $\vec{u}=(u,v)$, where $u$ and $v$ are the $x$ and $v$ velocities of the fluid respectively. We define a streamfunction $\psi$ by equation \ref{streamfunction equation}
 \begin{equation}
-
+	u = - \frac{\partial \psi}{\partial y}, v = \frac{\partial \psi}{\partial x}.
 \end{equation}
+We also define the vorticity in the $x-y$ plane $\omega$ by:
+\begin{equation}
+	\omega = \nabla \times \vec{u} = \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}.
+\end{equation}
+By these definitions of the streamfunction and vorticity we get the incompressability condition (equation \ref{incomp sf}) and the vorticity-streamfunction relation, equation \ref{vt to st}:
+
+\begin{equation}
+	0=\frac{\partial^2 \psi}{\partial x \partial y} - \frac{\partial^2 \psi}{\partial x \partial y} = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = \nabla \cdot \vec{u}
+	\label{incompsf}
+\end{equation}
+
+\begin{equation}
+	\omega = \frac{\partial^2 \psi}{\partial x^2} + \frac{\partial^2 \psi}{\partial y^2}.
+	\label{vt to st}
+\end{equation}
+Using the streamfunction we can immediately rewrite equation \ref{ade} as equation \ref{ade sf}.
+\begin{equation}
+	\frac{\partial T}{\partial t} -\frac{\partial \psi}{\partial y} \frac{\partial T}{\partial x} + \frac{\partial \psi}{\partial x} \frac{\partial T}{\partial y} = \kappa \nabla^2 T + \frac{Q}{C_p}
+	\label{ade sf}
+\end{equation}
+The streamfunction-vorticity equation for the Navier Stokes equation is a little more involved. We first split equation \ref{NSE slow + b} into its components:
+\begin{equation}
+	\frac{\partial u}{\partial t} = \frac{\rho'}{\rho_0} g_x -\frac{1}{\rho_0} \frac{\partial p'}{\partial x} + \nu (\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial x^2})
+	\label{x comp}
+\end{equation}
+and,
+\begin{equation}
+		\frac{\partial v}{\partial t} = \frac{\rho'}{\rho_0} g_y -\frac{1}{\rho_0} \frac{\partial p'}{\partial y} + \nu (\frac{\partial^2 v}{\partial x^2} + \frac{\partial^2 v}{\partial x^2}).
+		\label{y comp}
+\end{equation}
+Taking $\frac{\partial}{\partial x}$ of equation \ref{y comp} and subtracting $\frac{\partial }{\partial y}$ of equation \ref{x comp} we rearange to get equation \ref{NSE sf+v}:
+\begin{equation}
+	\frac{\partial w}{\partial t} = \frac{g_y}{\rho_0} \frac{\partial \rho'}{\partial x} - \frac{g_x}{\rho_0} \frac{\partial \rho'}{\partial y} + \nu \nabla^2 \omega
+	\label{NSE sf+v}
+\end{equation}
+Equations \ref{NSE sf+v} and \ref{ade sf} complete our streamfunction-vortivity description.
+
+\section*{Boundry conditions}
+
+ 
+
+
+
+
+
 
 
 
