@@ -49,13 +49,15 @@ for timeStep in range(timeSteps):
 	for i in range(1, n-1):
 		vt[i][0] = -2*sf[i][1]/(h**2)
 		
-		vt[i][ny-1] = -2*sf[i][ny-2]/(h**2) - 2/h
+		vt[i][ny-1] = -2*sf[i][ny-2]/(h**2)
 		
 		vt[0][i] = -2*sf[1][i]/(h**2)
 		
 		vt[n-1][i]=  -2*sf[n-2][i]/(h**2) 
 	
 	
+	
+	## here we update the vorticity
 	for i in range(1, n-1):
 		for j in range(1, ny-1):
 			w[i][j]=-0.25*((sf[i][j+1]-sf[i][j-1])*(vt[i+1][j]-vt[i-1][j])-(sf[i+1][j]-sf[i-1][j])*(vt[i][j+1]-vt[i][j-1]))/(h*h)+visc*(vt[i+1][j]+vt[i-1][j]+vt[i][j+1]+vt[i][j-1]-4.0*vt[i][j])/(h*h)
