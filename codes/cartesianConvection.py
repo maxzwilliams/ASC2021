@@ -51,13 +51,41 @@ def updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Touter
 	update = [[0 for i in range(n)] for j in range(n)]
 	newTemperature = [[0 for i in range(n)] for j in range(n)]
 	
+	
+	
+	for i in range(1,n-1):
+		## left wall
+		temperature[0][i] = temperature[1][i]
+		newTemperature[0][i] = temperature[1][i]
+		
+		## right wall
+		temperature[n-1][i] = temperature[n-2][i]
+		newTemperature[n-1][i] = temperature[n-2][i]
+		
+		## top wall
+		temperature[i][n-1] = temperature[i][n-2]
+		newTemperature[i][n-1] = temperature[i][n-2]
+		
+		## bottom wall
+		temperature[i][0] = temperature[i][1]
+		newTemperature[i][0] = temperature[i][1]
+		
+		
+		
+		
+	
 	for i in range(n):
 		temperature[0][i] = Touter
-		newTemperature[0][i] = Touter
+		
+		
 		temperature[n-1][i] = Touter
 		newTemperature[n-1][i] = Touter
+		
 		temperature[i][0] = Touter
-		newTemperature[n-1][i] = Touter
+		newTemperature[i][0] = Touter
+		
+		temperature[i][n-1] = Touter
+		newTemperature[i][n-1] = Touter
 	
 	
 	
@@ -88,13 +116,14 @@ def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0,h
 	update = [[0 for i in range(n)] for j in range(n)]	
 	## Now we need to look at eh bounrdy conditions.
 	for i in range(1, n-1):
-		vorticity[i][0] = -2*streamfunction[i][1]/(h**2)
+		vorticity[i][0] = -2*streamfunction[i][1]/(h**2) 
 		
 		vorticity[i][n-1] = -2*streamfunction[i][n-2]/(h**2)
 		
 		vorticity[0][i] = -2*streamfunction[1][i]/(h**2)
 		
 		vorticity[n-1][i]=  -2*streamfunction[n-2][i]/(h**2) 
+		
 		
 		newVorticity[i][0] = -2*streamfunction[i][1]/(h**2)
 		
@@ -124,22 +153,23 @@ def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0,h
 def main():
 
 	## function that ties everything together
-	n = 30
+	n = 100
 	timesteps = 10000
-	dt = 0.001
+	dt = 0.1
 	
 	iterations = 1000
 	epsilon = 0.01
 	omega=0.5
 	
 	h = 1/(n-1)
-	Cp=1
-	kappa=1
+	Cp=4000
+	kappa=10**(-4)
 	Touter=0
 	rho0=1000
-	alpha=0.01
-	nu=0.0005
-	g=10
+	##alpha=10**(-7)
+	alpha=10**(-1)
+	nu=10**(-6)
+	g=-10
 	t = 0
 	
 	
@@ -152,7 +182,8 @@ def main():
 	heat = [[0 for i in range(n)] for i in range(n)]
 	
 	for i in range(n):
-		heat[i][3] =  1
+		for j in range(0,5):
+			heat[j][i] =  1000
 	
 	for timestep in range(timesteps):
 		print("loop: " + str(timestep))
@@ -164,13 +195,19 @@ def main():
 		vorticity = updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0,h,n,dt)
 		
 		t = t + dt
-		plt.contour(vorticity)
+		plt.imshow(vorticity, interpolation='bilinear')
 		plt.savefig("vts//file"+str(timestep)+".png")
 		plt.clf()
 		
-		plt.contour(streamfunction)
+		plt.imshow(streamfunction, interpolation='bilinear')
 		plt.savefig("sfs//file"+str(timestep)+".png")
 		plt.clf()
+		
+		plt.imshow(temperature, interpolation='bilinear')
+		plt.savefig("t//File" + str(timestep) + ".png")
+		plt.clf()
+		
+		
 		
 		
 main()
