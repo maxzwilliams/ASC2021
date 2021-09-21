@@ -18,8 +18,7 @@
 \maketitle
 
 \section*{The Problem}
-We will consider convection of a slow moving fluid in a box with a heat source on the bottom layer. We will format this problem using streamfunctions with the aim of solving it numerically,
-
+We seek to model 2D convection for a slow moving fluid. We will format this problem using streamfunctions with the aim of solving it numerically. First, the solution in a box using cartesian cooridnates is deicussed. The problem is then formatted in polar coordinates and solved on a disk.
 \section*{The bousinesque Approximation}
 In the bousinique approximation we assume density flucations are small. This leads us to considering only density flucations when they are multiplies by a gravity term.
 \newline
@@ -151,10 +150,20 @@ and similary on the top and bottom wall:
 Equations \ref{streamfunction bc}, \ref{vorticity left-right} and \ref{vorticity top-bottom} compose the boundry conditions used here.
 
 
+\section*{Streamfunction-vorticity formulation in polar coorindates}
+Here we consider our domain $\mathcal{D}$ as a collection of discrized points $(r, \phi)$ where $r\in \{ r_{inner}, R\}$ and $\phi \in \{ 0, 2 \pi\}$. We define our velocity vector $\vec{u} = (u,v)$, where $u$ points radially and $v$ in the $\hat{\phi}$ direction. We define our streamfunction $\phi$ by equation \ref{sf p}
+\begin{equation}
+	u = \frac{1}{r} \frac{\partial \psi}{\partial \phi}, v = - \frac{\partial \psi}{\partial r}.
+	\label{sf p}
+\end{equation}
+(Ill do the rest of this tomorrow its late)
 
 
 
-\newline
+ 
+
+
+
 
 
 
