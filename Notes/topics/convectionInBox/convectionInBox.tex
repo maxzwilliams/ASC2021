@@ -91,6 +91,7 @@ We consider the problem in 2D cartesian co-ordinates (x,y) with $\vec{u}=(u,v)$,
 We also define the vorticity in the $x-y$ plane $\omega$ by:
 \begin{equation}
 	\omega = \nabla \times \vec{u} = \frac{\partial v}{\partial x} - \frac{\partial u}{\partial y}.
+	\label{vorticity}
 \end{equation}
 By these definitions of the streamfunction and vorticity we get the incompressability condition (equation \ref{incomp sf}) and the vorticity-streamfunction relation, equation \ref{vt to st}:
 
@@ -126,7 +127,33 @@ Taking $\frac{\partial}{\partial x}$ of equation \ref{y comp} and subtracting $\
 Equations \ref{NSE sf+v} and \ref{ade sf} complete our streamfunction-vortivity description.
 
 \section*{Boundry conditions}
-There are two classes of boundry conditions we must adress, fluid related boundy conditions and temperature related boundry conditions. We first consider the fluid related boundry conditions. We take the four boundries as stationary impermiable walls. 
+There are two classes of boundry conditions we must adress, fluid related boundy conditions and temperature related boundry conditions. We first consider the fluid related boundry conditions. We take the four boundries as stationary impermiable walls. (I cant draw latex graphics yet so I dont have a figure for this). We have four walls at $x=0,x=L,y=0,y=L$. At each wall, the normal fluid velocity is zero. For example, at the $y=0$ and $y=L$ walls, we have:
+
+\begin{equation}
+	u = \frac{\partial \psi}{\partial y} = 0
+\end{equation}
+and thus,
+\begin{equation}
+	\psi = constant.
+	\label{streamfunction bc}
+\end{equation}
+This is true for all four walls, which are connected. So on the walls, $\psi = constant$.
+From equation \ref{vorticity} on the left and right walls:
+\begin{equation}
+	\frac{\partial^2 \psi}{\partial x^2} + \frac{\partial^2 \psi}{\partial y^2} = \frac{\partial^2 \psi}{\partial y^2}= \omega_{wall}
+	\label{vorticity left-right}
+\end{equation}
+and similary on the top and bottom wall:
+\begin{equation}
+	\frac{\partial^2 \psi}{\partial x^2} + \frac{\partial^2 \psi}{\partial y^2} = \frac{\partial^2 \psi}{\partial x^2}= \omega_{wall}.
+	\label{vorticity top-bottom}
+\end{equation}
+Equations \ref{streamfunction bc}, \ref{vorticity left-right} and \ref{vorticity top-bottom} compose the boundry conditions used here.
+
+
+
+
+
 \newline
 
 
