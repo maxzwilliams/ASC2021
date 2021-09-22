@@ -96,7 +96,7 @@ By these definitions of the streamfunction and vorticity we get the incompressab
 
 \begin{equation}
 	0=\frac{\partial^2 \psi}{\partial x \partial y} - \frac{\partial^2 \psi}{\partial x \partial y} = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = \nabla \cdot \vec{u}
-	\label{incompsf}
+	\label{incomp sf}
 \end{equation}
 
 \begin{equation}
@@ -151,14 +151,33 @@ Equations \ref{streamfunction bc}, \ref{vorticity left-right} and \ref{vorticity
 
 
 \section*{Streamfunction-vorticity formulation in polar coorindates}
-Here we consider our domain $\mathcal{D}$ as a collection of discrized points $(r, \phi)$ where $r\in \{ r_{inner}, R\}$ and $\phi \in \{ 0, 2 \pi\}$. We define our velocity vector $\vec{u} = (u,v)$, where $u$ points radially and $v$ in the $\hat{\phi}$ direction. We define our streamfunction $\phi$ by equation \ref{sf p}
+Here we consider our domain $\mathcal{D}$ as a collection of discrized points $(r, \phi)$ where $r\in \{ r_{inner}, R\}$ and $\phi \in \{ 0, 2 \pi\}$. We define our velocity vector $\vec{u} = (u,v)$, where $u$ points radially and $v$ in the $\hat{\phi}$ direction. We define our streamfunction $\phi$ by equation \ref{sf p}:
 \begin{equation}
 	u = \frac{1}{r} \frac{\partial \psi}{\partial \phi}, v = - \frac{\partial \psi}{\partial r}.
 	\label{sf p}
 \end{equation}
-(Ill do the rest of this tomorrow its late)
+Similary to the cartesian case then, the vorticity is given by:
+\begin{equation}
+	\omega = \nabla \times \vec{u} = \frac{\partial v}{\partial r} + \frac{1}{r} v - \frac{1}{r} \frac{\partial u}{\partial \phi}
+	\label{polar vorticity}
+\end{equation}
+Equation \ref{NSE slow + b} can be seperated into equations \ref{NSE u polar} and \ref{NSE v polar}:
+\begin{equation}
+	\frac{\partial u}{\partial t} = \frac{\rho'}{\rho_0} g_r - \frac{1}{\rho_0} \frac{\partial p'}{\partial r} + \nu ( \nabla^2 u - \frac{2 u}{r^2} - \frac{2}{r^2} \frac{\partial v}{\partial \phi})
+	\label{NSE u polar}
+\end{equation}
 
+\begin{equation}
+	\frac{\partial v}{\partial t} = \frac{\rho'}{\rho_0} g_{\phi} - \frac{1}{r \rho_0} \frac{\partial p'}{\partial \phi} + \nu (\nabla^2 v + \frac{2}{r^2} \frac{\partial u}{\partial \phi} - \frac{v}{r^2})
+	\label{NSE v polar}
+\end{equation}
 
+By multiplying equation \ref{NSE v polar} we get:
+\begin{equation}
+	r \frac{\partial v}{\partial t} = r \frac{\rho'}{\rho_0} g_{\phi} - \frac{1}{\rho_0} \frac{\partial p'}{\partial \phi} + r \nu (\nabla^2 v + \frac{2}{r^2} \frac{\partial u}{\partial \phi} - \frac{v}{r^2})
+	\label{NSE v polar times r}
+\end{equation}
+Now now cross differentiate 
 
  
 
