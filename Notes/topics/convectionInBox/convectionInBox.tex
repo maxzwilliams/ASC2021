@@ -17,6 +17,9 @@
 
 \maketitle
 
+\section*{What is this?}
+A document where I can write down my working for modelling convection in a box as paper isn't the best at conveying ideas remotely. This is in no way polished document.
+
 \section*{The Problem}
 We seek to model 2D convection for a slow moving fluid. We will format this problem using streamfunctions with the aim of solving it numerically. First, the solution in a box using cartesian cooridnates is deicussed. The problem is then formatted in polar coordinates and solved on a disk.
 \section*{The bousinesque Approximation}
@@ -177,7 +180,14 @@ By multiplying equation \ref{NSE v polar} we get:
 	r \frac{\partial v}{\partial t} = r \frac{\rho'}{\rho_0} g_{\phi} - \frac{1}{\rho_0} \frac{\partial p'}{\partial \phi} + r \nu (\nabla^2 v + \frac{2}{r^2} \frac{\partial u}{\partial \phi} - \frac{v}{r^2})
 	\label{NSE v polar times r}
 \end{equation}
-Now now cross differentiate 
+Now now cross differentiate similar to the cartesian case to give:
+\begin{equation}
+	\frac{\partial r \omega}{\partial t} = \frac{- g_r}{\rho_0} \frac{\partial \rho'}{\partial \phi} + \nu (\frac{\partial}{\partial r} (r(\nabla^2 v + \frac{2}{r} \frac{\partial u}{\partial \phi} - \frac{v}{r^2} )) - \frac{\partial}{\partial \phi} (\nabla^2 u - \frac{2 u}{r}-\frac{2}{r} \frac{\partial v}{\partial \phi} ) )
+	\label{polar crossed}
+\end{equation}
+Note that we have assumed that $g_{\phi} = 0$ in equation \ref{polar crossed}
+
+
 
  
 
