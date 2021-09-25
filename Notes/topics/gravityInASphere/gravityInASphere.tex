@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper, total={8in, 10.5in}]{geometry}
+\usepackage{rotating}
+\usepackage{afterpage}
+\usepackage{url}
+
+
+
+
+\title{Gravity Within Earth}
+\author{Maximilian Williams}
+\date{June 2021}
+
+\begin{document}
+
+\maketitle
+
+\section*{What is this?}
+A little bit of working for finding the gravity within Earth
+
+\section*{The problem}
+I want to find the hydrostatic pressure within a self gravitation sphere of fluid. We give the sphere a density $\rho_0$ and radius $R$. Taking the navier stokes equation and ignoring all velocity related terms we get the hydrostatic balence:
+\begin{equation}
+	\nabla p = \vec{g} \rho_0
+\end{equation}
+Due to azimuthal and polar symetries, $p$ and $\vec{g}$ have only radial dependence, with $\vec{g}$ also only having a radial component. Thus,
+\begin{equation}
+	\frac{\partial p}{\partial r} = g(r) \rho_0
+\end{equation}
+By applying gauss's law of gravitation we get that:
+\begin{equation}
+	g(r) = G \frac{m(r)}{r^2},
+\end{equation}
+where $m(r)$ is the mass contained within a sphere of radius $r$ and is given by $m(r) = \rho_0 \frac{4}{3} \pi r^3$. Therfore, 
+\begin{equation}
+	\frac{\partial p}{\partial r} = \frac{2}{3} \pi G {\rho_0}^2 (R^2 - r^2)
+\end{equation}
+which we integrate to a depth of $r$ to get:
+\begin{equation}
+	P(r) = \frac{2}{3} \pi G {\rho_0}^2 (R^2 - r^2)
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
