@@ -48,7 +48,7 @@ def updateStreamFunction(vorticity, streamfunction, simulationSettings):
 				
 		if (epsilonDash < epsilon):
 			break;
-		if (iteration == iterations - 1):
+		if (interation == iterations - 1):
 			raise Exception("When solving for streamfunction there was no convergence")
 			
 	return streamfunction
@@ -85,24 +85,41 @@ def updateTemperature(streamfunction, temperature, heat, simulationSettings):
 			temperature[rIndex][phiIndex]  = oldTemperature[rIndex][phiIndex] + dt*update
 	return temperature
 
-def updateVorticity(vorticity, temperature, streamfunction):
+def updateVorticity(vorticity, temperature, streamfunction, simulationSettings):
 	## here we update the vorticity
 	
+	nu = simulationSettings['nu']
+	dt = simulationSettings['dt']
+	G = simulationSettings['G']
+	rho0 = simulationSettings['rho0']
+	dPhi = simulationSettings['dPhi']
+	dRadius = simulationSettings['dRadius']
+	alpha = simulationSettings['alpha']
+	
+	## we need to update the boundries
+	
+	for index in range(simulationSettings['phiSteps']):
+		vorticity[0][index] = (streamfunction[0][index] - streamfunction[1][index])*2/(dRadius**2)
+		vorticity[simulationSettings['radiusSteps']-1][index] = ( streamfunction[simulationSettings['radiusSteps']-1][index] -  streamfunction[simulationSettings['radiusSteps']-2][index])* 2/(dRadius**2)
+		
 	oldVorticity = copy.copy(vorticity)
 	
 	for rIndex in range(1, simulationSettings['radiusSteps']-1):
 		for phiIndex in range(simulationSettings['phiSteps']):
 			
-			g = 4/3 math.pi * G* rho0*r
-			term1 = -g/(rho0 * r) * (-rho0*alpha)*(temperature[rIndex][phiIndex+1] - temperature[rIndex][phiIndex-1])/(2*dPhi)
-			term2 = -3/(r**4) * (streamfunction[rIndex][phiIndex+1] - 2 * streamfunction[rIndex][phiIndex] + streamfunction[rIndex][phiIndex-1])/(dPhi**2)
-			term3 = -1/(r**4) * 
-			update = 
+			r = rIndexToR(simulationSettings, rIndex)
+			
+			g = 4/3 *math.pi * G* rho0*r
+			term1 = -g/(rho0 * r) * (-rho0*alpha)*(temperature[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - temperature[rIndex][(phiIndex-1)%simulationSettings['phiSteps']])/(2*dPhi)
+			term2 = (oldVorticity[rIndex+1][phiIndex] - 2*oldVorticity[rIndex][phiIndex] + oldVorticity[rIndex-1][phiIndex])/(dRadius**2)
+			term3 = 1/r * (oldVorticity[rIndex+1][phiIndex] - oldVorticity[rIndex-1][phiIndex])/(2*dRadius)
+			term4 = 1/r**2 * (oldVorticity[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - 2*oldVorticity[rIndex][phiIndex] + oldVorticity[rIndex][(phiIndex-1)%simulationSettings['phiSteps']])/(dPhi**2)
+			
+			update = term1 + nu * (term2 + term3 + term4)
 			
 			vorticity[rIndex][phiIndex] = oldVorticity[rIndex][phiIndex] + dt*update
 	
-	
-	pass
+	return vorticity
 	
 def rIndexToR(simulationSettings, rIndex):
 	return simulationSettings['innerRadius'] + rIndex * simulationSettings['dRadius']
@@ -135,15 +152,30 @@ def main():
 	simulationSettings['poissonIterations'] = 100
 	simulationSettings['poissonError'] = 0.001
 	simulationSettings['SORParam'] = 0.5
-	simulationSettings['dt'] = 0.001
-	simulationSettings['Cp'] = 4000
-	simulationSettings['kappa'] = 1
+	simulationSettings['dt'] = 0.0001
+	simulationSettings['Cp'] = 1
+	simulationSettings['kappa'] = 0.00001
+	simulationSettings['nu'] = 0.01
+	simulationSettings['G'] = 1
+	simulationSettings['rho0'] = 1000
+	simulationSettings['alpha'] = 10
 	streamfunction, vorticity, temperature, heat = generateFields(simulationSettings)
 	
+	for index in range(simulationSettings['phiSteps']):
+		heat[int(simulationSettings['phiSteps']/2)][index] = 100
 	
-	streamfunction = updateStreamFunction(vorticity, streamfunction, simulationSettings)
-	
-	temperature = updateTemperature(streamfunction, temperature, heat, simulationSettings)
+	for index in range(10000):
+		streamfunction = updateStreamFunction(vorticity, streamfunction, simulationSettings)
+		
+		temperature = updateTemperature(streamfunction, temperature, heat, simulationSettings)
+		
+		vorticity = updateVorticity(vorticity, temperature, streamfunction, simulationSettings)
+		
+		plt.imshow(temperature)
+		if (index % 100 == 0):
+			plt.savefig('tpolar/'+str(index)+".png")
+		
+		
 	
 	
 	
