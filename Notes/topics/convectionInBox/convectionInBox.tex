@@ -154,62 +154,49 @@ Equations \ref{streamfunction bc}, \ref{vorticity left-right} and \ref{vorticity
 
 
 \section*{Streamfunction-vorticity formulation in polar coorindates}
-Here we consider our domain $\mathcal{D}$ as a collection of discrized points $(r, \phi)$ where $r\in \{ r_{inner}, R\}$ and $\phi \in \{ 0, 2 \pi\}$. We define our velocity vector $\vec{u} = (u,v)$, where $u$ points radially and $v$ in the $\hat{\phi}$ direction. We define our streamfunction $\phi$ by equation \ref{sf p}:
+We consider polar coorindates $r$ and $\theta$ with $r\in \{ 0, ..., R\}$ and $\theta \in \{ 0, ... , 2\pi\}$. We discritize our domain $\mathcal{D}$ with grids points  $(r_i,\theta_j)$ with $r_i = i \Delta r, \theta_j = j \Delta \theta$. We define a velocity vector $\vec{u} = (u, v)$ with $u$ pointing radially and $v$ pointing azimuthally. A streamfunction $\psi$ is used to define $u$ and $v$ as shown:
 \begin{equation}
-	u = \frac{1}{r} \frac{\partial \psi}{\partial \phi}, v = - \frac{\partial \psi}{\partial r}.
-	\label{sf p}
+	u = \frac{1}{r} \frac{\partial \psi}{\partial \theta}, v = - \frac{\partial \psi}{\partial r}.
 \end{equation}
-Similary to the cartesian case then, the vorticity is given by:
+In defining $u$ and $v$ this way, the incompressability condition (equation \ref{polar compress}) is satisfied:
 \begin{equation}
-	\omega = \nabla \times \vec{u} = \frac{\partial v}{\partial r} + \frac{1}{r} v - \frac{1}{r} \frac{\partial u}{\partial \phi}
+	\nabla \cdot \vec{u} = 0,
+	\label{polar compress}
+\end{equation}
+where $\nabla$ is the del operator in cylindrical coordinates with any terms terms out of the $r-\theta$ plane supressed. The voriticty, $\omega$ is defined as:
+\begin{equation}
+	\omega = (\nabla \times \vec{u}) \cdot \hat{z} = - \nabla^2 \psi,
+	\label{omega polar}
+\end{equation}
+where $\hat{z}$ points out of the $r-\theta$ plane.
+\newline
+The simplified navier stokes equation (equation \ref{NSE slow + bs}) can be written in polar co-ordinates as:
+\begin{equation}
+	\frac{\partial u}{\partial t} = -\frac{1}{\rho_0} \frac{\partial p'}{\partial r} + \frac{\rho'}{\rho_0} g_r + \nu (  \nabla^2 u - \frac{u}{r^2} - \frac{2}{r^2} \frac{\partial v}{\partial \theta}  )
+	\label{u polar}
+\end{equation}
+\begin{equation}
+	\frac{\partial v}{\partial t} = -\frac{1}{r \rho_0} \frac{\partial p'}{\partial \theta} + \frac{\rho'}{\rho_0} g_{\theta} + \nu ( \nabla^2 v - \frac{v}{r^2} + \frac{2}{r^2} \frac{\partial u}{\partial \theta})
+	\label{v polar}
+\end{equation}
+Multiplying equation \ref{v polar} by $r$ and cross-differentationing $\frac{\partial}{\partial r}$ r (\ref{v polar}) $- \frac{\partial}{\partial \theta}$ (\ref{u polar}) we get:
+\begin{equation}
+	\frac{\partial}{\partial t} (r \frac{\partial v}{\partial r} - \frac{\partial u}{\partial \theta}) = -\frac{g_r}{\rho_0} \frac{\partial \rho'}{\partial \theta} + \nu( (\frac{\partial}{\partial r} r(\nabla^2 u - \frac{u}{r^2} - \frac{2}{r^2} \frac{\partial v}{\partial \theta})) - (\frac{\partial}{\partial \theta} (\nabla^2 v - \frac{v}{r^2} + \frac{2}{r^2} \frac{\partial u}{\partial \theta}) ) ),
+	\label{polar 1}
+\end{equation}
+where we have assumed that $\theta$ and $r$ derivatives commute and $g_{\theta}=0$. Using the definition of $\omega$ in equation \ref{omega polar} we write equation \ref{polar 1} as:
+\begin{equation}
+	\frac{\partial \omega}{\partial t} = - \frac{g_r}{\rho_0 r} \frac{\partial \rho'}{\partial \theta} +\nu \nabla^2 \omega
 	\label{polar vorticity}
 \end{equation}
-By plugging the definitions of the velocities using the streamfunction into equation \ref{polar vorticity} we arrive at:
-\begin{equation}
-	\omega = - \nabla^2 \psi
-	\label{polar vort-stream}
-\end{equation}
-
-Equation \ref{NSE slow + b} can be seperated into equations \ref{NSE u polar} and \ref{NSE v polar}:
-\begin{equation}
-	\frac{\partial u}{\partial t} = \frac{\rho'}{\rho_0} g_r - \frac{1}{\rho_0} \frac{\partial p'}{\partial r} + \nu ( \nabla^2 u - \frac{2 u}{r^2} - \frac{2}{r^2} \frac{\partial v}{\partial \phi})
-	\label{NSE u polar}
-\end{equation}
-
-\begin{equation}
-	\frac{\partial v}{\partial t} = \frac{\rho'}{\rho_0} g_{\phi} - \frac{1}{r \rho_0} \frac{\partial p'}{\partial \phi} + \nu (\nabla^2 v + \frac{2}{r^2} \frac{\partial u}{\partial \phi} - \frac{v}{r^2})
-	\label{NSE v polar}
-\end{equation}
-
-By multiplying equation \ref{NSE v polar} we get:
-\begin{equation}
-	r \frac{\partial v}{\partial t} = r \frac{\rho'}{\rho_0} g_{\phi} - \frac{1}{\rho_0} \frac{\partial p'}{\partial \phi} + r \nu (\nabla^2 v + \frac{2}{r^2} \frac{\partial u}{\partial \phi} - \frac{v}{r^2})
-	\label{NSE v polar times r}
-\end{equation}
-Now now cross differentiate similar to the cartesian case to give:
-\begin{equation}
-	\frac{\partial r \omega}{\partial t} = \frac{- g_r}{\rho_0} \frac{\partial \rho'}{\partial \phi} + \nu (\frac{\partial}{\partial r} (r(\nabla^2 v + \frac{2}{r^2} \frac{\partial u}{\partial \phi} - \frac{v}{r^2} )) - \frac{\partial}{\partial \phi} (\nabla^2 u - \frac{2 u}{r^2}-\frac{2}{r^2} \frac{\partial v}{\partial \phi} ) )
-	\label{polar crossed}
-\end{equation}
-Note that we have assumed that $g_{\phi} = 0$ in equation \ref{polar crossed}.
-\begin{equation}
- \frac{\partial \omega}{\partial t} = -\frac{g_r}{\rho r} \frac{\partial \rho'}{\partial \phi} -\frac{3\psi^{(0,2)}}{r^4}-\frac{\psi^{(0,4)}}{r^4}-\frac{\psi^{(1,0)}}{r^3}+\frac{2\psi^{(1,2)}}{r^3}+\frac{\psi^{(2,0)}}{r^2}-\frac{2\psi^{(2,2)}}{r^2}-\frac{2\psi^{(3,0)}}{r}-\psi^{(4,0)},
- \label{polar vort update}
-\end{equation}
-where $\psi^{(i,j)}$ means the derivative of $\psi$ with respect to $r$ $i$ times and $\phi$ $j$ times.
-\newline
-The advection-diffusion diffusion equation given in equation \ref{polar temp} follows a similar derivation to the cartesian case:
-\begin{equation}
-	\frac{\partial T}{\partial t} + \frac{1}{r} \frac{\partial \psi}{\partial \phi} \frac{\partial T}{\partial r} - \frac{1}{r} \frac{\partial \psi}{\partial r} \frac{\partial T}{\partial \phi} = \kappa \nabla^2 T + \frac{Q}{C_p}.
-	\label{polar ad}
-\end{equation}
 
 
 
 
 
 
- 
+
+
 
 
 
