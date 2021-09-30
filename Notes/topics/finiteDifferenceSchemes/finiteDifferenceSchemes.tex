@@ -1,0 +1,37 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper, total={8in, 10.5in}]{geometry}
+\usepackage{rotating}
+\usepackage{afterpage}
+\usepackage{url}
+
+
+
+
+\title{Finite Difference Schemes}
+\author{Maximilian Williams}
+\date{September 2021}
+
+\begin{document}
+
+\maketitle
+
+\section*{Finite Difference Schemes}
+There are four typical metrics used to evalaute a finite difference scheme. Accuracy, Consistency, Stability and Convergence.
+
+\subsection*{Accuracy}
+The order of terms neglected in the finite difference approximation is the accuracy
+
+\subsection*{Consistency}
+A finite difference approximation is considered consistent if by refining the mesh both temporally and spatially the truncation error goes to zero.
+
+\subsection*{Stability}
+A finite difference whose truncation errors grow unbounded as the solution evolves is considered unstable. Else, the finite difference is stable.
+
+\subsection*{Convergence}
+We will not worry too much about this, but its the rate at which mesh refinement decreases the truncation error.
+
+
+
+\end{document}
