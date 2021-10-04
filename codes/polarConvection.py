@@ -251,7 +251,7 @@ def main():
 	
 	## settings for the simulation, how large our space is, how fine our grid is
 	simulationSettings = dict()
-	simulationSettings['outerRadius'] = 1
+	simulationSettings['outerRadius'] = 0.2
 	simulationSettings['innerRadius'] = 0.1
 	simulationSettings['radiusSteps'] = 100
 	simulationSettings['phiSteps'] = 100
@@ -264,13 +264,13 @@ def main():
 	simulationSettings['dt'] = 0.1
 	simulationSettings['Cp'] = 4000
 	##simulationSettings['Cp'] = 1
-	simulationSettings['kappa'] = 0.143*10**(-6) 
-	##simulationSettings['kappa'] = 0
+	##simulationSettings['kappa'] = 0.143*10**(-6) 
+	simulationSettings['kappa'] = 0
 	simulationSettings['nu'] = 10**(-6)
 	simulationSettings['G'] = -6.7*10**(-11)
 	simulationSettings['rho0'] = 1000
-	simulationSettings['alpha'] = 210*10**(-6) 
-	##simulationSettings['alpha'] = 1
+	##simulationSettings['alpha'] = 210*10**(-6) 
+	simulationSettings['alpha'] = 1
 	##simulationSettings['alpha'] = 0
 	streamfunction, vorticity, temperature, heat = generateFields(simulationSettings)
 	
@@ -294,6 +294,7 @@ def main():
 			plt.savefig('sfspolar/'+str(index)+".png")
 			
 		##streamfunction = updateStreamFunction(vorticity, streamfunction, simulationSettings)
+		
 		streamfunction = updateStreamFunctionFast(vorticity, streamfunction, simulationSettings)
 		
 		temperature = updateTemperature(streamfunction, temperature, heat, simulationSettings)
