@@ -18,7 +18,7 @@
 \maketitle
 
 \section*{What is this?}
-A litle latex document for making sure that I understand what I am talking about.
+A litle latex document for making sure that I understand what I am talking about for the semi-lagrangian Crank-nicolson scheme.
 
 
 \section*{The problem}
@@ -27,7 +27,7 @@ We wish to solve the advection diffusion equation using numerical methods. We wi
 	\frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = \kappa \frac{\partial^2 u}{\partial t^2} + s(u,x,t)
 \end{equation}
 If we assume that $a$ is constant, then we can employ the Crank-Nicolson scheme to solve this. This is a semi-explicit scheme. The general idea is to approximate the spatial derivatives, apply the Crank-Nicolson scheme and solve for the $u$'s
-at timestep $n+1$ given you know them at a timestep $n$. We do this by writting this equation in matrix form and using linear algebra to solve for the quantities at timestep $n+1$. However, this may become unstable and inaccurate. To rememdy this, we employ the semi-lagrange crank nicolson method.
+at timestep $n+1$ given you know them at a timestep $n$. We do this by writting this equation in matrix form and using linear algebra to solve for the quantities at timestep $n+1$. However, this may become unstable and inaccurate if $a$ is non constant. To rememdy this, we employ the semi-lagrange crank nicolson method.
 
 \subsection*{Crank Nicolson}
 If we have an equation of the form:
@@ -36,7 +36,7 @@ If we have an equation of the form:
 \end{equation}
 If we discritize the domain in time and space steps we can write the quantity $u^{n}_i$ to mean $u$ at timestep $n$ and spacestep $i$ then we can write the above equation as:
 \begin{equation}
-	\frac{u^{n+1}_i - u^{n}_i}{\delta t} = \frac{1}{2} (F^{n+1}_{i} + F^{n}_i), 
+	\frac{u^{n+1}_i - u^{n}_i}{\Delta t} = \frac{1}{2} (F^{n+1}_{i} + F^{n}_i), 
 \end{equation}
 where $\Delta t$ is the length of the timestep and the arguments of $F$ has been suppressed. Note that $F^{n}_i$ is $F$ evaluated at time step $n$ and space step $i$. The evaluation of $F^{n}_i$ can be done using finite difference schemes. 
 
@@ -59,29 +59,79 @@ and integrate in the lagrangian frame:
 We can discreize this integral simply using the midpoint rule to give:
 \begin{equation}
 	u^{n+1} = u^{n}_{*} + \frac{\Delta t}{2} (f^{n}_{*} + f^{n+1}).
+	\label{u update}
 \end{equation}
 Here we note what the $*$ subscript means. Lets suppose we have a lattice point at a location $x$ within our lattice. $x_{*}$ is then the location of the fluid at $x$ a time $\Delta t$ ago. In other words, in a time $\Delta t$ the fluid travelled 
 from $x_{*}$ to $x$. Note that $x_{*}$ is not necessarily the location of a lattice point. For this reason, we have to use extrapolation to find $u$ and $f$ at $x_*$.
 
 
-\subsubsection*{Finding $x*$ to first order}
+\subsubsection*{Finding $x_*$ to first order}
 Lets suppose that we are at a time $t$ and considering a particle at position $x_0$. The evolution of the position of this particle is described by:
 \begin{equation}
 	\frac{\partial x}{\partial t} = v,
 \end{equation}
 and is simply due to it being advected along. We note the position of this particle at a time $t-\Delta t$ as $x_*$. To first order in time, we can write:
 \begin{equation}
-	x_{*} = x_0 - v(x_{*}, t-\Delta t) \Delta t + \mathcal{O}({\Delta t}^2).
+	x_{*} = x_0 - v(x_{*},t-\Delta t) \Delta t + \mathcal{O}({\Delta t}^2).
+	\label{x_{*} pure}
 \end{equation}
 You will note that $x_*$ is mentioned on both sides here, and so we cannot solve for it exactly. Rather, we use an iterative method using:
 \begin{equation}
-	x_{*}^{(k+1)} = x_0 - v(x_{*}^{(k)}, t  - \Delta t ) 
+	x_{*}^{(k+1)} = x_0 - v(x_{*}^{(k)},t  - \Delta t ) \Delta t
+	\label{x* update}
 \end{equation}
 where $x_{*}^{(k)}$ is the value of $x_{*}$ obtained at step $k$ of iteration. We might stop the algorithm once $x_{*}^{(k+1)}$ and $x_{*}^{(k)}$ differ by only some error $\epsilon$. Note that the value of the velocity $v$ at the location $x_*$ is not in general a lattice point and we only know the value of $v$ at lattice points. To get the value of $v$ at $x_{*}$ we have to use interpolation.
 
 \subsubsection*{Interpolation}
-There are several method for interpolation that can be used. The less accurate the interpolation, the higher the numerical diffusivity induced in the solution. It was found in other work that bicubic interpolation is the lowest order interpolation than can be used for simulating geologic flows. 
+There are several method for interpolation that can be used. The less accurate the interpolation, the higher the numerical diffusivity induced in the solution. It was found in other work that bicubic interpolation is the lowest order interpolation than can be used for simulating flows relavant to geologic scales. So here we choose to use the bicubic interpolation. Apparently this can be done in numpy, and since Im running low on time I think I'll just use numpys implimentation.
+
+
+\subsubsection*{Two level schemes and second order accurate determination of $x_{*}$}
+We are going to impliment a two level time scheme. We do this because it allows us to evaluate $x_{*}$ to second order time accuracy, which is needed to stop significant numerical diffusion in our numerical solution. We will assume that we have already developed a scheme to update $v$ at a time $t$ given that we know $u$ at a time $t-\Delta t$, so we will not worry about how $v$ is updated, we will simply say that we always know $v$ at the current time and all previous relavant times. We begin our simulation with knowing $v$ and $u$ at an initial time $t$. We then use \ref{u update} to get $u$ at time $t+\Delta t$. In doing this, we need to compute $x_{*}$ and we do this using our first order method above. Next we use our knowlegde of $u$ at time $t+\Delta t$ to find $v$ at $t+\Delta t$ which we assume is implimented elsewhere. We now know $u$ and $v$ at times $t$ and $t+\Delta t$. We next work to obtain $t+2 \Delta t$. To do this, we use \ref{u update} with double the timestep, that is:
+\begin{equation}
+	u^{n+2} = u^{n}_{*} +  \frac{2 \Delta t}{2} (f^{n}_{*} + f^{(n+2)} ).
+\end{equation}
+We note that this requires the computation of $u_{*}$ and $f_{*}$ which require the computation of $x_{*}$. Here is where the two step scheme comes in handy. We know the advection velocity $v$ at times $t$ and $t+\Delta t$. We apply a similar argument to \ref{x_{*} pure} to get:
+\begin{equation}
+	x_{*} = x_0 - v(x_{*}, t + \Delta t) (2 \Delta t),
+\end{equation}
+where $x_0$ is the particles position at $t$. This is second order accurate in $\Delta t$. We also use a similar algorithm to the first order accurate case:
+\begin{equation}
+	x_{*}^{(k+1)} = x_0 - v(x_{*}^{(k)}, t + \Delta t) (2 \Delta t).
+\end{equation}
+So, we are now able to update $u$ from time $t$ to time $t+2\Delta t$ with second order accuracy. Note that we required the time between these two, $t + \Delta t$ to do this. This is why we need this two level scheme. We can now apply similar reasoning to update the other half step, getting $u$ at $t+3 \Delta t$ using $t+ \Delta t$. We repeat this flip flopping between the two time levels and progress until we want to terminate the program.
 \newline
+
+\subsubsection*{A more detailed look at my case}
+In my case I want to solve the 2D analog of
+\begin{equation}
+	\frac{\partial T}{\partial t} + v \frac{\partial T}{\partial x} = \kappa \nabla^2 T + s,
+\end{equation}
+where $s$ is some source term that depends only on space $x$.
+\newline
+We will write $\vec{T}$ to indicate the vector repressenting the temperature in the domain. We will use $\hat{}$ to denote matricies. Writting this in the semi-lagrangian crank-nicholson scheme we get:
+\begin{equation}
+	\vec{T}^{(n+1)} = \vec{T}^{n}_{*} + \frac{\Delta t}{2} ( \kappa (\hat{\mathcal{L}} \vec{T})^{(n+1)} + \vec{s}^{(n+1)} +  \kappa (\hat{\mathcal{L}} \vec{T})_{*}^{(n)} + \vec{s}^{n}_{*}),
+\end{equation}
+where $\mathcal{L}$ is the matrix repressentation of the Laplace operator and superscripts denote the timestep that the field is taken at. The subscript ${*}$ is treated similar to in the general case above. 
+We note that we can write this as:
+\begin{equation}
+	(\hat{I} - \kappa \frac{\Delta t}{2} \hat{\mathcal{L}}) \vec{T}^{(n+1)} = \vec{T}^{n}_{*} + \frac{\Delta t}{2} (\vec{s}^{(n+1)} +  \kappa (\hat{\mathcal{L}} \vec{T})_{*}^{(n)} + \vec{s}^{n}_{*})
+\end{equation}
+If we assume that our source term is known for all times (even into the future) as is the case here,  then the entire right hand side of the above equation can be computed. So long as we can invert the matrix $(\hat{I} - \kappa \frac{\Delta t}{2} \hat{\mathcal{L}})$ we then have a method for updating $T$. We can use our two time level scheme above to do all this. I think I have all the tools to do this now.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
