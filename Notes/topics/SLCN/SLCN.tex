@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper, total={8in, 10.5in}]{geometry}
+\usepackage{rotating}
+\usepackage{afterpage}
+\usepackage{url}
+
+
+
+
+\title{Semi-Lagrangian Crank-Nicolson Method}
+\author{Maximilian Williams}
+\date{June 2021}
+
+\begin{document}
+
+\maketitle
+
+\section*{What is this?}
+A litle latex document for making sure that I understand what I am talking about.
+
+
+\sectiony*{The problem}
+We wish to solve the advection diffusion equation using numerical methods. We will keep our analysis to 1-Dimensional for simplisity, but it should be very easy to generalize to 2 and 3 dimensions.
+\begin{equation}
+	\frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = \kappa \frac{\partial^2 u}{\partial t^2} + s(u,x,t)
+\end{equation}
+If we assume that $a$ is constant, then we can employ the Crank-Nicolson scheme to solve this. This is a semi-explicit scheme. The general idea is to approximate the spatial derivatives, apply the Crank-Nicolson scheme and solve for the $u$'s
+at timestep $n+1$ given you know them at a timestep $n$. We do this by writting this equation in matrix form and using linear algebra to solve for the quantities at timestep $n+1$. However, this may become unstable and inaccurate. To rememdy this, we employ the semi-lagrange crank nicolson method.
+
+
+
+
+\subsection*{Crank Nicolson}
+If we have an equation of the form:
+\begin{equation}
+	\frac{\partial u}{\partial t} = F(x,t,u,\frac{\partial u}{\partial x}, \frac{\partial^2 u }{\partial t^2} )
+\end{equation}
+If we discritize the domain in time and space steps we can write the quantity $u^{n}_i$ to mean $u$ at timestep $n$ and spacestep $i$ then we can write the above equation as:
+\begin{equation}
+	\frac{u^{n+1}_i - u^{n}_i}{\delta t} = \frac{1}{2} (F^{n+1}_{i} + F^{n}_i), 
+\end{equation}
+where $\Delta t$ is the length of the timestep and the arguments of $F$ has been suppressed. Note that $F^{n}_i$ is $F$ evaluated at time step $n$ and space step $i$. The evaluation of $F^{n}_i$ can be done using finite difference schemes. 
+
+
+\subsection*{Semi-Lagrange Crank-Nicolson Method}
+We wish to solve a general problem of the form:
+\begin{equation}
+	\frac{\partial u}{\partial t} + v \frac{\partial u}{\partial x} = f,
+\end{equation}
+where $f$ is arbitrary smooth function of $t,x,u$ and its derivatives.
+\newline
+We can write this using the material deriviave:
+\begin{equation}
+	\frac{D u}{D t} = f
+\end{equation}
+and integrate in the lagrangian frame:
+\begin{equation}
+	u^{n+1} = u^{n}_{*} + \int_{n \Delta t}^{(n+1) \Delta t} f d \tor
+\end{equation}
+We can discreize this integral simply using the midpoint rule to give:
+\begin{equation}
+	u^{n+1} = u^{n}_{*} + \frac{\Delta t}{2} (f^{n}_{*} + f^{n+1}).
+\end{equation}
+Here we note what the $*$ subscript means. Lets suppose we have a lattice point at a location $x$ within our lattice. $x_{*}$ is then the location of the fluid at $x$ a time $\Delta t$ ago. In other words, in a time $\Delta t$ the fluid travelled 
+from $x_{*}$ to $x$. Note that $x_{*}$ is not necessarily the location of a lattice point. For this reason, we have to use extrapolation to find $u$ and $f$ at $x_*$ which we will discuss later. 
+
+\end{document}
