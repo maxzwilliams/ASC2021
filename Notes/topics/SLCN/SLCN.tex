@@ -21,16 +21,13 @@
 A litle latex document for making sure that I understand what I am talking about.
 
 
-\sectiony*{The problem}
+\section*{The problem}
 We wish to solve the advection diffusion equation using numerical methods. We will keep our analysis to 1-Dimensional for simplisity, but it should be very easy to generalize to 2 and 3 dimensions.
 \begin{equation}
 	\frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = \kappa \frac{\partial^2 u}{\partial t^2} + s(u,x,t)
 \end{equation}
 If we assume that $a$ is constant, then we can employ the Crank-Nicolson scheme to solve this. This is a semi-explicit scheme. The general idea is to approximate the spatial derivatives, apply the Crank-Nicolson scheme and solve for the $u$'s
 at timestep $n+1$ given you know them at a timestep $n$. We do this by writting this equation in matrix form and using linear algebra to solve for the quantities at timestep $n+1$. However, this may become unstable and inaccurate. To rememdy this, we employ the semi-lagrange crank nicolson method.
-
-
-
 
 \subsection*{Crank Nicolson}
 If we have an equation of the form:
@@ -57,13 +54,45 @@ We can write this using the material deriviave:
 \end{equation}
 and integrate in the lagrangian frame:
 \begin{equation}
-	u^{n+1} = u^{n}_{*} + \int_{n \Delta t}^{(n+1) \Delta t} f d \tor
+	u^{n+1} = u^{n}_{*} + \int_{n \Delta t}^{(n+1) \Delta t} f d \tau
 \end{equation}
 We can discreize this integral simply using the midpoint rule to give:
 \begin{equation}
 	u^{n+1} = u^{n}_{*} + \frac{\Delta t}{2} (f^{n}_{*} + f^{n+1}).
 \end{equation}
 Here we note what the $*$ subscript means. Lets suppose we have a lattice point at a location $x$ within our lattice. $x_{*}$ is then the location of the fluid at $x$ a time $\Delta t$ ago. In other words, in a time $\Delta t$ the fluid travelled 
-from $x_{*}$ to $x$. Note that $x_{*}$ is not necessarily the location of a lattice point. For this reason, we have to use extrapolation to find $u$ and $f$ at $x_*$ which we will discuss later. 
+from $x_{*}$ to $x$. Note that $x_{*}$ is not necessarily the location of a lattice point. For this reason, we have to use extrapolation to find $u$ and $f$ at $x_*$.
 
-\end{document}
+
+\subsubsection*{Finding $x*$ to first order}
+Lets suppose that we are at a time $t$ and considering a particle at position $x_0$. The evolution of the position of this particle is described by:
+\begin{equation}
+	\frac{\partial x}{\partial t} = v,
+\end{equation}
+and is simply due to it being advected along. We note the position of this particle at a time $t-\Delta t$ as $x_*$. To first order in time, we can write:
+\begin{equation}
+	x_{*} = x_0 - v(x_{*}, t-\Delta t) \Delta t + \mathcal{O}({\Delta t}^2).
+\end{equation}
+You will note that $x_*$ is mentioned on both sides here, and so we cannot solve for it exactly. Rather, we use an iterative method using:
+\begin{equation}
+	x_{*}^{(k+1)} = x_0 - v(x_{*}^{(k)}, t  - \Delta t ) 
+\end{equation}
+where $x_{*}^{(k)}$ is the value of $x_{*}$ obtained at step $k$ of iteration. We might stop the algorithm once $x_{*}^{(k+1)}$ and $x_{*}^{(k)}$ differ by only some error $\epsilon$. Note that the value of the velocity $v$ at the location $x_*$ is not in general a lattice point and we only know the value of $v$ at lattice points. To get the value of $v$ at $x_{*}$ we have to use interpolation.
+
+\subsubsection*{Interpolation}
+There are several method for interpolation that can be used. The less accurate the interpolation, the higher the numerical diffusivity induced in the solution. It was found in other work that bicubic interpolation is the lowest order interpolation than can be used for simulating geologic flows. 
+\newline
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document} 
