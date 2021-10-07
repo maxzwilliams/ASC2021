@@ -5,6 +5,7 @@
 \usepackage{rotating}
 \usepackage{afterpage}
 \usepackage{url}
+\usepackage{amsmath}
 
 
 
@@ -83,7 +84,7 @@ You will note that $x_*$ is mentioned on both sides here, and so we cannot solve
 where $x_{*}^{(k)}$ is the value of $x_{*}$ obtained at step $k$ of iteration. We might stop the algorithm once $x_{*}^{(k+1)}$ and $x_{*}^{(k)}$ differ by only some error $\epsilon$. Note that the value of the velocity $v$ at the location $x_*$ is not in general a lattice point and we only know the value of $v$ at lattice points. To get the value of $v$ at $x_{*}$ we have to use interpolation.
 
 \subsubsection*{Interpolation}
-There are several method for interpolation that can be used. The less accurate the interpolation, the higher the numerical diffusivity induced in the solution. It was found in other work that bicubic interpolation is the lowest order interpolation than can be used for simulating flows relavant to geologic scales. So here we choose to use the bicubic interpolation. Apparently this can be done in numpy, and since Im running low on time I think I'll just use numpys implimentation.
+There are several method for interpolation that can be used. The less accurate the interpolation, the higher the numerical diffusivity induced in the solution. It was found in other work that bicubic interpolation is the lowest order interpolation than can be used for simulating flows relavant to geologic scales. So here we choose to use the bicubic interpolation. Apparently this can be done in numpy, and since Im running low on time I think I'll just use numpys implimentation. However, I may need to code this by hand in the polar case.
 
 
 \subsubsection*{Two level schemes and second order accurate determination of $x_{*}$}
@@ -117,8 +118,40 @@ where $\mathcal{L}$ is the matrix repressentation of the Laplace operator and su
 We note that we can write this as:
 \begin{equation}
 	(\hat{I} - \kappa \frac{\Delta t}{2} \hat{\mathcal{L}}) \vec{T}^{(n+1)} = \vec{T}^{n}_{*} + \frac{\Delta t}{2} (\vec{s}^{(n+1)} +  \kappa (\hat{\mathcal{L}} \vec{T})_{*}^{(n)} + \vec{s}^{n}_{*})
+	\label{2D implicit update}
 \end{equation}
 If we assume that our source term is known for all times (even into the future) as is the case here,  then the entire right hand side of the above equation can be computed. So long as we can invert the matrix $(\hat{I} - \kappa \frac{\Delta t}{2} \hat{\mathcal{L}})$ we then have a method for updating $T$. We can use our two time level scheme above to do all this. I think I have all the tools to do this now.
+
+
+\subsubsection*{Dealing with Tensors}
+A little note to myself:
+\newline
+I have to be REALLY REALLY careful about assuming tensor symmetries.
+\newline
+In two dimensions, $T$ becomes a rank 2 tensor, with each entry being the value of temperature at a lattice point. Throughout this discussion in higher dimensions we will use Eistien notation. So $T$ becomes $T^{i}_{j}$. The discritized laplace operator acting on $T^{i}_{j}$ returns another rank 2 tensor of similar form. We note that the spatial derivatives which $\mathcal{L}$ repressents occure in the two directions repressented by the $i$ and $j$ indexes in $T^{i}_{j}$. When applying $\mathcal{L}$ on $T^{i}_{j}$ we must therefore contract over i and j. Therefore, $\mathcal{L}$ is a rank 4 tensor, $\mathcal{L}^{\alpha j}_{\beta i}$. So, all the matricies in 1 dimension become rank 4 tensors. We can now write out a two dimensional version of equation \ref{2D implicit update} as:
+\begin{equation}
+	(  \delta^{\alpha}_{i} \delta^{j}_{\beta}- \kappa \frac{\Delta t}{2} \mathcal{L}^{\alpha j}_{\beta i}) (T^{i}_{j})^{(n+1)} = (T^{i}_{j})^{(n+1)}_{*} + \frac{\Delta t}{2} ( (s^{i}_{j})^{(n+1)} + (s^{i}_{j})^{(n)} + \kappa ( \mathcal{L}^{\alpha j}_{\beta i} T^{i}_{j} )^{(n)}_{*} )
+\end{equation}
+Now we must clarify how we can ''invert" the rank 4 tensor $M^{\alpha j}_{\beta i}  =  \delta^{\alpha}_{i} \delta^{j}_{\beta}- \kappa \frac{\Delta t}{2} \mathcal{L}^{\alpha j}_{\beta i}$. What do we even mean by invert here? By the inverse of $M$ we mean the rank 4 tensor $N$ such that:
+\begin{equation}
+	N^{\beta i'}_{\alpha j'} M^{\alpha j}_{\beta i} = \delta^{i'}_{i} \delta^{j'}_{j}
+\end{equation}
+I'm just guessing this inverse exists. It should. There is no way in hell I want to write the program to do this, so I will use numpy to do this (they do have a method for this).
+\vspace{4 cm}
+We have two more important questions. What are the actual values of $\mathcal{L}^{\alpha i}_{\beta j}$ (this one is critical) and how can we impliment $*$ in a matrix format. The latter is not all that important, but it would be nice to do. 
+\subsubsection*{Discritized Laplace Operator in 2D cartesians}
+We can view $\mathcal{L}^{\alpha j}_{\beta i}$ with indexes $\alpha$ and $\beta$ fixed as a rank 2 tensor that we are constracting (over both indexes) with $T^{i}_{j}$. 
+\newline
+Lets take the simple case where we approximate the second order spatial derivative $\frac{\partial^2 T}{\partial {x}^2} T$ by $\frac{T^{i+1}_{j} - 2 T^{i}_{j} + T^{i-1}_{j}}{{\Delta x}^2}$ and similary for $\frac{\partial^2 T}{\partial {x}^2} T$. We look at small examples of grids to derive what $\mathcal{L}$ should be. We begin with a 3x3 repressentation of $T$.
+\begin{gather}
+T^{i}_{j} = \begin{bmatrix}	T^{0}_{0} & T^{1}_{0} & T^{2}_{0} \\ T^{0}_{1} & T^{1}_{1} & T^{2}_{1} \\ T^{0}_{2} & T^{1}_{2} & T^{2}_{2} \end{bmatrix}
+\end{gather}
+
+
+
+
+
+
 
 
 
