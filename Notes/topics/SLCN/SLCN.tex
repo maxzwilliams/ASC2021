@@ -142,10 +142,19 @@ We have two more important questions. What are the actual values of $\mathcal{L}
 \subsubsection*{Discritized Laplace Operator in 2D cartesians}
 We can view $\mathcal{L}^{\alpha j}_{\beta i}$ with indexes $\alpha$ and $\beta$ fixed as a rank 2 tensor that we are constracting (over both indexes) with $T^{i}_{j}$. 
 \newline
-Lets take the simple case where we approximate the second order spatial derivative $\frac{\partial^2 T}{\partial {x}^2} T$ by $\frac{T^{i+1}_{j} - 2 T^{i}_{j} + T^{i-1}_{j}}{{\Delta x}^2}$ and similary for $\frac{\partial^2 T}{\partial {x}^2} T$. We look at small examples of grids to derive what $\mathcal{L}$ should be. We begin with a 3x3 repressentation of $T$.
+Lets take the simple case where we approximate the second order spatial derivative $\frac{\partial^2 T}{\partial {x}^2} T$ by $\frac{T^{i+1}_{j} - 2 T^{i}_{j} + T^{i-1}_{j}}{{\Delta x}^2}$ and similary for $\frac{\partial^2 T}{\partial {x}^2} T$. We look at small examples of grids to derive what $\mathcal{L}$ should be. We begin with a 4x4 repressentation of $T$.
 \begin{gather}
-T^{i}_{j} = \begin{bmatrix}	T^{0}_{0} & T^{1}_{0} & T^{2}_{0} \\ T^{0}_{1} & T^{1}_{1} & T^{2}_{1} \\ T^{0}_{2} & T^{1}_{2} & T^{2}_{2} \end{bmatrix}
+T^{i}_{j} = \begin{bmatrix}	T^{0}_{0} & T^{1}_{0} & T^{2}_{0} & T^{3}_{0} \\ T^{0}_{1} & T^{1}_{1} & T^{2}_{1} & T^{3}_{1} \\ T^{0}_{2} & T^{1}_{2} & T^{2}_{2} & T^{3}_{2} \\ T^{0}_{3} & T^{1}_{3} & T^{2}_{3} & T^{3}_{3} \end{bmatrix}
 \end{gather}
+This grid is small enough that we can imagine what the discrete laplace operators action on it \it should be. We assume that we have periodic boundry conditions in the $x$ direction so that $T^{4}_{j}=T^{0}_{j}$. We use insulating boundry conditions on the $y$ axis, that is, $T^{i}_{-1}=T^{i}_{1}$ and $T^{i}_{4}=T^{i}_{2}$. For simplisity of explination, we break down the discrete laplace operator into $x$ and $y$ components which we will call $\mathcal{L}x$ and $\mathcal{L}y$. 
+From our definition of $\frac{\partial^2 T}{\partial x^2}$ we know that:
+
+\begin{gather}
+{\mathcal{L}x}^{\alpha j}_{\beta i} T^{i}_{j} = \frac{1}{ {\Delta x}^2 } \begin{bmatrix} T^{3}_{0}-2T^{0}_{0} + T^{1}_{0} & T^{0}_{0}-2 T^{1}_{0} + T^{2}_{0} & T^{1}_{0}-2 T^{2}_{0} + T^{3}_{0} & T^{2}_{0}-2 T^{3}_{0} + T^{0}_{0} \\ T^{3}_{1}-2T^{0}_{1} + T^{1}_{1} & T^{0}_{1}-2 T^{1}_{1} + T^{2}_{1} & T^{1}_{1}-2 T^{2}_{1} + T^{3}_{1} & T^{2}_{1}-2 T^{3}_{1} + T^{0}_{1} \\
+T^{3}_{2}-2T^{0}_{2} + T^{1}_{2} & T^{0}_{2}-2 T^{1}_{2} + T^{2}_{2} & T^{1}_{2}-2 T^{2}_{2} + T^{3}_{2} & T^{2}_{2}-2 T^{3}_{2} + T^{0}_{2} \\
+T^{3}_{3}-2T^{0}_{3} + T^{1}_{3} & T^{0}_{3}-2 T^{1}_{3} + T^{2}_{3} & T^{1}_{3}-2 T^{2}_{3} + T^{3}_{3} & T^{2}_{3}-2 T^{3}_{3} + T^{0}_{3} \end{bmatrix}
+\end{gather}
+
 
 
 
