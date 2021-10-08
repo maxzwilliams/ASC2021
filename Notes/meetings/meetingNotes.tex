@@ -65,6 +65,22 @@ Quick notes on what I remember from each meeting.
 \end{enumerate}
 
 
+
+
+\section*{8th of October 2021}
+\begin{enumerate}
+	\item Godunov scheme looks about right
+	\item Look carefully at the conditions for stability and accuracy, make sure they are consistant with the inner core
+	\item I should probably write everything in dimensionless form (both code and report)
+	\item Test the advection of my current codes. Set diffusion to 0, manually set the flow to some constant everywhere 
+	and see how my initial condition is advected about. Do diagonal, up and down and use the periodic boundry conditions 
+	to go back to the beginning position.
+	\item Things to look for in this test are where the centroid of my shape goes, does the centroid get displaced about the correct amount (I might lag) and how deformed is my initial shape once advected. It should be pretty deformed.
+	\item If all that works, lets get onto the real stuff. 
+	\item Model internal heating and see if the size of that inner boundry matters. How does do the polar and cartesian compare? Is the critical Reyleigh number about right in these simulations? 
+	\item If all that goes to plan, then LBM begins.
+\end{enumerate}
+
 \newpage
 
 
