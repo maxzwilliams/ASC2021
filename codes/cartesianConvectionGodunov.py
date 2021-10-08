@@ -184,8 +184,32 @@ def plotFields(temperature, vorticity, streamfunction, xMesh, yMesh,t):
 	plt.xlabel("x (horizontal)")
 	plt.ylabel("y (vertical)")
 	plt.savefig('t/'+str(t)+".png")
-
 	plt.close()
+	
+	vorticity = np.rot90(vorticity)
+	vorticity = np.rot90(vorticity)
+	vorticity = np.rot90(vorticity)
+	ax.contourf(xMesh, yMesh, vorticity, 100)
+	plt.xlabel("x (horizontal)")
+	plt.ylabel("y (vertical)")
+	plt.savefig('vts/'+str(t)+".png")
+	plt.close()
+	
+	
+	streamfunction = np.rot90(streamfunction)
+	streamfunction = np.rot90(streamfunction)
+	streamfunction = np.rot90(streamfunction)
+	ax.contourf(xMesh, yMesh, vorticity, 100)
+	plt.xlabel("x (horizontal)")
+	plt.ylabel("y (vertical)")
+	plt.savefig('sfs/'+str(t)+".png")
+	plt.close()
+	
+	
+	
+	
+	
+	
 	
 	
 	

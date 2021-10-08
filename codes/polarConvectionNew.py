@@ -267,12 +267,25 @@ def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh,t):
 	
 	
 	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
-	
-	
 	ax.contourf(thetaMesh, rMesh, temperature, 100)
 	ax.set_rorigin(-0.1)
 	plt.savefig('tpolar/'+str(t)+".png")
 	plt.close()
+	
+	
+	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
+	ax.contourf(thetaMesh, rMesh, streamfunction, 100)
+	ax.set_rorigin(-0.1)
+	plt.savefig('sfspolar/'+str(t)+".png")
+	plt.close()
+	
+	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
+	ax.contourf(thetaMesh, rMesh, vorticity, 100)
+	ax.set_rorigin(-0.1)
+	plt.savefig('vtspolar/'+str(t)+".png")
+	plt.close()
+	
+	
 	
 	
 	

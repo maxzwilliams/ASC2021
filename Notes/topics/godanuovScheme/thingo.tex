@@ -1,0 +1,58 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper, total={8in, 10.5in}]{geometry}
+\usepackage{rotating}
+\usepackage{afterpage}
+\usepackage{url}
+
+
+
+
+\title{Godanov Scheme}
+\author{Maximilian Williams}
+\date{June 2021}
+
+\begin{document}
+
+\maketitle
+
+\section*{What is this?}
+A little discussion on the Godanov scheme
+
+\section*{Problem}
+I was trying to find an explicit scheme for solving the advection-diffusion equation. The diffusion part is not an issue, so lets just look at the advection equation.
+\begin{equation}
+	\frac{\partial T}{\partial t} + v \frac{\partial T}{\partial x} = 0
+\end{equation}
+We will employ the goodanove scheme to numerically solve this equation. We discritize $\frac{\partial T}{\partial t}$ as:
+\begin{equation}
+	\frac{\partial T}{\partial t} = \frac{T^{n+1}_{i} - T^{n}_{i}}{\Delta t}.
+\end{equation}
+Now here comes the trick with the Godanov scheme. If $v>0$, then we use a upstream scheme:
+\begin{equation}
+	\frac{\partial T}{\partial x} = \frac{T^{n}_{i-1} - T^{n}_{i}}{\Delta x}.
+\end{equation}
+while if $v<0$ we use a downwind scheme:
+\begin{equation}
+	\frac{\partial T}{\partial x} = \frac{T^{n}_{i+1} - T^{n}_{i}}{\Delta x}.
+\end{equation}
+In doing this, we never use information that travelled against the advection velocity $v$. The MEPDE for this scheme looks like:
+\begin{equation}
+	\frac{\partial T}{\partial t} + v \frac{\partial T}{\partial x} = \mid v \mid \frac{\Delta x}{2} (1 - \mid v \mid  \frac{\Delta t}{\Delta x}) \frac{\partial^2 T}{\partial x^2} + \mathcal{O}({\Delta x}^2, {\Delta t}^2 ).
+\end{equation}
+So, this scheme has some numerical diffusion, with coeffecient $\kappa' = \mid v_c \mid \frac{\Delta x}{2} (1 - \mid v_c \mid) $, where we will use $v_c$ to denote the maximum velocity in our problem. Lets overeastimate this a little so that $\kappa' = \mid v_c \mid \frac{\Delta x}{2}$. We have neglected the diffusion term in our advection diffusion equation, but lets add it in to see how this numerical diffusion affects our numerical solution:
+\begin{equation}
+	\frac{\partial T}{\partial t} + v \frac{\partial T}{\partial x} = (\kappa + \kappa') \frac{\partial^2 T}{\partial x^2},
+\end{equation}
+So long as $\kappa >> \kappa'$ this numerical diffusivity is negligable and this scheme is accurate. However, this may require a very fine grid and so take lots of memory.
+
+
+
+
+
+
+
+
+
+\end{document}
