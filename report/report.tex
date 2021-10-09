@@ -1,0 +1,141 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper, total={8in, 10.5in}]{geometry}
+\usepackage{rotating}
+\usepackage{afterpage}
+\usepackage{url}
+
+
+
+
+\title{Numerical Analysis of Convection in the Inner Core (DRAFT)}
+\author{Maximilian Williams}
+\date{September 2021}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	Convection in the Earth's inner core has been a contentious topic in geoscience. Recently, it has been proposed through siesmic observations that Earths inner core is convecting. Here we numerically model convection in the Inner core, using the streamfunction-voriticty formulation in 2 dimensions and a three dimensional lattice boltzman approach. We find ...
+	
+ 
+\end{abstract}
+
+
+\section*{Introduction}
+Plan:
+I want to also talk about why this is actually important, why is this something that is worth studying
+\newline
+Here I want to introduce the physics of what I want to talk about. I want to introduce 
+the basic equations that I will use.
+\newline
+\noindent Throughout analysis we describe the fluid in the Eularian frame under a graviational acceleration $\vec{g}$ which may vary in space. We give each location in the fluid a velocity $\vec{u}$ and density $\rho$ that vary in space $\vec{x}$ and time $t$. We assume the fluids viscosity $\mu$, thermal diffusivity $\kappa$ and specific heat capacity $C_p$ are all constants. By conserving fluid momentum, we produce the navier stokes equation:
+\begin{equation}
+	\rho \frac{D \vec{u}}{D t} = \rho \vec{g} - \nabla p + \mu \nabla^2 \vec{u},
+	\label{NSE}
+\end{equation}
+where $\frac{D}{D t} = \frac{\partial }{\partial t} + (\vec{u} \cdot \nabla)$ is the material derivative, $p$ the pressure of the fluid and $\nabla$ the del operator. The dynamics of fluid temperature $T$ are described the inhomoenous advection diffusion equation:
+\begin{equation}
+	\frac{D T}{D t} = \kappa \nabla^2 T + \frac{H}{C_p},
+	\label{adeT}
+\end{equation}
+where $H$ is the source term of heat. The density of the fluid $\rho$ is assumed to vary linearly in temeprature according to the equation of state:
+\begin{equation}
+	\rho = \rho_0 (1- \alpha(T -T_0)),
+	\label{equation of state}
+\end{equation}
+where $\alpha$ is the volumetric expansion coeffecient and $\rho_0$ the density at a reference temperature $T_0$.
+Through siesmic imaging, variations in inner core density are $<< 1 \%$. We also assume that the inner cores evolution occures over geologic timescales, and as such take $\vec{u}$ to be first order. These assumptions allow us to make the slow flow boussinesq approximation to equation \ref{NSE}:
+\begin{equation}
+	\frac{\partial \vec{u}}{\partial t} = \frac{\rho'}{\rho} \vec{g} -   \frac{\nabla p'}{\rho_0} + \nu \nabla^2 \vec{u},
+	\label{NSE slow + boussinesq}
+\end{equation}
+where $\rho'=-\alpha(T - T_0)$, $\nu$ the kinomatic viscosity $\nu = \frac{\mu}{\rho_0}$ and $p'$ a first order pertibation to the background pressure $p_0$.
+\newline
+By introducing the dimensionless quanities The Rayleigh number $Ra$, Prantle number $Pr$ and Nesselt number $Nu$ we can write equations \ref{NSE slow + boussinesq}, \ref{}
+
+
+
+\begin{equation}
+	\frac{1}{Pr} \frac{\partial \vec{u}}{\partial t} = Ra T' \hat{k} - \nabla p' + \nabla^2 \vec{u},
+	\label{NSE slow + boussinesq + Non Dimensional}
+\end{equation}
+
+
+
+\begin{equation}
+	\frac{D T}{D t} = \nabla^2 T + BLOOP (fix this BLOOP),
+	\label{adeT + Non Dimensional}
+\end{equation}
+
+Here I want to non dimensionalise all these equations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection*{Numerical Methods}
+Here I want to introduce my two numerical schemes
+
+\subsubsection*{Streamfunction-Vorticity formulation}
+The streamfunction-vorticity formulation is a popular method for analytical and simple numerical analysis of incompressable fluids in two dimensions. Its key advantage is the elimination of all pressure terms, which would otherwise need to be iteratively accounted for or given in a constituative equation. We define the vorticity of our fluid as:
+\begin{equation}
+	\omega = \nabla \times \vec{u}
+\end{equation}
+and the streamfunction $\psi$ such that:
+\begin{equation}
+	\omega = \nabla^2 \psi.
+\end{equation}
+Physically, the voriticty is the amount of spinning the fluid does about a point, while lines of constant streamfunction have the fluid flow perpendicular to them. 
+
+
+
+
+
+
+We define a streamfunction $\psi$ as the function such that:
+\begin{equation}
+	\vec{u} = \nabla \times \psi
+\end{equation}
+
+
+
+
+
+
+I wont to introduce this in both cartesian AND polar coorindates
+
+
+\subsubsection*{Finite Difference Schemes}
+Here I want to look at how I numerically solved the streamfunction-vorticity equations, 
+how did I discritize the domain, how did I approximate each derivative. I then want to look at the theoretical 
+stability and accuracy of my equations. 
+
+\subsubsection*{Lattice Boltzman Method}
+I want to introduce the lattice boltzman method, go over its derivation, talk about why this is unique 
+in the world of computational fluid dynamics. I pretty much just want to explain what it is and how I used it.
+\newline
+
+
+\section*{Advection Tests}
+
+\section*{Results}
+
+\section*{}
+
+
+
+
+
+\end{document}
