@@ -69,7 +69,7 @@ def updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Touter
 				u = -(streamfunction[i][j+1] - 0)/(2*h)
 				v = (streamfunction[(i+1)%n][j] - streamfunction[(i-1)%n][j])/(2*h)
 				if (abs(u)*dt/h >= 1 or abs(v)*dt/h >= 1):
-					raise Exception("Scheme unstable")
+					raise Exception("Scheme unstable" + str(abs(v)*dt/h))
 				if (u >=0):
 					Tx = (temperature[(i)%n][j] - temperature[(i-1)%n][j])/h
 				else:
@@ -146,7 +146,7 @@ def updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Touter
 	
 ## now we need to write something that updates the vorticity equation for creeping flow
 
-def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0,h,n,dt):
+def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0, h, n, dt):
 	newVorticity = [[0 for i in range(n)] for j in range(n)]
 	update = [[0 for i in range(n)] for j in range(n)]	
 	## Now we need to look at eh bounrdy conditions.
@@ -174,7 +174,7 @@ def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0,h
 	return  newVorticity
 	
 	
-def plotFields(temperature, vorticity, streamfunction, xMesh, yMesh,t):
+def plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, index):
 
 	temperature = np.rot90(temperature)
 	temperature = np.rot90(temperature)
@@ -183,7 +183,7 @@ def plotFields(temperature, vorticity, streamfunction, xMesh, yMesh,t):
 	ax.contourf(xMesh, yMesh, temperature, 100)
 	plt.xlabel("x (horizontal)")
 	plt.ylabel("y (vertical)")
-	plt.savefig('t/'+str(t)+".png")
+	plt.savefig('t/'+str(index)+".png")
 	plt.close()
 	
 	vorticity = np.rot90(vorticity)
@@ -192,7 +192,7 @@ def plotFields(temperature, vorticity, streamfunction, xMesh, yMesh,t):
 	ax.contourf(xMesh, yMesh, vorticity, 100)
 	plt.xlabel("x (horizontal)")
 	plt.ylabel("y (vertical)")
-	plt.savefig('vts/'+str(t)+".png")
+	plt.savefig('vts/'+str(index)+".png")
 	plt.close()
 	
 	
@@ -202,7 +202,7 @@ def plotFields(temperature, vorticity, streamfunction, xMesh, yMesh,t):
 	ax.contourf(xMesh, yMesh, vorticity, 100)
 	plt.xlabel("x (horizontal)")
 	plt.ylabel("y (vertical)")
-	plt.savefig('sfs/'+str(t)+".png")
+	plt.savefig('sfs/'+str(index)+".png")
 	plt.close()
 	
 	
@@ -217,10 +217,10 @@ def main():
 
 	## function that ties everything together
 	
-	scale = 10 ## length scale of the box in meters
-	n = 35
+	scale = 1 ## length scale of the box in meters
+	n = 60
 	timesteps = 10000000
-	dt = 0.01
+	dt = 0.001
 	
 	iterations = 1000
 	epsilon = 0.0001
@@ -228,7 +228,7 @@ def main():
 	
 	h = 1/(n-1) * scale
 	Cp=4000
-	kappa=0.000000000001
+	kappa=0
 	
 	Touter=0
 	rho0=1000
@@ -242,42 +242,61 @@ def main():
 	xs = np.arange(0,scale+h, h)
 	ys = np.arange(0,scale+h, h)
 	
-	xMesh, yMesh = np.meshgrid(xs,ys)
+	xMesh, yMesh = np.meshgrid(xs, ys)
 	
 	
 	
 		
 	
-	temperature = [[0 for i in range(n)] for i in range(n)]
-	streamfunction = [[0 for i in range(n)] for i in range(n)]
+	temperature = [[0 for i in range(n)] for j in range(n)]
 	
-	vorticity = [[0 for i in range(n)] for i in range(n)]
+	for i in range(int(0.4*n), int(0.6*n)):
+		for j in range(int(0.4*n), int(0.6*n)):
+			temperature[i][j] = 1
 	
-	heat = [[0 for i in range(n)] for i in range(n)]
+	
+	streamfunction = [[0 for i in range(n)] for j in range(n)]
+	
+	vorticity = [[0 for i in range(n)] for j in range(n)]
+	
+	heat = [[0 for i in range(n)] for j in range(n)]
+	
+	
+	streamfunction1 = [[0.005*i for i in range(n)] for j in range(n)]
+	streamfunction2 = [[-0.005*i for i in range(n)] for j in range(n)]
+	
 	
 
 	
 	for timestep in range(timesteps):
 		print("loop: " + str(timestep))
 		
+		
+		if (t < 10):
+			streamfunction = streamfunction1
+		else:
+			streamfunction = streamfunction2
+		
 
 			
-		streamfunction = updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega, h)
+		##streamfunction = updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega, h)
 		
 		temperature = updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Touter,dt)
 		
 		
-		for i in range(n):
-			temperature[i][0] = 100 + random.uniform(0,1)
-			temperature[i][n-1] = -100 - random.uniform(0,1)
+		##for i in range(n):
+			##temperature[i][0] = 100 + random.uniform(0,1)
+			##temperature[i][n-1] = -100 - random.uniform(0,1)
 			
 		
-		vorticity = updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0,h,n,dt)
+		vorticity = updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0, h, n, dt)
+		
+		##print(vorticity)
 		
 		t = t + dt
 		if (timestep % 100 == 0):
 		
-			plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t)
+			plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, timestep)
 			
 	
 		
