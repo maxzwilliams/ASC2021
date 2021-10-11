@@ -53,11 +53,6 @@ Through siesmic imaging, variations in inner core density are $<< 1 \%$. We also
 	\label{NSE slow + boussinesq}
 \end{equation}
 where $\rho'=-\alpha(T - T_0)$, $\nu$ the kinomatic viscosity $\nu = \frac{\mu}{\rho_0}$ and $p'$ a first order pertibation to the background pressure $p_0$.
-\newline
-By introducing t
-
-
-
 
 
 
@@ -101,11 +96,6 @@ We define a streamfunction $\psi$ as the function such that:
 I wont to introduce this in both cartesian AND polar coorindates
 
 
-\subsubsection*{Finite Difference Schemes}
-Here I want to look at how I numerically solved the streamfunction-vorticity equations, 
-how did I discritize the domain, how did I approximate each derivative. I then want to look at the theoretical 
-stability and accuracy of my equations. 
-
 \subsubsection*{Lattice Boltzman Method}
 I want to introduce the lattice boltzman method, go over its derivation, talk about why this is unique 
 in the world of computational fluid dynamics. I pretty much just want to explain what it is and how I used it.
@@ -113,6 +103,16 @@ in the world of computational fluid dynamics. I pretty much just want to explain
 
 
 \section*{Advection Tests}
+
+We next tested the accuracy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero. In the first test, the streamfunction was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 
+
+
+
+
+
+
+To determine how accurate the advection schemes for the polar and cartesian vortivity-streamfunction programs, 
+
 
 \section*{Results}
 

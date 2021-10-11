@@ -60,11 +60,17 @@ def updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Touter
 	update = [[0 for i in range(n)] for j in range(n)]
 	newTemperature = [[0 for i in range(n)] for j in range(n)]
 	
+	
+	for xIndex in range(n):
+		temperature[xIndex][0] = temperature[xIndex][1]
+		temperature[xIndex][n-1] = temperature[xIndex][n-2]
+		
+	
 		
 
 	
 	for i in range(n):
-		for j in range(0,n):
+		for j in range(1, n-1):
 			if (j == 0):
 				u = -(streamfunction[i][j+1] - 0)/(2*h)
 				v = (streamfunction[(i+1)%n][j] - streamfunction[(i-1)%n][j])/(2*h)
@@ -183,6 +189,7 @@ def plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, index):
 	ax.contourf(xMesh, yMesh, temperature, 100)
 	plt.xlabel("x (horizontal)")
 	plt.ylabel("y (vertical)")
+	plt.title(str(t))
 	plt.savefig('t/'+str(index)+".png")
 	plt.close()
 	
@@ -209,7 +216,12 @@ def plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, index):
 	
 	
 	
-	
+def getTotalQ(T):
+	s = 0
+	for row in T:
+		for el in row:
+			s += el
+	return s
 	
 	
 	
@@ -220,7 +232,7 @@ def main():
 	scale = 1 ## length scale of the box in meters
 	n = 60
 	timesteps = 10000000
-	dt = 0.001
+	dt = 0.005
 	
 	iterations = 1000
 	epsilon = 0.0001
@@ -233,7 +245,7 @@ def main():
 	Touter=0
 	rho0=1000
 	##alpha=10**(-7)
-	alpha=10**(-1)
+	alpha=0
 	nu=10**(-10)
 	g=-100
 	t = 0
@@ -244,6 +256,8 @@ def main():
 	
 	xMesh, yMesh = np.meshgrid(xs, ys)
 	
+	TotalQ = []
+	times = []
 	
 	
 		
@@ -262,20 +276,38 @@ def main():
 	heat = [[0 for i in range(n)] for j in range(n)]
 	
 	
-	streamfunction1 = [[0.005*i for i in range(n)] for j in range(n)]
-	streamfunction2 = [[-0.005*i for i in range(n)] for j in range(n)]
+	streamfunction1 = [[0.0005*(i+j) for i in range(n)] for j in range(n)]
+	streamfunction2 = [[-0.0005*(i+j) for i in range(n)] for j in range(n)]
 	
 	
 
 	
 	for timestep in range(timesteps):
+	
+		TotalQ.append(getTotalQ(temperature))
+		times.append(t)
+		
 		print("loop: " + str(timestep))
 		
 		
-		if (t < 10):
+		if (t <8):
 			streamfunction = streamfunction1
-		else:
+		elif (t < 3*8):
 			streamfunction = streamfunction2
+		elif (t < 4*8):
+			streamfunction = streamfunction1
+		elif (t < 5*8):
+			streamfunction = [[0 for i in range(n)] for j in range(n)]
+		else:
+			break;
+			
+		if (timestep % 100 == 0 or timestep == 0):
+		
+			plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, timestep)
+			plt.plot(times, TotalQ)
+			plt.ylabel("Total Energy (arb. units)")
+			plt.xlabel("time (arb units)")
+			plt.savefig("totalq.png")
 		
 
 			
@@ -294,9 +326,7 @@ def main():
 		##print(vorticity)
 		
 		t = t + dt
-		if (timestep % 100 == 0):
-		
-			plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, timestep)
+
 			
 	
 		
