@@ -38,10 +38,10 @@ the basic equations that I will use.
 \end{equation}
 where $\frac{D}{D t} = \frac{\partial }{\partial t} + (\vec{u} \cdot \nabla)$ is the material derivative, $p$ the pressure of the fluid and $\nabla$ the del operator. The dynamics of fluid temperature $T$ are described the inhomoenous advection diffusion equation:
 \begin{equation}
-	\frac{D T}{D t} = \kappa \nabla^2 T + \frac{H}{C_p},
+	\frac{D T}{D t} = \kappa \nabla^2 T + \frac{Q}{C_v \rho},
 	\label{adeT}
 \end{equation}
-where $H$ is the source term of heat. The density of the fluid $\rho$ is assumed to vary linearly in temeprature according to the equation of state:
+where $Q$ is the heat generated per unit volume per unit time, $C_v$ the specific heat at constant volume and $\rho$ the fluid density. The density of the fluid $\rho$ is assumed to vary linearly in temeprature according to the equation of state:
 \begin{equation}
 	\rho = \rho_0 (1- \alpha(T -T_0)),
 	\label{equation of state}
@@ -54,23 +54,7 @@ Through siesmic imaging, variations in inner core density are $<< 1 \%$. We also
 \end{equation}
 where $\rho'=-\alpha(T - T_0)$, $\nu$ the kinomatic viscosity $\nu = \frac{\mu}{\rho_0}$ and $p'$ a first order pertibation to the background pressure $p_0$.
 \newline
-By introducing the dimensionless quanities The Rayleigh number $Ra$, Prantle number $Pr$ and Nesselt number $Nu$ we can write equations \ref{NSE slow + boussinesq}, \ref{}
-
-
-
-\begin{equation}
-	\frac{1}{Pr} \frac{\partial \vec{u}}{\partial t} = Ra T' \hat{k} - \nabla p' + \nabla^2 \vec{u},
-	\label{NSE slow + boussinesq + Non Dimensional}
-\end{equation}
-
-
-
-\begin{equation}
-	\frac{D T}{D t} = \nabla^2 T + BLOOP (fix this BLOOP),
-	\label{adeT + Non Dimensional}
-\end{equation}
-
-Here I want to non dimensionalise all these equations.
+By introducing t
 
 
 
