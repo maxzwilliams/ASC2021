@@ -43,7 +43,7 @@ where $\frac{D}{D t} = \frac{\partial }{\partial t} + (\vec{u} \cdot \nabla)$ is
 \end{equation}
 where $Q$ is the heat generated per unit volume per unit time, $C_v$ the specific heat at constant volume and $\rho$ the fluid density. The density of the fluid $\rho$ is assumed to vary linearly in temeprature according to the equation of state:
 \begin{equation}
-	\rho = \rho_0 (1- \alpha(T -T_0)),
+	\rho = \rho_0 (1- \alpha(T - T_0)),
 	\label{equation of state}
 \end{equation}
 where $\alpha$ is the volumetric expansion coeffecient and $\rho_0$ the density at a reference temperature $T_0$.
@@ -53,6 +53,8 @@ Through siesmic imaging, variations in inner core density are $<< 1 \%$. We also
 	\label{NSE slow + boussinesq}
 \end{equation}
 where $\rho'=-\alpha(T - T_0)$, $\nu$ the kinomatic viscosity $\nu = \frac{\mu}{\rho_0}$ and $p'$ a first order pertibation to the background pressure $p_0$.
+\newline
+The Earths
 
 
 
@@ -68,41 +70,115 @@ where $\rho'=-\alpha(T - T_0)$, $\nu$ the kinomatic viscosity $\nu = \frac{\mu}{
 Here I want to introduce my two numerical schemes
 
 \subsubsection*{Streamfunction-Vorticity formulation}
-The streamfunction-vorticity formulation is a popular method for analytical and simple numerical analysis of incompressable fluids in two dimensions. Its key advantage is the elimination of all pressure terms, which would otherwise need to be iteratively accounted for or given in a constituative equation. We define the vorticity of our fluid as:
+The streamfunction-vorticity formulation is a popular method for analytical and simple numerical analysis of incompressable fluids in two dimensions. Its key advantage is the elimination of all pressure terms, which would otherwise need to be iteratively accounted for or given in a constituative equation. We define the vorticity in the plane $\omega$ by:
 \begin{equation}
-	\omega = \nabla \times \vec{u}
+	\omega = (\nabla \times \vec{u})_z,
+	\label{omega}
 \end{equation}
-and the streamfunction $\psi$ such that:
+where the $z$ subscript denotes the component out of the page. We also define a streamfunction $\psi$ by:
 \begin{equation}
 	\omega = \nabla^2 \psi.
+	\label{psi}
 \end{equation}
-Physically, the voriticty is the amount of spinning the fluid does about a point, while lines of constant streamfunction have the fluid flow perpendicular to them. 
-
-
-
-
-
-
-We define a streamfunction $\psi$ as the function such that:
+Physically, the voriticty is the amount of spinning the fluid does about a point, while lines of constant streamfunction have the fluid flow perpendicular to them. Given a coordinate system, and a clever definition of $\vec{u}$ we can rewrite 
+equations \ref{adeT} and \ref{NSE slow + boussinesq} in terms of $\omega$ and $\psi$ rather than $\vec{u}$. In cartesian coordinates $(x,y)$ we pick 
 \begin{equation}
-	\vec{u} = \nabla \times \psi
+	u = -\frac{\partial \psi}{\partial y}, v = \frac{\partial \psi}{\partial x},
+	\label{cartesian velocities}
 \end{equation}
+giving:
+\begin{equation}
+	\frac{\partial T}{\partial t} -\frac{\partial \psi}{\partial y} \frac{\partial T}{\partial x} + \frac{\partial \psi}{\partial x} \frac{\partial T}{\partial y} = \kappa \nabla^2 T + \frac{Q}{\rho_0 C_v}
+	\label{adeT sfvt cartesian}
+\end{equation}
+\begin{equation}
+	\frac{\partial w}{\partial t} = \frac{g_y}{\rho_0} \frac{\partial \rho'}{\partial x} + \nu \nabla^2 \omega
+	\label{NSE slow + boussinesq sfvt cartesian}
+\end{equation}
+In polar coorindates (r, $\theta$) we pick:
+\begin{equation}
+	u = -\frac{1}{r} \frac{\partial \psi}{\partial \theta}, v = \frac{\partial \psi}{\partial r},
+	\label{polar velocities}
+\end{equation}
+giving:
+\begin{equation}
+	\frac{\partial T}{\partial t} - \frac{1}{r} \frac{\partial \psi}{\partial \theta} \frac{\partial T}{\partial r} + \frac{1}{r} \frac{\partial \psi}{\partial r} \frac{\partial T}{\partial \theta} = \kappa \nabla^2 T + \frac{Q}{\rho_0 C_v}
+	\label{adeT sfvt polar}
+\end{equation}
+and,
+\begin{equation}
+	\frac{\partial \omega}{\partial t} = - \frac{g_r}{\rho_0 r} \frac{\partial \rho'}{\partial \theta} +\nu \nabla^2 \omega.
+	\label{NSE slow + boussinesq sfvt polar}
+\end{equation}
+A fully derivation of equations \ref{adeT sfvt cartesian}, \ref{NSE slow + boussinesq sfvt cartesian}, \ref{adeT sfvt polar}, \ref{NSE slow + boussinesq sfvt polar} are given in appendix.
+Importantly, our definitions of $u$ and $v$ in equations \ref{cartesian velocities} and \ref{polar velocities} satisify equation \ref{omega} and \ref{psi}. Together, equations \ref{psi} \ref{adeT sfvt cartesian}, \ref{NSE slow + boussinesq sfvt cartesian}, \ref{adeT sfvt polar} and \ref{NSE slow + boussinesq sfvt polar} contain no unknown quantities like pressure $p$ and so can be solved via finite difference methods.
+
+\subsubsection*{Solving the streamfunction-vorticity equations}
+We first discritize our domain $\mathcal{D}$. In the cartesian case, we use $(x_i,y_j)=(i \Delta x, j \Delta y)$ with integers $i$ and $j$ satisfying $0\leq i < N_x$ $0 \leq j < N_y$. In the polar case, we use $(r_i, \theta_j)= (R_0 + i \Delta r, j 
+\Delta \theta)$ again with  $0 \leq i < N_r$ and $0 \leq j < N_{\theta}$. We impose $\Delta \theta = \frac{2 \pi}{N_{\theta} - 1}$ for consistancy with $\theta$-periodic boundary conditions and an inner radius $R_0$ in polar coordinates to avoid 
+singularities generated by $r=0$. We also discritize time $t$ by $t_n = n \Delta t$. For a function $f$, we use $f^n_{i,j}$ to mean $f$ evaluated at time $n$ at position $(x_i,y_j)$ in cartesian coorindates or $(r_i, \theta_j)$ in polar 
+coordinates. 
+\newline
+To approximate derivatives we use a finite difference approach. All time derivatives are approximated by forward difference:
+\begin{equation}
+	\frac{\partial f}{\partial t} = \frac{f^{n+1} - f^{n}}{\Delta t}
+	\label{forward time difference}
+\end{equation}
+Second order space derivatives are apprimxated by a central difference:
+\begin{equation}
+	\frac{\partial^2 f_{i,j}}{\partial {x_1}^2} = \frac{f_{i+1,j} - 2 f_{i,j} + f_{i-1,j}}{{\Delta x_1}^2},
+\end{equation}
+\begin{equation}
+	\frac{\partial^2 f_{i,j}}{\partial {x_2}^2} = \frac{f_{i,j+1} - 2 f_{i,j} + f_{i,j-1}}{{\Delta x_2}^2},
+\end{equation}
+where $x_1$ is the first coordinate and $x_2$ is the second coordinate. For example, in cartesian coordinates $(x,y)$, we would have $x_1=x$ and $x_2=y$. 
+For non advection terms, we approximate first order spatial derivaitves by:
+\begin{equation}
+	\frac{\partial f_{i,j}}{\partial x_1} = \frac{f_{i+1,j} - f_{i-1,j}}{2{\Delta x_1}},
+\end{equation}
+and
+\begin{equation}
+	\frac{\partial f_{i,j}}{\partial x_2} = \frac{f_{i,j+1} - f_{i,j+1}}{2{\Delta x_2}}.
+\end{equation}
+For advection terms, such as $a \frac{\partial f_{i,j}}{\partial x_1}$ we employ a first order godanov scheme:
+\begin{equation}
+	a \frac{\partial f_{i,j}}{\partial x_1} = \frac{1}{\Delta x} ( \mid a\mid (  \frac{1}{2} f_{i+1,j} - \frac{1}{2} f_{i-1,j}   ) - a ( \frac{1}{2} f_{i+1,j} -f_{i,j} - \frac{1}{2} f_{i-1,j} )).
+\end{equation}
+These scheme is always a downstream scheme regardless of the sign of the direction of the advecting field $a$.
+\newline
+Other more accurate, but substantually more complex methods for solving these equations, particularlly the advection equation exists such as the semi-lagrange crank-nicolson scheme.
+\newline
+To solve the streamfuntion-vorticity equations we assume a starting vorticity $\omega$ on our domain $\mathcal{D}$. We then apply the Jacobi method to solve equation \ref{psi} for $\psi$ on the interior of the domain which we call $\mathcal{D}'$. 
+Using $\psi$ we update $T$ on $\mathcal{D}'$ using equation \ref{adeT sfvt cartesian} (or \ref{adeT sfvt polar} for polar). Finally, $\omega$ is updated on $\mathcal{D}'$ using 
+equation \ref{NSE slow + boussinesq sfvt cartesian} (\ref{NSE slow + boussinesq sfvt polar} for polar). This process is repeated.
+
+\subsubsection*{The Jacobi Method}
+We cannot solve for $\psi$ explicitly in equation \ref{psi}. Instead we use an iterative method called the Jacobi method. In cartesian coorindates, equation \ref{psi} becomes
+
+%% Here I want to look at how I solved the laplace equation
+
+\subsubsection*{Solution Stability and Accuracy}
+%% Here I want to look at the stabiliy of this method
+not done yet
 
 
 
 
 
 
-I wont to introduce this in both cartesian AND polar coorindates
+
+
+
+
+
+
 
 
 \subsubsection*{Lattice Boltzman Method}
 I want to introduce the lattice boltzman method, go over its derivation, talk about why this is unique 
 in the world of computational fluid dynamics. I pretty much just want to explain what it is and how I used it.
 \newline
-
-
-\section*{Advection Tests}
+\section*{Advection and Heat Conservation }
 
 We next tested the accuracy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero. In the first test, the streamfunction was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 
 
