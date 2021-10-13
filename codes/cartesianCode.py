@@ -31,7 +31,8 @@ def updateSf(vt, sf, T, q, ss):
 		
 		
 		##sf = 0.25*(sfij1 + sfijm1 + sfi1j + sfim1j + ss['dx']**2 * vt)
-		term1 = vt + (sfi1j-sfim1j)/(ss['dx']**2) + (sfij1-sfijm1)/(ss['dy']**2)
+		term1 = vt + (sfi1j-sfim1j)/(ss['dx']**2) + (sfij1-sfijm1)/(ss['dy']**2) ## this might be wrong. do we have a - on the vt or not??
+		## I need to make sure that I am using consistant defintions of omega and psi
 	
 		sf = ss['SORparam'] * ((ss['dx']*ss['dy'])**2)/(2*((ss['dx'])**2 + (ss['dy'])**2)) * term1 + (1- ss['SORparam']) * sf
 		

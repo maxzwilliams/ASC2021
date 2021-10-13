@@ -153,33 +153,44 @@ Using $\psi$ we update $T$ on $\mathcal{D}'$ using equation \ref{adeT sfvt carte
 equation \ref{NSE slow + boussinesq sfvt cartesian} (\ref{NSE slow + boussinesq sfvt polar} for polar). This process is repeated.
 
 \subsubsection*{The Jacobi Method}
-We cannot solve for $\psi$ explicitly in equation \ref{psi}. Instead we use an iterative method called the Jacobi method. In cartesian coorindates, equation \ref{psi} becomes
+We cannot solve for $\psi$ explicitly in equation \ref{psi}. Instead we use an iterative method called the Jacobi method. In cartesian coorindates, equation \ref{psi} can be written:
 
-%% Here I want to look at how I solved the laplace equation
+\begin{equation}
+	\omega = \frac{\partial^2 \psi}{\partial x^2} + \frac{\partial^2 \psi}{\partial y^2}.
+\end{equation}
+Using our finite differences this can be written as:
+\begin{equation}
+	\omega_{i,j} = \frac{\psi_{i+1,j} - 2 \psi_{i,j} + \psi_{i-1,j}  }{{\Delta x}^2} + \frac{\psi_{i,j+1} - 2 \psi_{i,j} + \psi_{i,j-1}  }{{\Delta y}^2}
+	\label{psi disc}
+\end{equation}
+We can then write $\psi_{i,j}$ as:
+\begin{equation}
+	\psi_{i,j} = \frac{{\Delta x}^2 {\Delta y}^2  }{2*({\Delta x}^2  + {\Delta y}^2)} (\frac{\psi_{i+1,j} +\psi_{i-1,j} }{{\Delta x}^2} + \frac{\psi_{i,j+1} +\psi_{i,j-1}  }{{\Delta y}^2 }   - \omega_{i,j}).
+	\label{psi from omega}
+\end{equation}
+We then use the result of $\psi_{i,j}$ back into equation \ref{psi from omega} to solve for $\psi_{i,j}$ iterately as shown in equation \ref{psi iterative}:
+\begin{equation}
+	\psi_{i,j}^{(k+1)} = \frac{{\Delta x}^2 {\Delta y}^2  }{2*({\Delta x}^2  + {\Delta y}^2)} (\frac{\psi_{i+1,j}^{(k)} +\psi_{i-1,j}^{(k)}  }{{\Delta x}^2} + \frac{\psi_{i,j+1}^{(k)} +\psi_{i,j-1}^{(k)}  }{{\Delta y}^2 }   - \omega_{i,j}).
+	\label{psi iterative}
+\end{equation}
+Where the superscript $(k)$ means the result of the $k^{th}$ iteration of the above equation and this operation us applied to all points in $\mathcal{D}'$.
+ We terminate this iterative method once the error $\sum_{(i,j) \in \mathcal{D'}} \mid \psi_{i,j}^{(k+1)} - \psi_{i,j}^{(k)} \mid$ gets suffeciently small. A similary method is applied to the polar coordinate case. 
 
 \subsubsection*{Solution Stability and Accuracy}
 %% Here I want to look at the stabiliy of this method
-not done yet
-
-
-
-
-
-
-
-
-
-
-
-
+Here I will have some very simple stability analysis
+for the advection equation and the $\omega$ equation.
 
 
 \subsubsection*{Lattice Boltzman Method}
 I want to introduce the lattice boltzman method, go over its derivation, talk about why this is unique 
 in the world of computational fluid dynamics. I pretty much just want to explain what it is and how I used it.
-\newline
-\section*{Advection and Heat Conservation }
 
+
+
+
+
+\section*{Advection and Heat Conservation}
 We next tested the accuracy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero. In the first test, the streamfunction was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 
 
 
