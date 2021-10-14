@@ -191,7 +191,32 @@ in the world of computational fluid dynamics. I pretty much just want to explain
 
 
 \section*{Advection and Heat Conservation}
-We next tested the accuracy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero. In the first test, the streamfunction was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 
+We next tested the accuracy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero to avoid convection and a segment of the fluid was set to 1 unit of temperature with all other regions set to 0 units of temperature. In the first test, the streamfunction was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 
+
+\begin{figure}
+	\centering
+	\inclydegraphics{frog.png}
+	\caption{Polar azimuthal advection test. Temperature (color) is plotted in polar space. Red dot indicates temperature weighted mean position within the fluid and is taken as the location of the temperature 1 zone. 
+	(a) shows the initial condition, (b) shows the fluid being advected through the periodic boundry condition, (c) the analytic result for when the fluid would return to its initial state and (d) the final state of the fluid.
+	Times are given above each pane.}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\inclydegraphics{frog.png}
+	\caption{Azimuthal advection test. Temperature (color) is plotted in polar space. }
+\end{figure}
+
+The second set of tests moved the fluid in a diagonal motion over the domain bringing it back to its origin state. 
+
+\begin{figure}
+	\centering
+	\includegraphics{frog.png}
+	\caption{Cartesian diagonal advection test. Temperature (color) is plotted in polar space. Red dot indicates temperature weighted mean position within the fluid and is taken as the location of the temperature 1 zone.}
+\end{figure}
+
+
 
 
 

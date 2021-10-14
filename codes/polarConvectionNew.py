@@ -277,13 +277,37 @@ def generateFields(simulationSettings):
 	
 	return streamfunction, vorticity, temperature, heat
 	
+def myRound(number):
+	if (number - math.floor(number)>=0.5 ):
+		return int(math.ceil(number))
+	else:
+		return int(math.floor(number))
+		
 	
-def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh,t, index):
+def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh, t, index, analyticDynamics):
+	rCenter = 0
+	thetaCenter = 0
+	
+	totalTemperature = 0
+	for rIndex in range(len(temperature)):
+		for thetaIndex in range(len(temperature[0])):
+			totalTemperature += temperature[rIndex][thetaIndex]
+	
+	
+	for rIndex in range(len(temperature)):
+		for thetaIndex in range(len(temperature[0])):
+			rCenter += rMesh[rIndex]*temperature[rIndex][thetaIndex]/totalTemperature
+			thetaCenter += thetaMesh[thetaIndex]*temperature[rIndex][thetaIndex]/totalTemperature
+	##rCenter = myRound(rCenter)
+	##thetaCenter = myRound(thetaCenter)
 
-	
-	
 	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
 	pc = ax.pcolormesh(thetaMesh, rMesh, temperature, antialiased=False)
+	theta = [thetaCenter]
+	r = [rCenter]
+	plt.plot(theta, r, 'or')
+	
+	
 	ax.set_rorigin(-0.1)
 	plt.colorbar(pc)
 	plt.title(t)
@@ -296,7 +320,7 @@ def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh,t, index
 	ax.set_rorigin(-0.1)
 	plt.title(t)
 	plt.colorbar(pc)
-	plt.savefig('sfspolar/'+str(t)+".png")
+	plt.savefig('sfspolar/'+str(index)+".png")
 	plt.close()
 	
 	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
@@ -304,7 +328,7 @@ def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh,t, index
 	ax.set_rorigin(-0.1)
 	plt.title(t)
 	plt.colorbar(pc)
-	plt.savefig('vtspolar/'+str(t)+".png")
+	plt.savefig('vtspolar/'+str(index)+".png")
 	plt.close()
 	
 
@@ -317,16 +341,11 @@ def getTotalQ(T, simulationSettings):
 			s += area * T[rIndex][phiIndex]
 			
 	return s
-			
-		
-			
-			
-	
-	
-	
-	
 	
 def main():
+
+
+
 	vel = 0.0005
 	## settings for the simulation, how large our space is, how fine our grid is
 	simulationSettings = dict()
@@ -340,7 +359,7 @@ def main():
 	simulationSettings['poissonIterations'] = 10000
 	simulationSettings['poissonError'] = 0.001
 	simulationSettings['SORParam'] = 0.5
-	simulationSettings['dt'] = math.pi/(1000*vel)
+	simulationSettings['dt'] = math.pi/(10000*vel)
 	simulationSettings['Cp'] = 4000
 	##simulationSettings['Cp'] = 1
 	##simulationSettings['kappa'] = 0.143*10**(-6) 
@@ -367,7 +386,11 @@ def main():
 	##simulationSettings['alpha'] = 0
 	streamfunction, vorticity, temperature, heat = generateFields(simulationSettings)
 	
-	streamfunction = [[ vel*(j*simulationSettings['dRadius'])**2 for i in range(simulationSettings['phiSteps'])] for j in range(simulationSettings['radiusSteps'])]
+	streamfunction1 = [[ vel*( (j*simulationSettings['dRadius'])**2 ) for i in range(simulationSettings['phiSteps'])] for j in range(simulationSettings['radiusSteps'])]
+	streamfunction2 = [[ -vel*( (j*simulationSettings['dRadius'])**2) for i in range(simulationSettings['phiSteps'])] for j in range(simulationSettings['radiusSteps'])]
+	
+	
+	analyticDynamics = dict()
 	
 	
 	t = 0
@@ -377,12 +400,26 @@ def main():
 			temperature[rIndex][phiIndex] = 1
 	
 
-	
 	index = 0
 	while index<100000:
+		
 		print("index", index)
 		totalQ.append(getTotalQ(temperature, simulationSettings))
 		time.append(t)
+		
+		
+		if (t < 200):
+			streamfunction = streamfunction1
+		elif (t < 3*200):
+			streamfunction = streamfunction2
+		elif (t < 4*200):
+			streamfunction = streamfunction1
+		else:
+			streamfunction = [[0 for phiIndex in range(simulationSettings['phiSteps'])] for rIndex in range(simulationSettings['radiusSteps'])]
+			
+		
+		
+		
 		
 	
 		##plt.imshow(temperature)
@@ -394,7 +431,7 @@ def main():
 			##plt.savefig('sfspolar/'+str(t)+".png")
 			
 		if (index % 10 == 0):
-			plotFields(temperature, vorticity, streamfunction, rs, thetas, t, index)
+			plotFields(temperature, vorticity, streamfunction, rs, thetas, t, index, analyticDynamics)
 			##plt.plot(time, totalQ)
 			plt.xlabel("time (arb. units)")
 			plt.ylabel("Total Thermal Energy (arb. units)")
