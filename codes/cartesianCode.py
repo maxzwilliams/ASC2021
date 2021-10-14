@@ -69,6 +69,26 @@ def updateSf(vt, sf, T, q, ss):
 	return sf
 	
 	
+def updateTSlow(vt, sf, T, q, ss):
+	for xIndex in range(ss['xSteps']):
+		T[0][xIndex] = T[2][xIndex] 
+		T[ss['ySteps']+1][xIndex] = T[ss['ySteps']-1][xIndex]
+		
+	u = np.zeros(T.shape)
+	v = np.zeros(T.shape)
+	
+	for xIndex in range(ss['xSteps']):
+		for yIndex in range(1, ss['ySteps']+1):
+			u = (sf[yIndex+1][xIndex] - sf[yIndex-1][xIndex])/ss['dy']
+			v = -(sf[yIndex][(xIndex+1)%ss['xSteps']] - sf[yIndex-1][(xIndex-1)%ss['xSteps']])/ss['dx']
+			
+		
+	
+	
+	
+	
+	
+	
 def updateT(vt, sf, T, q, ss):
 	Tij1 = np.roll(T, -1, axis=1)
 	Tijm1 = np.roll(T, 1, axis=1)
@@ -84,8 +104,29 @@ def updateT(vt, sf, T, q, ss):
 		T[0][xIndex] = T[2][xIndex] 
 		T[ss['ySteps']+1][xIndex] = T[ss['ySteps']-1][xIndex]
 	
-	u = -(sfi1j - sfim1j)/(2*ss['dy'])
-	v = (sfij1 - sfijm1)/(2*ss['dx'])
+	u = (sfi1j - sfim1j)* 1/(2*ss['dy'])
+	v = -(sfij1 - sfijm1)* 1/(2*ss['dx'])
+	
+	u1 = copy.deepcopy(u)
+	v1 = copy.deepcopy(v)
+			
+	np.set_printoptions(threshold=np.inf)
+
+	
+	
+	
+	
+	
+	##u = np.zeros(u.shape)
+	##v = np.zeros(v.shape)
+	##for xIndex in range(ss['xSteps']):
+		##for yIndex in range(2, ss['ySteps']):
+			##u[yIndex][xIndex] = (sf[yIndex+1][xIndex] - sf[yIndex-1][xIndex])/(2*ss['dy'])
+			##v[yIndex][xIndex] = -(sf[yIndex][(xIndex+1)%ss['xSteps']] - sf[yIndex-1][(xIndex-1)%ss['xSteps'] ])/(2*ss['dx'])
+			
+	##print("new")
+	##print(u)
+	##time.sleep(1)
 	
 	umax = np.amax(np.absolute(u))
 	vmax = np.amax(np.absolute(v))
@@ -93,16 +134,21 @@ def updateT(vt, sf, T, q, ss):
 	if ( umax*ss['dt']/ss['dx'] >= 1 or vmax * ss['dt']/ss['dy'] >= 1):
 		return vt, "time error"
 	
-	
+
 	advectionx = 1/(ss['dx']) *( np.multiply(np.absolute(u), 0.5*(Tij1-Tijm1)) - np.multiply(u, (0.5*Tij1 - T + 0.5*Tijm1))  )
 	advectiony = 1/(ss['dy']) *( np.multiply(np.absolute(v), 0.5*(Ti1j-Tim1j)) - np.multiply(v, (0.5*Ti1j - T + 0.5*Tim1j)) )
+	
+	
+	##advectionx = u*( Tij1-Tijm1 )/(2*ss['dx'])
+	##advectiony = v*( Ti1j-Tim1j )/(2*ss['dy'])
+	
 	
 	diffusionTerm = ss['kappa'] * ( ( Tij1-2*T + Tijm1 )/(ss['dx']**2) +  (Ti1j-2*T+Tim1j )/(ss['dy']**2))
 	source = q/(ss['rho0'] * ss['cv'])
 	
 	
 	
-	##T = ss['dt'] * (diffusionTerm + source) + T
+	##rtn = ss['dt'] * (diffusionTerm + source) + T
 	rtn = ss['dt'] * (- advectionx - advectiony + diffusionTerm + source) + T
 	
 	return rtn, None
@@ -155,11 +201,7 @@ def printFields(vt, sf, T, ss, time):
 	plt.ylabel("y (vertical)")
 	plt.savefig("t/"+str(time)+"p"+".png")
 	plt.close()
-	
-	plt.imshow(T)
-	plt.savefig("t/"+str(time)+".png")
-	
-	print("plotted")
+
 	
 	
 	
@@ -197,13 +239,13 @@ def main():
 	ss['poissonIterations'] = 10000
 	ss['poissonError'] = 0.0001
 	ss['SORparam'] = 0.5
-	ss['dt'] = 0.001
+	ss['dt'] = 0.01
 	ss['timeSteps'] = 100000
 	ss['kappa'] = 0
 	ss['rho0']= 1000
 	ss['cv'] = 4000
 	ss['g'] = -100
-	ss['alpha'] = 0.1
+	ss['alpha'] = 0
 	ss['nu']=0.0006
 	
 	
@@ -220,14 +262,16 @@ def main():
 		for yIndex in range(int(0.4*ss['ySteps']), int(0.6*ss['ySteps'])):
 			q[yIndex][xIndex] = 0.0
 	
-	
+	for xIndex in range(int(0.4*ss['xSteps']), int(0.6*ss['xSteps'])):
+		for yIndex in range(int(0.4*ss['ySteps']), int(0.6*ss['ySteps'])):
+			T[yIndex][xIndex] = 100
 	
 	##sf = np.array([[ 0.0 for i in range(ss['xSteps'])] for j in range(ss['ySteps']+2)])
 	
 	
-	##for xIndex in range(ss['xSteps']):
-		##for yIndex in range(1, ss['ySteps']+1):
-			##sf[yIndex][xIndex] = (xIndex)*0.000005
+	for xIndex in range(ss['xSteps']):
+		for yIndex in range(1, ss['ySteps']+1):
+			sf[yIndex][xIndex] = (xIndex)*0.000005
 			
 	step = 0
 	while step < ss['timeSteps']:
@@ -241,7 +285,7 @@ def main():
 		if (step % 100 == 0):
 			printFields(vt, sf, T, ss, step)
 		
-		sf = updateSf(vt, sf, T, q, ss) ## is is this??
+		##sf = updateSf(vt, sf, T, q, ss) ## is is this??
 		
 		T, error = updateT(vt, sf, T, q, ss)
 		
@@ -255,9 +299,7 @@ def main():
 			
 			
 		
-		for xIndex in range(int(0.4*ss['xSteps']), int(0.6*ss['xSteps'])):
-			for yIndex in range(int(0.4*ss['ySteps']), int(0.6*ss['ySteps'])):
-				T[yIndex][xIndex] = 100
+
 		
 		
 		vt = updateVt(vt, sf, T, q, ss)

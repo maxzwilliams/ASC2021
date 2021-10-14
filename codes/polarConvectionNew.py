@@ -169,40 +169,55 @@ def updateTemperature(streamfunction, temperature, heat, simulationSettings):
 	iterations = simulationSettings['poissonIterations']
 	epsilon = simulationSettings['poissonError']
 	omega = simulationSettings['SORParam']
+	rho0 = simulationSettings['rho0']
 	
-	for phiIndex in range(simulationSettings['phiSteps']):
-		temperature[0][phiIndex] = temperature[1][phiIndex]
-		temperature[simulationSettings['radiusSteps']-1][phiIndex] = temperature[simulationSettings['radiusSteps']-2][phiIndex]
+	##for phiIndex in range(simulationSettings['phiSteps']):
+		##temperature[0][phiIndex] = temperature[1][phiIndex]
+		##temperature[simulationSettings['radiusSteps']-1][phiIndex] = temperature[simulationSettings['radiusSteps']-2][phiIndex]
 
 	oldTemperature = copy.deepcopy(temperature)
-	for rIndex in range(1, simulationSettings['radiusSteps']-1):
+	for rIndex in range(0, simulationSettings['radiusSteps']):
 		for phiIndex in range(simulationSettings['phiSteps']):
-		
-		
-			
 			r = rIndexToR(simulationSettings, rIndex)
-			term1 = (oldTemperature[rIndex+1][phiIndex] - 2*oldTemperature[rIndex][phiIndex] + oldTemperature[rIndex-1][phiIndex])/(dRadius**2)
-			term2 = 1/r *(oldTemperature[rIndex+1][phiIndex] - oldTemperature[rIndex-1][phiIndex])/(2*dRadius)
-			term3 = 1/r**2 *(oldTemperature[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - 2*oldTemperature[rIndex][phiIndex] + oldTemperature[rIndex][ (phiIndex-1)%simulationSettings['phiSteps']]  )/(dPhi**2)
-			term4 = heat[rIndex][phiIndex]/Cp
+			if (rIndex == 0):
+				preTemp = oldTemperature[1][phiIndex]
+				advTemp = oldTemperature[rIndex+1][phiIndex]
+				u = 0
+				v = 0
 			
-			u = 1/r * (streamfunction[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - streamfunction[rIndex][(phiIndex-1)%simulationSettings['phiSteps']])/(2*dPhi)
-			v = - (streamfunction[rIndex+1][phiIndex] - streamfunction[rIndex-1][phiIndex])/(2*dRadius)
+			
+			elif (rIndex == simulationSettings['radiusSteps']-1):
+				advTemp = oldTemperature[simulationSettings['radiusSteps']-2][phiIndex]
+				preTemp = oldTemperature[rIndex-1][phiIndex]
+				u = 0 
+				v = 0
+			else:
+				advTemp = oldTemperature[rIndex+1][phiIndex]
+				preTemp = oldTemperature[rIndex-1][phiIndex]
+				u = 1/r * (streamfunction[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - streamfunction[rIndex][(phiIndex-1)%simulationSettings['phiSteps']])/(2*dPhi)
+				v = - (streamfunction[rIndex+1][phiIndex] - streamfunction[rIndex-1][phiIndex])/(2*dRadius)
+			
+			
+			term1 = ( advTemp - 2*oldTemperature[rIndex][phiIndex] + preTemp)/(dRadius**2)
+			term2 = 1/r *(advTemp - preTemp)/(2*dRadius)
+			term3 = 1/r**2 *(oldTemperature[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - 2*oldTemperature[rIndex][phiIndex] + oldTemperature[rIndex][ (phiIndex-1)%simulationSettings['phiSteps']]  )/(dPhi**2)
+			term4 = heat[rIndex][phiIndex]/(Cp*rho0)
+			
 			
 			if (abs(u)*dt/dRadius >= 1 or abs(v)*dt/(r*dPhi) >= 1):
 				return temperature, "Time Fail"
 			
+			
 			if (u>=0):
-				term5 = -u * (oldTemperature[rIndex][phiIndex] - oldTemperature[rIndex-1][phiIndex])/(dRadius)
+				term5 = -u * (oldTemperature[rIndex][phiIndex] - preTemp)/(dRadius)
 			else:
-				term5 = -u * (oldTemperature[rIndex+1][phiIndex] - oldTemperature[rIndex][phiIndex])/(dRadius)
+				term5 = -u * (advTemp - oldTemperature[rIndex][phiIndex])/(dRadius)
 			if (v >=0):
 				term6 = -1/r * v * (oldTemperature[rIndex][(phiIndex)%simulationSettings['phiSteps']] - oldTemperature[rIndex][(phiIndex-1)%simulationSettings['phiSteps']])/(dPhi)
 			else:
 				term6 = -1/r * v * (oldTemperature[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - oldTemperature[rIndex][(phiIndex)%simulationSettings['phiSteps']])/(dPhi)
 			##term5 = -1/r * (streamfunction[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - streamfunction[rIndex][(phiIndex-1)%simulationSettings['phiSteps']])/(2*dPhi) *(oldTemperature[rIndex+1][phiIndex] - oldTemperature[rIndex-1][phiIndex])/(2*dRadius)
 			##term6 = 1/r * (streamfunction[rIndex+1][phiIndex] - streamfunction[rIndex-1][phiIndex])/(2*dRadius) *(oldTemperature[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - oldTemperature[rIndex][(phiIndex-1)%simulationSettings['phiSteps']])/(2*dPhi)
-			
 			update = kappa*(term1 + term2 + term3 ) + term4 + term5 + term6
 			##print("update", update)
 			temperature[rIndex][phiIndex] = oldTemperature[rIndex][phiIndex] + dt*update
@@ -264,24 +279,31 @@ def generateFields(simulationSettings):
 	
 	
 def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh,t, index):
+
 	
 	
 	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
-	ax.contourf(thetaMesh, rMesh, temperature, 100)
+	pc = ax.pcolormesh(thetaMesh, rMesh, temperature, antialiased=False)
 	ax.set_rorigin(-0.1)
+	plt.colorbar(pc)
+	plt.title(t)
 	plt.savefig('tpolar/'+str(index)+".png")
 	plt.close()
 	
 	
 	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
-	ax.contourf(thetaMesh, rMesh, streamfunction, 100)
+	pc = ax.pcolormesh(thetaMesh, rMesh, streamfunction, antialiased=False)
 	ax.set_rorigin(-0.1)
+	plt.title(t)
+	plt.colorbar(pc)
 	plt.savefig('sfspolar/'+str(t)+".png")
 	plt.close()
 	
 	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
-	ax.contourf(thetaMesh, rMesh, vorticity, 100)
+	pc = ax.pcolormesh(thetaMesh, rMesh, vorticity, antialiased=False)
 	ax.set_rorigin(-0.1)
+	plt.title(t)
+	plt.colorbar(pc)
 	plt.savefig('vtspolar/'+str(t)+".png")
 	plt.close()
 	
@@ -305,20 +327,20 @@ def getTotalQ(T, simulationSettings):
 	
 	
 def main():
-	
+	vel = 0.0005
 	## settings for the simulation, how large our space is, how fine our grid is
 	simulationSettings = dict()
 	simulationSettings['outerRadius'] = 1
 	simulationSettings['innerRadius'] = 0.1
-	simulationSettings['radiusSteps'] = 60
-	simulationSettings['phiSteps'] = 60
+	simulationSettings['radiusSteps'] = 100
+	simulationSettings['phiSteps'] = 100
 	simulationSettings['dRadius'] = (simulationSettings['outerRadius'] - simulationSettings['innerRadius'])/simulationSettings['radiusSteps']
 	##simulationSettings['dRadius'] = simulationSettings['radiusSteps']/(simulationSettings['outerRadius'] - simulationSettings['innerRadius'])
 	simulationSettings['dPhi'] = 2*math.pi/(simulationSettings['phiSteps']-1)
 	simulationSettings['poissonIterations'] = 10000
 	simulationSettings['poissonError'] = 0.001
 	simulationSettings['SORParam'] = 0.5
-	simulationSettings['dt'] = 10
+	simulationSettings['dt'] = math.pi/(1000*vel)
 	simulationSettings['Cp'] = 4000
 	##simulationSettings['Cp'] = 1
 	##simulationSettings['kappa'] = 0.143*10**(-6) 
@@ -328,10 +350,8 @@ def main():
 	##simulationSettings['G'] = -6.7*10**(-8)
 	rs = np.arange(simulationSettings['innerRadius'], simulationSettings['outerRadius'], simulationSettings['dRadius'] )
 	thetas = np.arange(0, 2*math.pi+simulationSettings['dPhi'], simulationSettings['dPhi'] )
-	print(thetas)
 	
 	rmesh, thetaMesh = np.meshgrid(rs, thetas)
-	print(thetaMesh)
 	
 	totalQ = []
 	time = []
@@ -347,17 +367,20 @@ def main():
 	##simulationSettings['alpha'] = 0
 	streamfunction, vorticity, temperature, heat = generateFields(simulationSettings)
 	
-	streamfunction = [[ 0.005*i for i in range(simulationSettings['radiusSteps'])] for j in range(simulationSettings['phiSteps'])]
+	streamfunction = [[ vel*(j*simulationSettings['dRadius'])**2 for i in range(simulationSettings['phiSteps'])] for j in range(simulationSettings['radiusSteps'])]
 	
 	
 	t = 0
 	
-	for phiIndex in range(10,30):
-		for rIndex in range(45, 55):
-			temperature[rIndex][phiIndex] = 100
+	for phiIndex in range(int(0.4*simulationSettings['radiusSteps']),int(0.6*simulationSettings['radiusSteps']) ):
+		for rIndex in range(int(0.4*simulationSettings['phiSteps']),int(0.6*simulationSettings['phiSteps']) ):
+			temperature[rIndex][phiIndex] = 1
+	
+
 	
 	index = 0
 	while index<100000:
+		print("index", index)
 		totalQ.append(getTotalQ(temperature, simulationSettings))
 		time.append(t)
 		
@@ -370,9 +393,9 @@ def main():
 		##if (t % 10 == 0):
 			##plt.savefig('sfspolar/'+str(t)+".png")
 			
-		if (index % 100 == 0):
+		if (index % 10 == 0):
 			plotFields(temperature, vorticity, streamfunction, rs, thetas, t, index)
-			plt.plot(time, totalQ)
+			##plt.plot(time, totalQ)
 			plt.xlabel("time (arb. units)")
 			plt.ylabel("Total Thermal Energy (arb. units)")
 			plt.savefig("polarTotalQ.png")
@@ -388,6 +411,8 @@ def main():
 		##streamfunction = updateStreamFunctionFast(vorticity, streamfunction, simulationSettings)
 		
 		temperature, state = updateTemperature(streamfunction, temperature, heat, simulationSettings)
+		
+
 		
 		if (state == "Time Fail"):
 			
