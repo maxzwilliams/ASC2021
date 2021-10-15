@@ -190,6 +190,9 @@ in the world of computational fluid dynamics. I pretty much just want to explain
 
 
 
+
+
+
 \section*{Advection and Heat Conservation}
 We next tested the accuracy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero to avoid convection and a segment of the fluid was set to 1 unit of temperature with all other regions set to 0 units of temperature. In the first test, the streamfunction was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 
 
@@ -216,14 +219,7 @@ The second set of tests moved the fluid in a diagonal motion over the domain bri
 	\caption{Cartesian diagonal advection test. Temperature (color) is plotted in polar space. Red dot indicates temperature weighted mean position within the fluid and is taken as the location of the temperature 1 zone.}
 \end{figure}
 
-
-
-
-
-
-
-
-To determine how accurate the advection schemes for the polar and cartesian vortivity-streamfunction programs, 
+I will also have a test of heat conservation. Here. This will be simple, just a few pictures of the codes running (show some nice plumes) and the energy vs time graph. It shows that neither of these conserve thermal energy.
 
 
 \section*{Results}

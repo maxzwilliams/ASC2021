@@ -241,14 +241,14 @@ def main():
 	
 	h = 1/(n-1) * scale
 	Cp=4000
-	kappa=0
+	kappa=10**(-6)
 	
 	Touter=0
 	rho0=1000
 	##alpha=10**(-7)
 	alpha=0.1
 	nu=10**(-10)
-	g=-100
+	g=-10
 	t = 0
 	
 	
