@@ -50,10 +50,12 @@ def goPlot(data, vmin, vmax, name):
 	
 
 if __name__ == "__main__":
-	plots = int(sys.argv[1])
+	plotsMax = int(sys.argv[2])
+	plotsMin = int(sys.argv[1])
+	stepSize = int(sys.argv[3])
 	
 	fileSets = []
-	for index in range(plots):
+	for index in range(plotsMin,plotsMax+1, stepSize):
 		fileSets.append(["u//ux"+str(index)+".csv", "u//uy"+str(index)+".csv", "rho//rho"+str(index)+".csv"  ])
 		
 	

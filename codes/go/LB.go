@@ -1,7 +1,6 @@
 // LBM for natural convection in the earth
 
 package main
-
 import "fmt"
 import "math"
 import "math/rand"
@@ -24,12 +23,12 @@ type D3Field struct {
 }
 
 type D2Property struct{
-	entries [][]float64
-	name string
+	entries [][]float64 // a number for each point in (x,y) space
+	name string // name of the property
 }
 
 
-type lattice struct{
+type lattice struct{ // defines the lattice we are solving the problem on
 	weights []float64
 	directions [][]int
 	opposites []int
@@ -44,6 +43,9 @@ type lattice struct{
 	S float64
 	tau_f float64
 	tau_g float64
+	tau_grav float64 // relaxation time for gravity
+	rho float64 // reference density
+	alpha float64 // thermal expansion coeffecient
 	
 }
 
@@ -54,6 +56,7 @@ func streamingStep2D(f1 D2Field, l lattice, b boundary) D2Field{
 	var f2 D2Field
 	entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
 	f2.entries = entries
+	f2.name = f1.name
 
 
 	// okay so we take a field and we stream it. Thats all that we need to do.
@@ -65,24 +68,9 @@ func streamingStep2D(f1 D2Field, l lattice, b boundary) D2Field{
 				} else{
 					f2.entries[i][j][dIndex] = f1.entries[i-d[0]][j-d[1]][dIndex]
 				}
-				
-				
-				/*
-				// try to write this properly
-				if (b(i+d[0], j+d[1])) {
-					f2.entries[i][j][l.opposites[dIndex]] = f1.entries[i][j][dIndex]
-					
-				} else {
-					f2.entries[i+d[0]][j+d[1]][dIndex] = f1.entries[i][j][dIndex]
-				}
-				
-				*/
 			}
 		}
 	}
-	
-	
-	
 	return f2
 }
 
@@ -91,28 +79,57 @@ func getMacro2D(f D2Field, l lattice, b boundary) (D2Property, D2Field){
 	var u D2Field
 	
 	rhoentries := D2Constant(l.nx, l.ny, 0.0)
-	uentries := D3Constant(l.nx, l.ny, l.D  , 0.0)
+	uentries := D3Constant(l.nx, l.ny, l.D, 0.0)
+	
+	rho.entries = rhoentries
+	u.entries = uentries
 
 	for xIndex:=0;xIndex<l.nx;xIndex++{
 		for yIndex:=0;yIndex<l.ny;yIndex++{
-		
-		
-		
 			if (!b(xIndex, yIndex)){
 				for dIndex, _ := range l.directions{
-					rhoentries[xIndex][yIndex] += f.entries[xIndex][yIndex][dIndex]
+					rho.entries[xIndex][yIndex] += f.entries[xIndex][yIndex][dIndex]
 				}
 				for dIndex, d := range l.directions{
 
-					uentries[xIndex][yIndex][0] += float64(d[0]) * f.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
-					uentries[xIndex][yIndex][1] += float64(d[1]) * f.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
+					u.entries[xIndex][yIndex][0] += float64(d[0]) * f.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
+					u.entries[xIndex][yIndex][1] += float64(d[1]) * f.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
 				}
 			}
 		}
 	}
-	rho.entries = rhoentries
-	u.entries = uentries
 	return rho, u // rho and u are zero in the dead nodes
+}
+
+
+func getMacro2DWithEp(f D2Field, g D2Field, l lattice, b boundary) (D2Property, D2Property, D2Field) {
+	var rho D2Property
+	var ep D2Property
+	var u D2Field
+	
+	rhoentries := D2Constant(l.nx, l.ny, 0.0)
+	epentries := D2Constant(l.nx, l.ny, 0.0)
+	uentries := D3Constant(l.nx, l.ny, l.D, 0.0)
+	
+	rho.entries = rhoentries
+	ep.entries = epentries
+	u.entries = uentries
+	
+	for xIndex:=0;xIndex<l.nx;xIndex++{
+		for yIndex:=0;yIndex<l.ny;yIndex++{
+			if (!b(xIndex, yIndex)){
+				for dIndex, _ := range l.directions{
+					rho.entries[xIndex][yIndex] += f.entries[xIndex][yIndex][dIndex]
+				}
+				for dIndex, d := range l.directions{
+					u.entries[xIndex][yIndex][0] += float64(d[0]) * f.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
+					u.entries[xIndex][yIndex][1] += float64(d[1]) * f.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
+					ep.entries[xIndex][yIndex] += g.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
+				}
+			}
+		}
+	}
+	return rho, ep, u // rho and u are zero in the dead nodes
 }
 
 
@@ -122,6 +139,37 @@ func getEq2D(rho D2Property, u D2Field, l lattice) D2Field{
 	var f D2Field
 	entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
 	f.entries = entries
+	f.name = "f"
+
+	var term1 float64
+	var term2 float64
+	var term3 float64
+	var term4 float64
+	
+	for dIndex, d := range l.directions{
+		for xIndex:=0;xIndex<l.nx;xIndex++{
+			for yIndex:=0;yIndex<l.ny;yIndex++{
+			
+				term1 = l.vels[0]
+				term2 = l.vels[1] * ( float64(d[0])*u.entries[xIndex][yIndex][0] + float64(d[1])*u.entries[xIndex][yIndex][1] )
+				term3 = l.vels[2] * math.Pow(( float64(d[0])*u.entries[xIndex][yIndex][0] + float64(d[1])*u.entries[xIndex][yIndex][1] ), 2.0)
+				term4 = l.vels[3] * (u.entries[xIndex][yIndex][0]*u.entries[xIndex][yIndex][0] + u.entries[xIndex][yIndex][1]*u.entries[xIndex][yIndex][1]   )
+				
+				f.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * l.weights[dIndex]*(term1 + term2 + term3 + term4)
+			}
+		}
+	}
+	return f
+}
+
+
+func getEq2Df(rho D2Property, u D2Field, l lattice) D2Field{
+	// this looks good
+	
+	var f D2Field
+	entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
+	f.entries = entries
+	f.name = "f"
 	
 	
 	
@@ -146,20 +194,87 @@ func getEq2D(rho D2Property, u D2Field, l lattice) D2Field{
 	return f
 }
 
+func getEq2Dg(rho D2Property, ep D2Property, u D2Field, l lattice) D2Field{
+	// this looks good
+	
+	var g D2Field
+	entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
+	g.entries = entries
+	g.name = "g"
+	
+	
+	
+	var term1 float64
+	var term2 float64
+	var term3 float64
+	var term4 float64
+	
+	for dIndex, d := range l.directions{
+		for xIndex:=0;xIndex<l.nx;xIndex++{
+			for yIndex:=0;yIndex<l.ny;yIndex++{
+			
+				term1 = l.vels[0]
+				term2 = l.vels[1] * ( float64(d[0])*u.entries[xIndex][yIndex][0] + float64(d[1])*u.entries[xIndex][yIndex][1] )
+				term3 = l.vels[2] * math.Pow(( float64(d[0])*u.entries[xIndex][yIndex][0] + float64(d[1])*u.entries[xIndex][yIndex][1] ), 2.0)
+				term4 = l.vels[3] * (u.entries[xIndex][yIndex][0]*u.entries[xIndex][yIndex][0] + u.entries[xIndex][yIndex][1]*u.entries[xIndex][yIndex][1]   )
+				
+				g.entries[xIndex][yIndex][dIndex] = ep.entries[xIndex][yIndex]* rho.entries[xIndex][yIndex] * l.weights[dIndex]*(term1 + term2 + term3 + term4)
+			}
+		}
+	}
+	return g
+}
+
+
+
+
 
 func collisionStep(f D2Field, feq D2Field, l lattice) D2Field{
 	var rtn D2Field
 	entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
 	rtn.entries = entries
+	rtn.name = f.name
+	
+	var tau float64
+	if ( f.name == "f"){
+		tau = l.tau_f
+	} else if (f.name == "g"){
+		tau = l.tau_g
+	} else {
+		panic("unknown field being used")
+	}
 	
 	for dIndex, _ := range l.directions{
 		for xIndex:=0;xIndex<l.nx;xIndex++{
 			for yIndex:=0;yIndex<l.ny;yIndex++{
-				rtn.entries[xIndex][yIndex][dIndex] = math.Abs(f.entries[xIndex][yIndex][dIndex] +  1.0/(l.tau_f) *  ( feq.entries[xIndex][yIndex][dIndex] - f.entries[xIndex][yIndex][dIndex] ))
+				rtn.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] +  1.0/(tau) *  ( feq.entries[xIndex][yIndex][dIndex] - f.entries[xIndex][yIndex][dIndex] )
 			}
 		}
 	}
 	return rtn
+}
+
+
+func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lattice) D2Field{
+	// pingback
+	
+	var rtn D2Field
+	//entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
+	rtn.entries = f.entries
+	rtn.name = "f"
+	
+	for dIndex, d := range l.directions{
+		for xIndex:=0;xIndex<l.nx;xIndex++{
+			for yIndex:=0;yIndex<l.ny;yIndex++{
+				if (dIndex == 0){
+					rtn.entries[xIndex][yIndex][dIndex] += 0
+				} else{
+					rtn.entries[xIndex][yIndex][dIndex] += -1.0/(l.tau_grav) * l.weights[dIndex] * rho.entries[xIndex][yIndex] * (ep.entries[xIndex][yIndex]*2.0/float64(l.D)) * l.alpha * math.Pow( math.Pow(float64(d[0]), 2.0) + math.Pow(float64(d[1]), 2.0), -0.5) * (grav.entries[xIndex][yIndex][0]*float64(d[0]) + grav.entries[xIndex][yIndex][1]*float64(d[1]))
+				}
+			}
+		}
+	}
+	return rtn 
 }
 
 
@@ -202,7 +317,7 @@ func D2Constant(size1 int, size2 int, c float64) [][]float64{
 
 func circleBoundaryThousand(xIndex int, yIndex int) bool{
 
-	if (45-30<xIndex && 55+30>xIndex && 45-30<yIndex && 55+30>yIndex){
+	if (0<=xIndex && 100>xIndex && 0<=yIndex && 100>yIndex){
 		return false
 	}
 	return true
@@ -222,9 +337,6 @@ func convertFloatArrayToStringArray(floatArray []float64) []string{
 	}
 	return rtn
 }
-
-
-    
     
 func writeArrayCSV(floatArray [][]float64, fileName string){
     file, _ := os.Create(fileName)
@@ -237,6 +349,31 @@ func writeArrayCSV(floatArray [][]float64, fileName string){
     	stringValue := convertFloatArrayToStringArray(value)
         writer.Write(stringValue)
     }
+}
+
+
+func testArrayNaN2D(array [][]float64) bool{
+	for _, row := range array{
+		for _, el := range row{
+			if (math.IsNaN(el)){
+				return true
+			}
+		}	
+	}
+	return false
+}
+
+func testArrayNaN3D(array [][][]float64) bool{
+	for _, outer := range array{
+		for _, row := range outer{
+			for _, el := range row{
+				if (math.IsNaN(el)){
+					return true
+				}
+			}
+		}	
+	}
+	return false
 }
 
 
@@ -275,7 +412,7 @@ func main(){
 	vels := []float64{ 1.0, 3.0/(math.Pow(S, 2.0)), 9.0/(2.0*math.Pow(S,4.0)), -3.0/(2.0*math.Pow(S, 2.0))}
 	
 	// define the discritization
-	nt := 100
+	nt := 1000
 	nx := 100
 	ny := 100
 		
@@ -297,69 +434,135 @@ func main(){
 	var vf float64 = 0.00001 // kinematic viscosity
 	var tau_f float64 = vf/(math.Pow(S/math.Sqrt(3), 2.0)*dt) + 0.5 // check this
 	
+	var vg float64 = 0.00001 // a measure of thermal diffusivity
+	var tau_g float64 = vg/(math.Pow(S/math.Sqrt(3), 2.0) *dt  ) + 0.5 // relaxation time associated with thermal diffusion
+	
+	var vgrav float64 = 0.6
+	var tau_grav float64 = vgrav/(math.Pow(S/math.Sqrt(3), 2.0) *dt  ) + 0.5
+	
+	
+	var rhoBack float64 = 1000.0
+	var alpha float64 = 0.00001
+	
+	// set some fluid properties
+	D2Q9.rho = rhoBack
+	D2Q9.alpha = alpha
+	
+	
+	
+	
+	// set the relaxation times into our lattice
 	D2Q9.tau_f = tau_f
+	D2Q9.tau_g = tau_g
+	D2Q9.tau_grav = tau_grav
 	
 
 	
 	// then we define our arrays
 	var f D2Field
+	var g D2Field
 	var fstream D2Field
+	var gstream D2Field
 	var feq D2Field
+	var geq D2Field
 	var rho D2Property
+	var ep D2Property
 	var u D2Field
+	var gravity D2Field
 	
 	f.entries = D3Constant(nx, ny, Q, 0.0)
+	f.name = "f" 
+	g.entries = D3Constant(nx, ny, Q, 0.0)
+	g.name = "g"
 	fstream.entries =  D3Constant(nx, ny, Q, 0.0)
+	fstream.name = "f"
+	gstream.entries =  D3Constant(nx, ny, Q, 0.0)
+	gstream.name = "g"
 	feq.entries = D3Constant(nx, ny, Q, 0.0)
+	feq.name = "f"
+	geq.entries = D3Constant(nx, ny, Q, 0.0)
+	geq.name = "g"
 	rho.entries = D2Constant(nx, ny, 1.0)
+	ep.entries = D2Constant(nx, ny, 0.0)
 	u.entries = D3Constant(nx, ny, D, 0.0)
+	
+	// populate gravity Here I will assume a very simple gravitational field which we can change later
+	gravity.name = "gravity"
+	gravity.entries = D3Constant(nx, ny, 2, 0.0)
+	for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
+		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
+			gravity.entries[xIndex][yIndex][0] = 0
+			gravity.entries[xIndex][yIndex][1] = 9.8 // wil need to check the units on this later
+		}
+	}
+	
 	
 	
 	// lets set a simple flow in the x direction
 	fmt.Println("starting initial conditions")
 	for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-			if (!circleBoundaryThousand(xIndex,yIndex)){
+			if (!circleBoundaryThousand(xIndex, yIndex)){
 				for dIndex, _ := range D2Q9.directions{
-				
-					if (40 < xIndex && 60 > xIndex && 40 < yIndex && 60 > yIndex){
-						f.entries[xIndex][yIndex][dIndex] = 0.001*rand.Float64()
-					} else {
-						f.entries[xIndex][yIndex][dIndex] = 0.001*rand.Float64()
-					}
-					
-				}
-				/*
-				if (xIndex > 40 && xIndex < 60 && yIndex > 40 && yIndex < 60){
-					f.entries[xIndex][yIndex][1] = 0.001*rand.Float64()
-				} else{
-					f.entries[xIndex][yIndex][dIndex] = 0.0 + 0.0001*rand.Float64()
-				}
-				*/
-				
-					
-				
-				
+					f.entries[xIndex][yIndex][dIndex] = 1.0	
+				}				
 			}
 		}
 	}
 	
-	//feq := D3Zeros(nx, ny, Q)
-	//Deltaf := D3Zeros(nx, ny, Q)
-	
+	// We will also need to set the conditions for the q field initially.
 	ux := D2Constant(nx, ny, 0.0)
 	uy := D2Constant(nx, ny, 0.0)
 	
 	for n:=0;n<nt;n++{
-		// The only initial condition that we have is for f everywhere in the domainf
+		fmt.Println("starting loop" + strconv.Itoa(n))
+		
+		
+		
+		// fix the ep value (fix the temperature)
+		g.entries = D3Constant(nx, ny, Q, 0.0)
+		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
+			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
+				if (45 < xIndex && 55 > xIndex && 45 < yIndex && 55 > yIndex){
+					ep.entries[xIndex][yIndex] = 100
+				}
+				
+				for dIndex, _ := range D2Q9.directions{
+					g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * 2.0/float64(D2Q9.D) *ep.entries[xIndex][yIndex] * D2Q9.weights[dIndex]
+				}
+			}	
+		}
+		
+		// this gives some parts of the g field
+		
+		
+	
 		
 		fstream = streamingStep2D(f, D2Q9, circleBoundaryThousand)
+		gstream = streamingStep2D(g, D2Q9, circleBoundaryThousand)
 		f = fstream
-		rho, u = getMacro2D(f, D2Q9, circleBoundaryThousand) // looks good
-		feq = getEq2D(rho, u, D2Q9)
-
-
+		g = gstream
+		
+		
+		
+		
+		//rho, u = getMacro2D(f, D2Q9, circleBoundaryThousand) // this is used for the code without thermally driven flows
+		rho, ep, u = getMacro2DWithEp(f, g, D2Q9, circleBoundaryThousand)
 	
+		
+		//feq = getEq2D(rho, u, D2Q9) // this is used for the code without thermally driven flows
+		feq = getEq2Df(rho, u, D2Q9)
+		geq = getEq2Dg(rho, ep, u, D2Q9)
+		
+		
+		f = collisionStep(f, feq, D2Q9)
+		
+		g = collisionStep(g, feq, D2Q9)
+
+		
+		f = gravityAffect(f, gravity, rho, ep, D2Q9)
+		// we need to do gravity term.
+
 		
 		// record the results
 		fmt.Println("writting rho to csv")
@@ -380,13 +583,6 @@ func main(){
 		name = "u//uy"+strconv.Itoa(n)+".csv"
 		writeArrayCSV(uy, name)
 		fmt.Println("done writting u")
-		
-		f = collisionStep(f, feq, D2Q9)
-		
-		
-		
-		
-		fmt.Println("step: " + strconv.Itoa(n))
 	
 	}
 	
