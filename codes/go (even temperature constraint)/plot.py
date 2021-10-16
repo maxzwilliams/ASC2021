@@ -5,6 +5,7 @@ Python program for plotting the output of the go LB code
 import math
 import csv
 import sys
+import numpy as np
 
 import copy
 import matplotlib.pyplot as plt
@@ -17,6 +18,10 @@ def convertToArray(fileName):
 	rows = []
 	for row in csvr:
 		rows.append(row)
+
+	rows = np.array(rows, dtype=np.float64)
+
+	rows = np.rot90(rows)
 	return rows
 	
 def convertStringArrayToFloatArray(stringArray2D):
@@ -43,10 +48,29 @@ def goPlot(data, vmin, vmax, name):
 	plt.title(name)
 	plt.savefig(name+".png")
 	print("done plotting")
-	plt.close()
-	
-	
+	fig.clf()
+	plt.close("all")
 
+	del fig
+	del pc
+	del ax
+
+
+def getTotalEnergy(data):
+
+	s = 0
+	for row in data:
+		for el in row:
+			s += el
+
+	return s
+
+def plotEnergies(times, energies):
+	plt.plot(times, energies)
+	plt.xlabel("timestep (arb. units)")
+	plt.ylabel("Total energy (arb. units)")
+	plt.savefig("Energies.png")
+	plt.close()
 	
 
 if __name__ == "__main__":
@@ -61,8 +85,11 @@ if __name__ == "__main__":
 
 		
 	
-	
+	energies = []
+	times = []
+	counter = 0
 	for el in fileSets:
+		
 		uxData = convertToArray(el[0])
 		uxData = convertStringArrayToFloatArray(uxData)
 		uyData = convertToArray(el[1])
@@ -70,13 +97,17 @@ if __name__ == "__main__":
 		rhoData = convertToArray(el[2])
 		rhoData = convertStringArrayToFloatArray(rhoData)
 
-
-		
 		goPlot(uxData, None, None, "p"+el[0] )
 		goPlot(uyData, None, None, "p"+el[1])
 		goPlot(rhoData, None, None,"p"+el[2])
-
+		
 		epData = convertToArray(el[3])
 		epData = convertStringArrayToFloatArray(epData)
 		goPlot(epData, None, None,"p"+el[3])
 		
+		energies.append(getTotalEnergy(epData))
+		times.append(counter)
+		counter = counter + stepSize
+	plotEnergies(times, energies)
+
+
