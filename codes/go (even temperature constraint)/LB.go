@@ -513,8 +513,8 @@ func main(){
 	gravity.entries = D3Constant(nx, ny, 2, 0.0)
 	for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-			gravity.entries[xIndex][yIndex][0] = 0
-			gravity.entries[xIndex][yIndex][1] = 1 // will need to check the units on this later
+			gravity.entries[xIndex][yIndex][0] = 0.0
+			gravity.entries[xIndex][yIndex][1] = 1.0 // will need to check the units on this later
 		}
 	}
 	
@@ -547,12 +547,6 @@ func main(){
 	fmt.Println("starting computation")
 
 
-	randomNumbers1 := make([]float64, 0)
-	randomNumbers2 := make([]float64, 0)
-	for index:=0;index<D2Q9.nx;index++{
-		randomNumbers1 = append(randomNumbers1, 2.0*rand.Float64() - 1.0)
-		randomNumbers2 = append(randomNumbers2, 2.0*rand.Float64() - 1.0)
-	}
 
 	for n:=0;n<nt;n++{
 		fmt.Printf("\rstarting loop" + strconv.Itoa(n))
@@ -562,12 +556,12 @@ func main(){
 		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
 
-				if (yIndex<5){
+				if (yIndex<3){
 					//ep.entries[xIndex][yIndex] = -0.001 + 0.00025*(math.Sin( 1.0/10.0 * float64(xIndex)))
 
 					// fix g here
 					for dIndex, _ := range D2Q9.directions{
-						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * (-0.001 + 0.00025*randomNumbers1[xIndex]  )) * D2Q9.weights[dIndex]
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * (-0.001 + 0.00025 * (2.0*rand.Float64() - 1.0)  )) * D2Q9.weights[dIndex]
 					}
 
 
@@ -577,55 +571,17 @@ func main(){
 
 					// fix g here
 					for dIndex, _ := range D2Q9.directions{
-						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * (0.001 + 0.00025*randomNumbers2[xIndex] )) * D2Q9.weights[dIndex]
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * (0.001 + 0.00025*(2.0*rand.Float64() - 1.0) )) * D2Q9.weights[dIndex]
 					}
 
 				}
 
 			}	
 		}
-
-
-		
-
-		
-		/*
-		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
-			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-				if (45<xIndex && 55>xIndex && 45 < yIndex && 55>yIndex){
-
-					ep.entries[xIndex][yIndex] = 0.001
-
-					for dIndex, _ := range D2Q9.directions{
-						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D)) * ep.entries[xIndex][yIndex] * D2Q9.weights[dIndex]
-					}
-
-				}
-
-			}	
-		}
-		*/
-
-
-
-
-		
-		
-		
-
-		
-		
-		
-		
-	
-		
 		fstream = streamingStep2D(f, D2Q9, circleBoundaryThousand)
 		gstream = streamingStep2D(g, D2Q9, circleBoundaryThousand) // there is a problem here, somehow g gets to be (after this) such that ep grows very big/wrong
 		f = fstream
 		g = gstream
-		
-		
-		
 		
 		//rho, u = getMacro2D(f, D2Q9, circleBoundaryThousand) // this is used for the code without thermally driven flows
 		rho, ep, u = getMacro2DWithEp(f, g, D2Q9, circleBoundaryThousand)
