@@ -189,7 +189,7 @@ func getEq2Df(rho D2Property, u D2Field, l lattice) D2Field{
 				term3 = l.vels[2] * math.Pow(( float64(d[0])*u.entries[xIndex][yIndex][0] + float64(d[1])*u.entries[xIndex][yIndex][1] ), 2.0)
 				term4 = l.vels[3] * (u.entries[xIndex][yIndex][0]*u.entries[xIndex][yIndex][0] + u.entries[xIndex][yIndex][1]*u.entries[xIndex][yIndex][1]   )
 				
-				f.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * l.weights[dIndex]*(term1 + term2 + term3 + term4)
+				f.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * l.weights[dIndex] * (term1 + term2 + term3 + term4)
 			}
 		}
 	}
@@ -259,22 +259,30 @@ func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lat
 	
 	var rtn D2Field
 	//entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
-	rtn.entries = f.entries
+	rtn.entries = D3Constant(l.nx, l.ny, l.Q, 0.0)
 	rtn.name = "f"
 	
 	for dIndex, d := range l.directions{
 		for xIndex:=0;xIndex<l.nx;xIndex++{
 			for yIndex:=0;yIndex<l.ny;yIndex++{
+
+
+
+				//rtn.entries[xIndex][yIndex][dIndex] += -1.0/(l.tau_grav) * 1.0 * l.weights[dIndex] * l.rho * l.alpha * 1.0 * float64(d[1]) * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) )
+
+				
+
 				if (dIndex == 0){
-					rtn.entries[xIndex][yIndex][dIndex] += 0
+					rtn.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + 0.0
 				} else{
 
 					//term := -1/(l.tau_grav) * 3.0 * l.weights[dIndex] * float64(d[1]) * (-rho.entries[xIndex][yIndex]) * l.alpha * 1.0 * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) )
 					//term = 0.0
 					term := -1.0/(l.tau_grav) * l.weights[dIndex] * rho.entries[xIndex][yIndex] * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) ) * l.alpha * math.Pow( math.Pow(float64(d[0]), 2.0) + math.Pow(float64(d[1]), 2.0), -0.5) * (grav.entries[xIndex][yIndex][0]*float64(d[0]) + grav.entries[xIndex][yIndex][1]*float64(d[1]))
 					//fmt.Println(term)
-					rtn.entries[xIndex][yIndex][dIndex] += term
+					rtn.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + term
 				}
+				
 				/*
 				if (dIndex == 3 || dIndex == l.opposites[3] ){
 					term := -1/(l.tau_grav) * 3.0 * l.weights[dIndex] * float64(d[1]) * (-rho.entries[xIndex][yIndex]) * l.alpha * 1.0 * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) )
@@ -419,7 +427,12 @@ func main(){
 	
 	op := []int{0, 2, 1, 4, 3, 6, 5, 8, 7}
 	
+
 	vels := []float64{ 1.0, 3.0/(math.Pow(S, 2.0)), 9.0/(2.0*math.Pow(S,4.0)), -3.0/(2.0*math.Pow(S, 2.0))}
+	fmt.Println(vels)
+
+	// trying a different eq method
+	//vels = []float64{ 1.0, 0.0, 0.0, 0.0}
 	
 	// define the discritization
 	nt := 10000000
@@ -454,7 +467,7 @@ func main(){
 	
 	
 	var rhoBack float64 = 1000.0
-	var alpha float64 = 1
+	var alpha float64 = 0.1
 	
 	// set some fluid properties
 	D2Q9.rho = rhoBack
@@ -541,35 +554,37 @@ func main(){
 	for n:=0;n<nt;n++{
 		fmt.Printf("\rstarting loop" + strconv.Itoa(n))
 
-
-		
 		// fix the ep value (fix the temperature)
 		// fix g at the bonudry aswell
 		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
 
 				if (yIndex<20 && yIndex > 15){
-					ep.entries[xIndex][yIndex] = -0.001 + 0.00025*(math.Sin( 1.0/10.0 * float64(xIndex)))
+					//ep.entries[xIndex][yIndex] = -0.001 + 0.00025*(math.Sin( 1.0/10.0 * float64(xIndex)))
 
 					// fix g here
 					for dIndex, _ := range D2Q9.directions{
-						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * ep.entries[xIndex][yIndex]) * D2Q9.weights[dIndex]
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * (-0.001 + 0.00025*(math.Sin( 1.0/10.0 * float64(xIndex))))) * D2Q9.weights[dIndex]
 					}
 
 
 				}
 				if (yIndex > 85 && yIndex < 90  ){
-					ep.entries[xIndex][yIndex] = +0.001 + 0.00025*(math.Sin(1.0/10.0 * float64(xIndex)))
+					//ep.entries[xIndex][yIndex] = +0.001 + 0.00025*(math.Sin(1.0/10.0 * float64(xIndex)))
 
 					// fix g here
 					for dIndex, _ := range D2Q9.directions{
-						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * ep.entries[xIndex][yIndex]) * D2Q9.weights[dIndex]
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * (0.001 + 0.00025*(math.Sin( 1.0/10.0 * float64(xIndex))))) * D2Q9.weights[dIndex]
 					}
 
 				}
 
 			}	
 		}
+
+
+		
+
 		
 		/*
 		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
@@ -613,29 +628,6 @@ func main(){
 		rho, ep, u = getMacro2DWithEp(f, g, D2Q9, circleBoundaryThousand)
 
 
-
-
-	
-		
-		//feq = getEq2D(rho, u, D2Q9) // this is used for the code without thermally driven flows
-		
-		geq = getEq2Dg(rho, ep, u, D2Q9)
-		feq = getEq2Df(rho, u, D2Q9)
-
-		
-		
-		f = collisionStep(f, feq, D2Q9)
-		
-		g = collisionStep(g, geq, D2Q9)
-
-		
-		f = gravityAffect(f, gravity, rho, ep, D2Q9)
-		
-		// theres another term isnt there?
-
-		
-		// record the results
-
 		if ( n % 100  == 0){
 			//fmt.Println("writting rho to csv")
 			name := "rho//rho"+strconv.Itoa(n)+".csv"
@@ -658,6 +650,30 @@ func main(){
 			writeArrayCSV(uy, name)
 			//fmt.Println("done writting u")
 		}
+
+
+
+
+	
+		
+		//feq = getEq2D(rho, u, D2Q9) // this is used for the code without thermally driven flows
+		
+		geq = getEq2Dg(rho, ep, u, D2Q9)
+		feq = getEq2Df(rho, u, D2Q9)
+
+		f = collisionStep(f, feq, D2Q9)
+		
+		g = collisionStep(g, geq, D2Q9)
+
+		
+		f = gravityAffect(f, gravity, rho, ep, D2Q9)
+		
+		// theres another term isnt there?
+
+		
+		// record the results
+
+
 
 	
 	}
