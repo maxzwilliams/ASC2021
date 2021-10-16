@@ -52,7 +52,6 @@ type lattice struct{ // defines the lattice we are solving the problem on
 type boundary func(cord1 int, cord2 int) bool
 
 func streamingStep2D(f1 D2Field, l lattice, b boundary) D2Field{
-// somehow this step induces asymetry
 	var f2 D2Field
 	entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
 	f2.entries = entries
@@ -117,14 +116,17 @@ func getMacro2DWithEp(f D2Field, g D2Field, l lattice, b boundary) (D2Property, 
 	
 	for xIndex:=0;xIndex<l.nx;xIndex++{
 		for yIndex:=0;yIndex<l.ny;yIndex++{
+
 			if (!b(xIndex, yIndex)){
+
 				for dIndex, _ := range l.directions{
 					rho.entries[xIndex][yIndex] += f.entries[xIndex][yIndex][dIndex]
 				}
+
 				for dIndex, d := range l.directions{
-					u.entries[xIndex][yIndex][0] += float64(d[0]) * f.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
-					u.entries[xIndex][yIndex][1] += float64(d[1]) * f.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
-					ep.entries[xIndex][yIndex] += g.entries[xIndex][yIndex][dIndex]/rhoentries[xIndex][yIndex]
+					u.entries[xIndex][yIndex][0] += float64(d[0]) * f.entries[xIndex][yIndex][dIndex]/rho.entries[xIndex][yIndex]
+					u.entries[xIndex][yIndex][1] += float64(d[1]) * f.entries[xIndex][yIndex][dIndex]/rho.entries[xIndex][yIndex]
+					ep.entries[xIndex][yIndex] += g.entries[xIndex][yIndex][dIndex]/rho.entries[xIndex][yIndex]
 				}
 			}
 		}
@@ -226,9 +228,6 @@ func getEq2Dg(rho D2Property, ep D2Property, u D2Field, l lattice) D2Field{
 }
 
 
-
-
-
 func collisionStep(f D2Field, feq D2Field, l lattice) D2Field{
 	var rtn D2Field
 	entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
@@ -269,14 +268,27 @@ func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lat
 				if (dIndex == 0){
 					rtn.entries[xIndex][yIndex][dIndex] += 0
 				} else{
-					rtn.entries[xIndex][yIndex][dIndex] += -1.0/(l.tau_grav) * l.weights[dIndex] * rho.entries[xIndex][yIndex] * (ep.entries[xIndex][yIndex]*2.0/float64(l.D)) * l.alpha * math.Pow( math.Pow(float64(d[0]), 2.0) + math.Pow(float64(d[1]), 2.0), -0.5) * (grav.entries[xIndex][yIndex][0]*float64(d[0]) + grav.entries[xIndex][yIndex][1]*float64(d[1]))
+
+					//term := -1/(l.tau_grav) * 3.0 * l.weights[dIndex] * float64(d[1]) * (-rho.entries[xIndex][yIndex]) * l.alpha * 1.0 * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) )
+					//term = 0.0
+					term := -1.0/(l.tau_grav) * l.weights[dIndex] * rho.entries[xIndex][yIndex] * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) ) * l.alpha * math.Pow( math.Pow(float64(d[0]), 2.0) + math.Pow(float64(d[1]), 2.0), -0.5) * (grav.entries[xIndex][yIndex][0]*float64(d[0]) + grav.entries[xIndex][yIndex][1]*float64(d[1]))
+					//fmt.Println(term)
+					rtn.entries[xIndex][yIndex][dIndex] += term
 				}
+				/*
+				if (dIndex == 3 || dIndex == l.opposites[3] ){
+					term := -1/(l.tau_grav) * 3.0 * l.weights[dIndex] * float64(d[1]) * (-rho.entries[xIndex][yIndex]) * l.alpha * 1.0 * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) )
+					rtn.entries[xIndex][yIndex][dIndex] += term
+				}
+				*/
+				
+
+				
 			}
 		}
 	}
 	return rtn 
 }
-
 
 
 func D3Constant(size1 int, size2 int, size3 int, c float64) [][][]float64{
@@ -311,13 +323,12 @@ func D2Constant(size1 int, size2 int, c float64) [][]float64{
 		rtn = append(rtn, inner)
 	}
 	return rtn 
-	
 }
 
 
 func circleBoundaryThousand(xIndex int, yIndex int) bool{
 
-	if (0<=xIndex && 100>xIndex && 0<=yIndex && 100>yIndex){
+	if (0<=xIndex && 200>xIndex && 0<=yIndex && 100>yIndex){
 		return false
 	}
 	return true
@@ -376,7 +387,6 @@ func testArrayNaN3D(array [][][]float64) bool{
 	return false
 }
 
-
 func main(){
 	s1 := rand.NewSource(time.Now().UnixNano())
 	rand.New(s1)
@@ -391,8 +401,8 @@ func main(){
 	
 	
 	var D2Q9 lattice
+
 	ws := []float64{4.0/9.0, 1.0/9.0, 1.0/9.0, 1.0/9.0, 1.0/9.0, 1.0/36.0, 1.0/36.0, 1.0/36.0, 1.0/36.0}
-	fmt.Println(ws[0])
 	
 	v1 := []int{0,0} 
 	v2 := []int{1,0} 
@@ -412,8 +422,8 @@ func main(){
 	vels := []float64{ 1.0, 3.0/(math.Pow(S, 2.0)), 9.0/(2.0*math.Pow(S,4.0)), -3.0/(2.0*math.Pow(S, 2.0))}
 	
 	// define the discritization
-	nt := 1000
-	nx := 100
+	nt := 10000000
+	nx := 200
 	ny := 100
 		
 	D2Q9.weights = ws
@@ -431,18 +441,20 @@ func main(){
 	
 	
 	// lets define our constants 
-	var vf float64 = 0.00001 // kinematic viscosity
-	var tau_f float64 = vf/(math.Pow(S/math.Sqrt(3), 2.0)*dt) + 0.5 // check this
+	var vf float64 = 0.1 // kinematic viscosity
+	var tau_f float64 = vf/(math.Pow(S/math.Sqrt(3), 2.0) * dt) + 0.5 // check this
 	
-	var vg float64 = 0.00001 // a measure of thermal diffusivity
-	var tau_g float64 = vg/(math.Pow(S/math.Sqrt(3), 2.0) *dt  ) + 0.5 // relaxation time associated with thermal diffusion
-	
+	var vg float64 = 0.00002 // a measure of thermal diffusivity
+	//var vg float64 = 10000 // a measure of thermal diffusivity
+	var tau_g float64 = vg/(math.Pow(S/math.Sqrt(3), 2.0) * dt  ) + 0.5 // relaxation time associated with thermal diffusion
+	//tau_g = 0.0 // this should throw a million errors // so clearly this isnt being used properly by the program.
+
 	var vgrav float64 = 0.6
-	var tau_grav float64 = vgrav/(math.Pow(S/math.Sqrt(3), 2.0) *dt  ) + 0.5
+	var tau_grav float64 = vgrav/(math.Pow(S/math.Sqrt(3), 2.0) * dt  ) + 0.5
 	
 	
 	var rhoBack float64 = 1000.0
-	var alpha float64 = 0.00001
+	var alpha float64 = 1
 	
 	// set some fluid properties
 	D2Q9.rho = rhoBack
@@ -492,7 +504,7 @@ func main(){
 	for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
 			gravity.entries[xIndex][yIndex][0] = 0
-			gravity.entries[xIndex][yIndex][1] = 9.8 // wil need to check the units on this later
+			gravity.entries[xIndex][yIndex][1] = 1 // will need to check the units on this later
 		}
 	}
 	
@@ -504,7 +516,15 @@ func main(){
 		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
 			if (!circleBoundaryThousand(xIndex, yIndex)){
 				for dIndex, _ := range D2Q9.directions{
-					f.entries[xIndex][yIndex][dIndex] = 1.0	
+
+					f.entries[xIndex][yIndex][dIndex] = 1.0/9.0
+					/*
+					if (dIndex == 0){
+						f.entries[xIndex][yIndex][dIndex] = 0.001	
+					} else {
+						f.entries[xIndex][yIndex][dIndex] = 0.0
+					}
+					*/
 				}				
 			}
 		}
@@ -514,32 +534,75 @@ func main(){
 	ux := D2Constant(nx, ny, 0.0)
 	uy := D2Constant(nx, ny, 0.0)
 	
+	fmt.Println("starting computation")
+
+
+
 	for n:=0;n<nt;n++{
-		fmt.Println("starting loop" + strconv.Itoa(n))
-		
-		
+		fmt.Printf("\rstarting loop" + strconv.Itoa(n))
+
+
 		
 		// fix the ep value (fix the temperature)
-		g.entries = D3Constant(nx, ny, Q, 0.0)
+		// fix g at the bonudry aswell
 		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-				if (45 < xIndex && 55 > xIndex && 45 < yIndex && 55 > yIndex){
-					ep.entries[xIndex][yIndex] = 100
+
+				if (yIndex<20 && yIndex > 15){
+					ep.entries[xIndex][yIndex] = -0.001 + 0.00025*(math.Sin( 1.0/10.0 * float64(xIndex)))
+
+					// fix g here
+					for dIndex, _ := range D2Q9.directions{
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * ep.entries[xIndex][yIndex]) * D2Q9.weights[dIndex]
+					}
+
+
 				}
-				
-				for dIndex, _ := range D2Q9.directions{
-					g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * 2.0/float64(D2Q9.D) *ep.entries[xIndex][yIndex] * D2Q9.weights[dIndex]
+				if (yIndex > 85 && yIndex < 90  ){
+					ep.entries[xIndex][yIndex] = +0.001 + 0.00025*(math.Sin(1.0/10.0 * float64(xIndex)))
+
+					// fix g here
+					for dIndex, _ := range D2Q9.directions{
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * ep.entries[xIndex][yIndex]) * D2Q9.weights[dIndex]
+					}
+
 				}
+
 			}	
 		}
 		
-		// this gives some parts of the g field
+		/*
+		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
+			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
+				if (45<xIndex && 55>xIndex && 45 < yIndex && 55>yIndex){
+
+					ep.entries[xIndex][yIndex] = 0.001
+
+					for dIndex, _ := range D2Q9.directions{
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D)) * ep.entries[xIndex][yIndex] * D2Q9.weights[dIndex]
+					}
+
+				}
+
+			}	
+		}
+		*/
+
+
+
+
+		
+		
+		
+
+		
+		
 		
 		
 	
 		
 		fstream = streamingStep2D(f, D2Q9, circleBoundaryThousand)
-		gstream = streamingStep2D(g, D2Q9, circleBoundaryThousand)
+		gstream = streamingStep2D(g, D2Q9, circleBoundaryThousand) // there is a problem here, somehow g gets to be (after this) such that ep grows very big/wrong
 		f = fstream
 		g = gstream
 		
@@ -548,41 +611,54 @@ func main(){
 		
 		//rho, u = getMacro2D(f, D2Q9, circleBoundaryThousand) // this is used for the code without thermally driven flows
 		rho, ep, u = getMacro2DWithEp(f, g, D2Q9, circleBoundaryThousand)
+
+
+
+
 	
 		
 		//feq = getEq2D(rho, u, D2Q9) // this is used for the code without thermally driven flows
-		feq = getEq2Df(rho, u, D2Q9)
+		
 		geq = getEq2Dg(rho, ep, u, D2Q9)
+		feq = getEq2Df(rho, u, D2Q9)
+
 		
 		
 		f = collisionStep(f, feq, D2Q9)
 		
-		g = collisionStep(g, feq, D2Q9)
+		g = collisionStep(g, geq, D2Q9)
 
 		
 		f = gravityAffect(f, gravity, rho, ep, D2Q9)
-		// we need to do gravity term.
+		
+		// theres another term isnt there?
 
 		
 		// record the results
-		fmt.Println("writting rho to csv")
-		name := "rho//rho"+strconv.Itoa(n)+".csv"
-		writeArrayCSV(rho.entries, name)
-		fmt.Println("done writting rho")
-		
-		
-		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
-			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-				ux[xIndex][yIndex] = u.entries[xIndex][yIndex][0]
-				uy[xIndex][yIndex] = u.entries[xIndex][yIndex][1]
+
+		if ( n % 100  == 0){
+			//fmt.Println("writting rho to csv")
+			name := "rho//rho"+strconv.Itoa(n)+".csv"
+			writeArrayCSV(rho.entries, name)
+			name = "ep//ep"+strconv.Itoa(n)+".csv"
+			writeArrayCSV(ep.entries, name)
+			//fmt.Println("done writting rho")
+			
+			
+			for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
+				for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
+					ux[xIndex][yIndex] = u.entries[xIndex][yIndex][0]
+					uy[xIndex][yIndex] = u.entries[xIndex][yIndex][1]
+				}
 			}
+			//fmt.Println("writting u to csv")
+			name = "u//ux"+strconv.Itoa(n)+".csv"
+			writeArrayCSV(ux, name)
+			name = "u//uy"+strconv.Itoa(n)+".csv"
+			writeArrayCSV(uy, name)
+			//fmt.Println("done writting u")
 		}
-		fmt.Println("writting u to csv")
-		name = "u//ux"+strconv.Itoa(n)+".csv"
-		writeArrayCSV(ux, name)
-		name = "u//uy"+strconv.Itoa(n)+".csv"
-		writeArrayCSV(uy, name)
-		fmt.Println("done writting u")
+
 	
 	}
 	

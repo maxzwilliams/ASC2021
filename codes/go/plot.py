@@ -36,7 +36,7 @@ def convertStringArrayToFloatArray(stringArray2D):
 def goPlot(data, vmin, vmax, name):
 	print("plotting")
 	fig, ax = plt.subplots(dpi=120)
-	pc = ax.pcolorfast(data)
+	pc = ax.pcolorfast(data, vmin=vmin, vmax=vmax)
 	plt.colorbar(pc)
 	plt.xlabel("x")
 	plt.ylabel("y")
@@ -56,7 +56,9 @@ if __name__ == "__main__":
 	
 	fileSets = []
 	for index in range(plotsMin,plotsMax+1, stepSize):
-		fileSets.append(["u//ux"+str(index)+".csv", "u//uy"+str(index)+".csv", "rho//rho"+str(index)+".csv"  ])
+		fileSets.append(["u//ux"+str(index)+".csv", "u//uy"+str(index)+".csv", "rho//rho"+str(index)+".csv", "ep//ep"+str(index)+".csv"  ])
+		##fileSets.append(["u//ux"+str(index)+".csv", "u//uy"+str(index)+".csv", "rho//rho"+str(index)+".csv"])
+
 		
 	
 	
@@ -67,7 +69,14 @@ if __name__ == "__main__":
 		uyData = convertStringArrayToFloatArray(uyData)
 		rhoData = convertToArray(el[2])
 		rhoData = convertStringArrayToFloatArray(rhoData)
+
+
 		
-		goPlot(uxData, 0.9, 1.1, "p"+el[0] )
-		goPlot(uyData, 0.9, 1.1, "p"+el[1])
-		goPlot(rhoData, 0.9, 1.1,"p"+el[2])
+		goPlot(uxData, None, None, "p"+el[0] )
+		goPlot(uyData, None, None, "p"+el[1])
+		goPlot(rhoData, None, None,"p"+el[2])
+
+		epData = convertToArray(el[3])
+		epData = convertStringArrayToFloatArray(epData)
+		goPlot(epData, None, None,"p"+el[3])
+		
