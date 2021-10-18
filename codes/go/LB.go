@@ -464,7 +464,7 @@ func main(){
 	
 	
 	var rhoBack float64 = 1000.0
-	var alpha float64 = 0.1
+	var alpha float64 = 1
 	
 	// set some fluid properties
 	D2Q9.rho = rhoBack
@@ -527,7 +527,7 @@ func main(){
 			if (!circleBoundaryThousand(xIndex, yIndex)){
 				for dIndex, _ := range D2Q9.directions{
 
-					f.entries[xIndex][yIndex][dIndex] = 1.0/9.0
+					f.entries[xIndex][yIndex][dIndex] = D2Q9.weights[dIndex]
 					/*
 					if (dIndex == 0){
 						f.entries[xIndex][yIndex][dIndex] = 0.001	
@@ -543,16 +543,21 @@ func main(){
 	// We will also need to set the conditions for the q field initially.
 	ux := D2Constant(nx, ny, 0.0)
 	uy := D2Constant(nx, ny, 0.0)
-	
-	fmt.Println("starting computation")
-
 
 	randomNumbers1 := make([]float64, 0)
 	randomNumbers2 := make([]float64, 0)
+
 	for index:=0;index<D2Q9.nx;index++{
-		randomNumbers1 = append(randomNumbers1, 2.0*rand.Float64() - 1.0)
-		randomNumbers2 = append(randomNumbers2, 2.0*rand.Float64() - 1.0)
+
+		randomNumbers1 = append(randomNumbers1, (2.0*rand.Float64() - 1.0))
+		randomNumbers2 = append(randomNumbers2, (2.0*rand.Float64() - 1.0))
 	}
+
+
+
+
+	
+	fmt.Println("starting computation")
 
 	for n:=0;n<nt;n++{
 		fmt.Printf("\rstarting loop" + strconv.Itoa(n))
@@ -562,7 +567,7 @@ func main(){
 		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
 
-				if (yIndex<5){
+				if (yIndex<3){
 					//ep.entries[xIndex][yIndex] = -0.001 + 0.00025*(math.Sin( 1.0/10.0 * float64(xIndex)))
 
 					// fix g here
@@ -577,7 +582,7 @@ func main(){
 
 					// fix g here
 					for dIndex, _ := range D2Q9.directions{
-						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * (0.001 + 0.00025*randomNumbers2[xIndex] )) * D2Q9.weights[dIndex]
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * (0.001 + 0.00025*randomNumbers2[xIndex]  )) * D2Q9.weights[dIndex]
 					}
 
 				}

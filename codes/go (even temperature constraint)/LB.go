@@ -527,7 +527,7 @@ func main(){
 			if (!circleBoundaryThousand(xIndex, yIndex)){
 				for dIndex, _ := range D2Q9.directions{
 
-					f.entries[xIndex][yIndex][dIndex] = 1.0/9.0
+					f.entries[xIndex][yIndex][dIndex] = D2Q9.weights[dIndex]
 					/*
 					if (dIndex == 0){
 						f.entries[xIndex][yIndex][dIndex] = 0.001	
