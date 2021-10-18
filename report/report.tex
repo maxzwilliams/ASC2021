@@ -202,8 +202,6 @@ Where the superscript $(k)$ means the result of the $k^{th}$ iteration of the ab
 
 
 \subsubsection*{Lattice Boltzman Method}
-
-
 {\it{In this section I give a brief introduction to the Lattice Boltzman Method and why its different from most numerical tehcniques. I introduce a 2-dimensional lattice D2Q9 and discribe the Thermal Lattice Boltzman method (TLBM) which is employed by my numerical solution to simulate convection.}}
 \vspace{0.3cm}
 
@@ -316,13 +314,17 @@ In both streamfunction-vorticity codes, boundaries were assumed to be fluid-impe
 back" boundary condition was used. This is a fluid-impermiable, insulating and slip boundry.
 
 \section*{Advection and Heat Conservation}
-We next tested the accuracy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero to avoid convection and a segment of the fluid was set to 1 unit of temperature with all other regions set to 0 units of temperature. In the first test, the streamfunction was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 
+Next we tested the accuarcy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero to avoid convection 
+and a segment of the fluid was set to 1 unit of temperature with all other regions set to 0 units of temperature. In the first test, the streamfunction 
+was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 
 
 \begin{figure}
 	\centering
 	\includegraphics{frog.png}
-	\caption{Polar azimuthal advection test. Temperature (color) is plotted in polar space. Red dot indicates temperature weighted mean position within the fluid and is taken as the location of the temperature 1 zone. 
-	(a) shows the initial condition, (b) shows the fluid being advected through the periodic boundry condition, (c) the analytic result for when the fluid would return to its initial state and (d) the final state of the fluid.
+	\caption{Polar azimuthal advection test. Temperature (color) is plotted in polar space. Red dot indicates temperature weighted mean position within 
+	the fluid and is taken as the location of the temperature 1 zone. 
+	(a) shows the initial condition, (b) shows the fluid being advected through the periodic boundry condition, (c) the analytic result for when the fluid 
+	would return to its initial state and (d) the final state of the fluid.
 	Times are given above each pane.}
 \end{figure}
 
@@ -338,16 +340,34 @@ The second set of tests moved the fluid in a diagonal motion over the domain bri
 \begin{figure}
 	\centering 
 	\includegraphics{frog.png}
-	\caption{Cartesian diagonal advection test. Temperature (color) is plotted in polar space. Red dot indicates temperature weighted mean position within the fluid and is taken as the location of the temperature 1 zone.}
+	\caption{Cartesian diagonal advection test. Temperature (color) is plotted in polar space. Red dot indicates temperature weighted mean position within 
+	the fluid and is taken as the location of the temperature 1 zone.}
 \end{figure}
 
-I will also have a test of heat conservation. Here. This will be simple, just a few pictures of the codes running (show some nice plumes) and the energy vs time graph. It shows that neither of these conserve thermal energy.
+I will also have a test of heat conservation. Here. This will be simple, just a few pictures of the codes running (show some nice plumes) and the energy 
+vs time graph. It shows that neither of these conserve thermal energy.
 
 
 \section*{Results}
 
-\section*{}
 
+\subsection*{How much does the central region matter??}
+
+
+\subsection*{Conditions For Convection In The Inner Core}
+
+
+
+\section*{Dicussion}
+
+
+\section*{Conclusion}
+
+
+\section*{Appendix}
+
+\subsection*{Derivation of Graviational Field in a self gravitating fluid}
+We assume that the Earth is homogenous accross polar and azimuthal variations. By applying Gauss's law to this that 
 
 
 \bibliographystyle{abbrv}
