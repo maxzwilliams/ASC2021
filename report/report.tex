@@ -6,6 +6,9 @@
 \usepackage{afterpage}
 \usepackage{url}
 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
 \usepackage{amsmath}
 
 
@@ -268,12 +271,46 @@ and,
 	\rho \epsilon = \sum_{i=0}^{i=8} g_{i}.
 	\label{LBM ep}
 \end{equation}
-The forcing terms $F_i$ and $G_i$ are problem dependent. For thermal convection we only need thermal
+The forcing terms $F_i$ and $G_i$ are problem dependent. For thermal convection $G_i=0$ and $F_i$ is a gravitational term ${\Delta f}_{\alpha}$:
+\begin{equation}
+	{\Delta f}_{\alpha} = - w_{\alpha} \rho \alpha \epsilon \frac{\vec{e}_{\alpha}}{\mid \vec{e}_{\alpha} \mid} \cdot \vec{g} \frac{1}{\tau_{grav}},
+\end{equation}
+where $\mid \mid$ is the vector norm and $\vec{g}$ is the gravitational acceleration. Here $\tau_{grav}$ is the relaxation time for the gravitational field. We take $\tau_g=0.6$ here, following \cite{mora2017simulation}. The algorithm used to evolve the above TLBM equations is given in algorithm \ref{alg:TLBM}
 
+\begin{algorithm}[h!]
+\caption{Thermal Lattice Boltzman Algorithm}\label{alg:TLBM}
+\begin{algorithmic}
+
+\State $f_{\alpha} = \rho_0 w_{\alpha}$
+\State $\epsilon = 0$
+\State $\epsilon_b$
+\State $\rho = 0$
+\State $\vec{u} = 0$
+\While{Simulation Running}
+	\State $g_{\alpha} += \rho \epsilon_b w_{\alpha} $
+	\If{$x-\vec{e}_{\alpha}$ is solid}
+		\State $f_{\alpha}(x) = f_{\alpha'}(x)$
+		\State $g_{\alpha}(x) = g_{\alpha'}(x)$
+	\Else
+		\State $f_{\alpha}(x) = f_{\alpha}(x - \vec{e}_{\alpha})$
+		\State $g_{\alpha}(x) = g_{\alpha}(x - \vec{e}_{\alpha})$
+	\EndIf
+	\State $\rho = \sum_{i=0}^{i=8} f_{i}$
+	\State $\vec{u} =\frac{(\sum_{i=0}^{i=8} f_{i} \vec{e}_{i})}{\rho} $
+	\State $\epsilon = \frac{\sum_{i=0}^{i=8} g_{i}}{\rho}$
+	\State $f^{eq}_{\alpha} = \rho w_{\alpha} (1 + 3 \frac{\vec{e}_{\alpha} \cdot \vec{u}}{s^2} + \frac{9}{2} \frac{(\vec{e}_{\alpha} \cdot \vec{u}  )^2}{c^4} - \frac{3}{2} \frac{\vec{u} \cdot \vec{u}}{c^2})  $
+	\State $g^{eq}_{\alpha}(\vec{x}, t)  = \epsilon \rho w_{\alpha} (1 + 3 \frac{\vec{e}_{\alpha} \cdot \vec{u}}{s^2} + \frac{9}{2} \frac{(\vec{e}_{\alpha} \cdot \vec{u}  )^2}{c^4} - \frac{3}{2} \frac{\vec{u} \cdot \vec{u}}{c^2}  ) $ 
+	\State ${\Delta f}_{\alpha} = - w_{\alpha} \rho \alpha \epsilon \frac{\vec{e}_{\alpha}}{\mid \vec{e}_{\alpha} \mid} \cdot \vec{g}$
+	\State $\tau_g = \frac{3 \kappa}{S^2 \Delta t} + \frac{1}{2}$
+	\State $\tau_f = \frac{3 \nu}{S^2 \Delta t} + \frac{1}{2}$
+	\State $f_{\alpha} = f_{\alpha} + \frac{f^{eq}_{\alpha}-f_{\alpha}}{\tau_f} + {\Delta f}_{\alpha}$
+	\State $g_{\alpha} = g_{\alpha} + \frac{g^{eq}_{\alpha}-g_{\alpha}}{\tau_g}$
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
 
 \subsubsection*{Boundary Conditions}
 %% here I want to go over the boundary conditions that I used 
-
 
 
 
