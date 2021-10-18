@@ -6,6 +6,8 @@
 \usepackage{afterpage}
 \usepackage{url}
 
+\usepackage{amsmath}
+
 
 
 
@@ -18,11 +20,10 @@
 \maketitle
 
 \begin{abstract}
-	Convection in the Earth's inner core has been a contentious topic in geoscience. Recently, it has been proposed through siesmic observations that Earths inner core is convecting. Here we numerically model convection in the Inner core, using the streamfunction-voriticty formulation in 2 dimensions and a three dimensional lattice boltzman approach. We find ...
+	Convection in the Earth's inner core has been a contentious topic in geoscience. Recently, it has been proposed through siesmic observations that Earths inner core is convecting. Here we numerically model convection in the Inner core, using the streamfunction-vorticity formulation and lattice boltzman method in 2-dimensions. 
 	
  
 \end{abstract}
-
 
 \section*{Introduction}
 Plan:
@@ -30,6 +31,16 @@ I want to also talk about why this is actually important, why is this something 
 \newline
 Here I want to introduce the physics of what I want to talk about. I want to introduce 
 the basic equations that I will use.
+\newline
+
+
+
+
+
+
+\subsubsection*{Governing Equations}
+{\it{In this section I introduce the physics of the problem; the governing equations that we wish to numerically solve.}}
+\vspace{0.3cm}
 \newline
 \noindent Throughout analysis we describe the fluid in the Eularian frame under a graviational acceleration $\vec{g}$ which may vary in space. We give each location in the fluid a velocity $\vec{u}$ and density $\rho$ that vary in space $\vec{x}$ and time $t$. We assume the fluids viscosity $\mu$, thermal diffusivity $\kappa$ and specific heat capacity $C_p$ are all constants. By conserving fluid momentum, we produce the navier stokes equation:
 \begin{equation}
@@ -63,24 +74,23 @@ The Earths
 
 {\it{Two numerical methods are introduced for solving the thermal convection problem, the Lattice Boltzman Method and the streamfunction-vorticity formulation. }}
 
-
-Here I want to introduce my two numerical schemes
-
 \subsubsection*{Streamfunction-Vorticity formulation}
-{\it{Here I introduce the streamfunction-vorticity method and use it to eliminate pressure terms in \ref{NSE slow + boussinesq} and \ref{adeT} in cartesian and polar geometries giving a set of numerically solvable equations.}}
+{\it{Here I introduce the streamfunction-vorticity method for use in 2 dimensions and use it to eliminate pressure terms in \ref{NSE slow + boussinesq} and \ref{adeT} in cartesian and polar geometries giving a set of numerically solvable equations.}}
+\vspace{0.3cm}
+\newline
+\noindent The streamfunction-vorticity formulation is a popular method for analytical and simple numerical analysis of incompressable fluids in two dimensions. Its main advantage is its elimination of all pressure terms, which would typically require iterative techniques to solve, as is used in the SIMPLE algorithm. However, the streamfunction-vorticity method is limited to 2-dimensional or 3-dimensional symmetric flows and so has limited applicability.
 
-The streamfunction-vorticity formulation is a popular method for analytical and simple numerical analysis of incompressable fluids in two dimensions. Its key advantage is the elimination of all pressure terms, which would otherwise need to be iteratively accounted for or given in a constituative equation. We define the vorticity in the plane $\omega$ by:
+We define two scalar quantities, the vorticity $\omega$ and the streamfunction $\psi$. The vorticity $\omega$ is given by:
 \begin{equation}
 	\omega = (\nabla \times \vec{u})_z,
 	\label{omega}
 \end{equation}
-where the $z$ subscript denotes the component out of the page. We also define a streamfunction $\psi$ by:
+where the $z$ subscript denotes the component out of the plane. We also define a streamfunction $\psi$ by:
 \begin{equation}
 	\omega = - \nabla^2 \psi.
 	\label{psi}
 \end{equation}
-Physically, the voriticty is the amount of spinning the fluid does about a point, while lines of constant streamfunction have the fluid flow perpendicular to them. Given a coordinate system, and a clever definition of $\vec{u}$ we can rewrite 
-equations \ref{adeT} and \ref{NSE slow + boussinesq} in terms of $\omega$ and $\psi$ rather than $\vec{u}$. In cartesian coordinates $(x,y)$ we pick 
+Given a coordinate system, and a clever definition of $\vec{u}$ we can rewrite equations \ref{adeT} and \ref{NSE slow + boussinesq} in terms of $\omega$ and $\psi$ rather than $\vec{u}$ and $p$. In cartesian coordinates $(x,y)$ we pick 
 \begin{equation}
 	u = \frac{\partial \psi}{\partial y}, v = -\frac{\partial \psi}{\partial x},
 	\label{cartesian velocities}
@@ -110,15 +120,21 @@ and,
 	\label{NSE slow + boussinesq sfvt polar}
 \end{equation}
 A full derivation of equations \ref{adeT sfvt cartesian}, \ref{NSE slow + boussinesq sfvt cartesian}, \ref{adeT sfvt polar}, \ref{NSE slow + boussinesq sfvt polar} are given in appendix.
-Importantly, our definitions of $u$ and $v$ in equations \ref{cartesian velocities} and \ref{polar velocities} satisify equation \ref{omega} and \ref{psi}. Together, equations \ref{psi} \ref{adeT sfvt cartesian}, \ref{NSE slow + boussinesq sfvt cartesian}, \ref{adeT sfvt polar} and \ref{NSE slow + boussinesq sfvt polar} contain no unknown quantities like pressure $p$ and so can be solved via finite difference methods.
+Importantly, our definitions of $u$ and $v$ in equations \ref{cartesian velocities} and \ref{polar velocities} satisify equation \ref{omega} and \ref{psi}. Equations \ref{psi}, \ref{adeT sfvt cartesian}, \ref{NSE slow + boussinesq sfvt cartesian} for the cartesian case and \ref{psi}, \ref{adeT sfvt polar}, \ref{NSE slow + boussinesq sfvt polar} for the polar case can be directly solved.
 
 \subsubsection*{Solving the streamfunction-vorticity equations}
 {\it{The finite difference method used for solving the streamfunction-vorticity-formulated governing equations is shown}}
-\vspace{2cm}
-\noindent We first discritize our domain $\mathcal{D}$. In the cartesian case, we use $(x_i,y_j)=(i \Delta x, j \Delta y)$ with integers $i$ and $j$ satisfying $0\leq i < N_x$ $0 \leq j < N_y$. In the polar case, we use $(r_i, \theta_j)= (R_0 + i \Delta r, j 
-\Delta \theta)$ again with  $0 \leq i < N_r$ and $0 \leq j < N_{\theta}$. We impose $\Delta \theta = \frac{2 \pi}{N_{\theta} - 1}$ for consistancy with $\theta$-periodic boundary conditions and an inner radius $R_0$ in polar coordinates to avoid 
-singularities generated by $r=0$. We also discritize time $t$ by $t_n = n \Delta t$. For a function $f$, we use $f^n_{i,j}$ to mean $f$ evaluated at time $n$ at position $(x_i,y_j)$ in cartesian coorindates or $(r_i, \theta_j)$ in polar 
-coordinates. 
+\vspace{0.3cm}
+\newline
+\noindent We first discritize our domain $\mathcal{D}$. In the cartesian case, we use $(x_i,y_j)=(i \Delta x, j \Delta y)
+$ with integers $i$ and $j$ satisfying $0\leq i < N_x$ $0 \leq j < N_y$. In the polar case, we use $(r_i, \theta_j)= (R_0 
++ i \Delta r, j 
+\Delta \theta)$ again with  $0 \leq i < N_r$ and $0 \leq j < N_{\theta}$. We impose $\Delta \theta = \frac{2 \pi}
+{N_{\theta} - 1}$ for consistancy with $\theta$-periodic boundary conditions and an inner radius $R_0$ in polar 
+coordinates to avoid 
+singularities generated by $r=0$. We also discritize time $t$ by $t_n = n \Delta t$. For a function $f$, we use 
+$f^n_{i,j}$ to mean $f$ evaluated at time $n$ at position $(x_i,y_j)$ in cartesian coorindates or $(r_i, \theta_j)$ in 
+polar coordinates. 
 \newline
 To approximate derivatives we use a finite difference approach. All time derivatives are approximated by forward difference:
 \begin{equation}
@@ -177,29 +193,87 @@ Where the superscript $(k)$ means the result of the $k^{th}$ iteration of the ab
 
 
 \subsubsection*{Solution Stability and Accuracy}
-
 %% Here I want to look at the stabiliy of this method
-The solution stability is 
 
  
 
 
 \subsubsection*{Lattice Boltzman Method}
-The lattice boltzman method 
 
 
-I want to introduce the lattice boltzman method, go over its derivation, talk about why this is unique 
-in the world of computational fluid dynamics. I pretty much just want to explain what it is and how I used it.
+{\it{In this section I give a brief introduction to the Lattice Boltzman Method and why its different from most numerical tehcniques. I introduce a 2-dimensional lattice D2Q9 and discribe the Thermal Lattice Boltzman method (TLBM) which is employed by my numerical solution to simulate convection.}}
+\vspace{0.3cm}
 
+\noindent The Lattice Boltzman Method (LBM) is a generalization of a Lattice Gas Automata (LGA), which are themselves a 
+specialized Automata for simulating fluid flows. These Automata methods like common fluid simulation techniques 
+discritize space and time. They directly simulate the state of particles or their distributions and evolve in time 
+accoring to rules which give the desired macroscopic fluid properties as an emergent effect. This is fundamentally 
+different from typical approaches which amount to directly numerically solving a set of partial differential equations.
+\newline
+\noindent To discritize space, we place nodes at locations $(x_i,y_j)=(i,j)$ with $i,j$ integers. Each node has attached to it a latitce, here the D2Q9 lattice shown in figure \ref{D2Q9}. The lattice defines unit vectors $\vec{e}_i$, $i \in \{ 0,1,2,3,4,5,6,7,8 \}$. In addition, each direction $e_i$ gets a weight $w_i$. In the D2Q9 lattice these are:
+\begin{equation*}
+w_i = \begin{cases}
+          \frac{4}{9} \quad &\text{if}  \ i=0 \\
+          \frac{1}{9} \quad &\text{if} \ i=1,2,3,4 \\
+          \frac{1}{36} \quad &\text{if} \ i=5,6,7,8 \\
+     \end{cases}.
+\end{equation*}
+\begin{figure}[h!]
+	\centering
+	\includegraphics{D2Q9Lattice.jpg}
+	\caption{D2Q9 Lattice. Black notes repressent lattice points, vectors $e_0,..,e_8$ are the lattice vectors. Image sourced from \cite{khazaeli2015ghost}}
+	\label{D2Q9}
+\end{figure}
+\noindent We wish to simulate convection. For this, we require the particle motion and the internal energy throughout the lattice. We define two distribution functions $f_{\alpha}(\vec{x}, t)$ and $g_{\alpha}(\vec{x}, t)$ denoting the particle and internal energy distributions along direction $\alpha$ at lattice points $\vec{x}$ and times $t$. The direction can be thought of as the direction of flow for particles or energy. Each timestep there are two steps to updating $f$ and $g$, a common streaming step:
+\begin{equation}
+	f_{\alpha}(\vec{x} + \vec{e}_\alpha, t + \Delta t) = f_{\alpha}(\vec{x}, t),
+	\label{streaming step}
+\end{equation}
+and different collision steps:
+\begin{equation}
+	f_{\alpha}(\vec{x} + \vec{e}_{\alpha}, t + \Delta t) = f_{\alpha}(\vec{x}, t) + \frac{1}{\tau_f} (f^{eq}_{\alpha}(\vec{x}, t)  - f_{\alpha}(\vec{x}, t)) + F_{\alpha}
+	\label{f collision step}
+\end{equation}
+\begin{equation}
+	g_{\alpha}(\vec{x} + \vec{e}_{\alpha}, t + \Delta t) = g_{\alpha}(\vec{x}, t) + \frac{1}{\tau_g} (g^{eq}_{\alpha}(\vec{x}, t)  - g_{\alpha}(\vec{x}, t)) + G_{\alpha}.
+	\label{g collision step}
+\end{equation}
+Here $F_{\alpha}$ and $G_{\alpha}$ are the forcing terms terms and $f^{eq}_{\alpha}$ and $g^{eq}_{\alpha}$ are equilibrium distributions. The relaxation times $\tau_f$ and $\tau_g$ are related to the macroscopic thermal diffusivity ($\kappa$) and kinematic viscousity $\nu$ by:
+\begin{equation}
+	\tau_g = \frac{3 \kappa}{S^2 \Delta t} + \frac{1}{2}
+\end{equation}
+and,
+\begin{equation}
+	\tau_f = \frac{3 \nu}{S^2 \Delta t} + \frac{1}{2}.
+\end{equation}
+The equilibrium distributions are given by the BKG approximation:
+\begin{equation}
+	f^{eq}_{\alpha}(\vec{x}, t)  = \rho w_{\alpha} (1 + 3 \frac{\vec{e}_{\alpha} \cdot \vec{u}}{s^2} + \frac{9}{2} \frac{(\vec{e}_{\alpha} \cdot \vec{u}  )^2}{c^4} - \frac{3}{2} \frac{\vec{u} \cdot \vec{u}}{c^2}  ),
+\end{equation}
+\begin{equation}
+	g^{eq}_{\alpha}(\vec{x}, t)  = \epsilon \rho w_{\alpha} (1 + 3 \frac{\vec{e}_{\alpha} \cdot \vec{u}}{s^2} + \frac{9}{2} \frac{(\vec{e}_{\alpha} \cdot \vec{u}  )^2}{c^4} - \frac{3}{2} \frac{\vec{u} \cdot \vec{u}}{c^2}  ),
+\end{equation}
 
-
-
-
+Here $\rho$, $\epsilon$ and $\vec{u}$ are the macroscopic density, internal energy and velocity given by:
+\begin{equation}
+	\rho = \sum_{i=0}^{8} f_{i},
+	\label{LBM rho}
+\end{equation}
+\begin{equation}
+	\rho \vec{u} = \sum_{i=0}^{i=8} f_{i} \vec{e}_{i}
+	\label{LBM u}
+\end{equation}
+and,
+\begin{equation}
+	\rho \epsilon = \sum_{i=0}^{i=8} g_{i}.
+	\label{LBM ep}
+\end{equation}
+The forcing terms $F_i$ and $G_i$ are problem dependent. For thermal convection we only need thermal
 
 
 \subsubsection*{Boundary Conditions}
 %% here I want to go over the boundary conditions that I used 
-In both cases
+
 
 
 
@@ -236,6 +310,11 @@ I will also have a test of heat conservation. Here. This will be simple, just a 
 \section*{Results}
 
 \section*{}
+
+
+
+\bibliographystyle{abbrv}
+\bibliography{ref.bib}
 
 
 
