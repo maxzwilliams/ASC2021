@@ -311,9 +311,9 @@ where $\mid \mid$ is the vector norm and $\vec{g}$ is the gravitational accelera
 
 \subsubsection*{Boundary Conditions}
 %% here I want to go over the boundary conditions that I used 
-
-
-
+%% I might not have space to go over exactly how I did this here. Maybe that can be in the appendix.
+In both streamfunction-vorticity codes, boundaries were assumed to be fluid-impermiable, non-slip and insulating. In the Lattice Boltzman code, ''bounce 
+back" boundary condition was used. This is a fluid-impermiable, insulating and slip boundry.
 
 \section*{Advection and Heat Conservation}
 We next tested the accuracy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero to avoid convection and a segment of the fluid was set to 1 unit of temperature with all other regions set to 0 units of temperature. In the first test, the streamfunction was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 

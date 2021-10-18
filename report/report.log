@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  18 OCT 2021 22:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  18 OCT 2021 22:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -328,15 +328,15 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <frog.png, id=30, 348.30125pt x 281.05pt>
 File: frog.png Graphic file (type png)
 <use frog.png>
-Package pdftex.def Info: frog.png  used on input line 334.
+Package pdftex.def Info: frog.png  used on input line 323.
 (pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
 File: frog.png Graphic file (type png)
 <use frog.png>
-Package pdftex.def Info: frog.png  used on input line 343.
+Package pdftex.def Info: frog.png  used on input line 332.
 (pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
 File: frog.png Graphic file (type png)
 <use frog.png>
-Package pdftex.def Info: frog.png  used on input line 351.
+Package pdftex.def Info: frog.png  used on input line 340.
 (pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
 (./report.bbl [4 <./D2Q9Lattice.jpg>] [5 <./frog.png>]) [6] [7] (./report.aux) 
 ) 
@@ -365,7 +365,7 @@ texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (7 pages, 250321 bytes).
+Output written on report.pdf (7 pages, 250648 bytes).
 PDF statistics:
  102 PDF objects out of 1000 (max. 8388607)
  72 compressed objects within 1 object stream
