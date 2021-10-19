@@ -313,42 +313,43 @@ where $\mid \mid$ is the vector norm and $\vec{g}$ is the gravitational accelera
 In both streamfunction-vorticity codes, boundaries were assumed to be fluid-impermiable, non-slip and insulating. In the Lattice Boltzman code, ''bounce 
 back" boundary condition was used. This is a fluid-impermiable, insulating and slip boundry.
 
-\section*{Advection and Heat Conservation}
-Next we tested the accuarcy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero to avoid convection 
-and a segment of the fluid was set to 1 unit of temperature with all other regions set to 0 units of temperature. In the first test, the streamfunction 
-was set so that the velocity field was purely horizontal and azimuthal in the cartesian and polar cases respectively. 
+\section*{Advection tests}
+{\it{Here I pressent some simple tests that show how accurately my advection scheme is performing in both geometries.}}
+\vspace{0.3cm}
+\noindent Next we tested the accuarcy of the advection schemes. Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero to avoid convection. The fluid was set to temperature 0 (arb. units) except a small segment which was set to $1$ shown in yellow top left of figure \ref{polar periodic advection}, \ref{polar diagonal advection}, \ref{cartesian periodic advection}, \ref{cartesian diagonal advection}. A streamfunction $\psi_c$ was enforced to produce diagonal back and forth motion or a continous horizontal or azimuthal motion to cross a periodic boundary. Details of the streamfunctions used are given in appendix.
 
-\begin{figure}
+\begin{figure}[h!]
 	\centering
-	\includegraphics{frog.png}
+	\includegraphics{polarPeriodic/PolarPeriodicFigure.jpg}
 	\caption{Polar azimuthal advection test. Temperature (color) is plotted in polar space. Red dot indicates temperature weighted mean position within 
-	the fluid and is taken as the location of the temperature 1 zone. 
-	(a) shows the initial condition, (b) shows the fluid being advected through the periodic boundry condition, (c) the analytic result for when the fluid 
-	would return to its initial state and (d) the final state of the fluid.
-	Times are given above each pane.}
+	the fluid and is taken as the location of the temperature 1 zone. Fluid is advected by an anticlockwise flow. Cronological order is Top left, top right, bottom left, bottom right. Top left shows the initial condition. Top right shows advection across periodic boundary. Bottom left is state when an exact scheme would have returned to the original position. Bottom right is the final state after being advected around one rotation.}
+	\label{polar periodic advection}
 \end{figure}
 
 
-\begin{figure}
+\begin{figure}[h!]
 	\centering
-	\includegraphics{frog.png}
-	\caption{Azimuthal advection test. Temperature (color) is plotted in polar space. }
+	\includegraphics{polarDiagonal/PolarDiagonalFigure.jpg}
+	\caption{ Polar coorindate diagonal advection test. Similar convection used to figure \ref{polar periodic advection}. Fluid is diagonally advected over a time $t$ from the initial state (top left) to top right. The advection field is reversed for time $2t$ giving bottom left. The field is reversed again producing bottom right.}
+	\label{polar diagonal advection}
+\end{figure}
+ 
+\begin{figure}[h!]
+	\centering
+	\includegraphics{cartesianPeriodic/CartesianPeriodicFigure.jpg}
+	\caption{Cartesian coordinate advection test accross a periodic boundary. Convention similar to figure \ref{polar periodic advection}.}
+	\label{cartesian periodic advection}
 \end{figure}
 
-The second set of tests moved the fluid in a diagonal motion over the domain bringing it back to its origin state. 
-
-\begin{figure}
+\begin{figure}[h!]
 	\centering 
-	\includegraphics{frog.png}
-	\caption{Cartesian diagonal advection test. Temperature (color) is plotted in polar space. Red dot indicates temperature weighted mean position within 
-	the fluid and is taken as the location of the temperature 1 zone.}
+	\includegraphics{cartesianDiagonal/CartesianDiagonalFigure.jpg}
+	\caption{Cartesian diagonal advection test. Similar convention to figure \ref{polar diagonal advection}. }
+	\label{cartesian diagonal advection}
 \end{figure}
-
-I will also have a test of heat conservation. Here. This will be simple, just a few pictures of the codes running (show some nice plumes) and the energy 
-vs time graph. It shows that neither of these conserve thermal energy.
-
 
 \section*{Results}
+
 
 
 \subsection*{How much does the central region matter??}
