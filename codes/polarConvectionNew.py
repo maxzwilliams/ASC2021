@@ -93,14 +93,6 @@ def updateStreamFunctionFast(vorticity, streamfunction, simulationSettings):
 	##time.sleep(1)
 	return streamfunction
 		
-		
-		
-	
-	
-	
-	
-		
-	
 
 def updateStreamFunction(vorticity, streamfunction, simulationSettings):
 	"""
@@ -157,9 +149,7 @@ def updateStreamFunction(vorticity, streamfunction, simulationSettings):
 			raise Exception("When solving for streamfunction there was no convergence")
 			
 	return streamfunction
-	
 
-	
 def updateTemperature(streamfunction, temperature, heat, simulationSettings):
 	Cp = simulationSettings['Cp']
 	kappa = simulationSettings['kappa']
@@ -293,11 +283,38 @@ def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh, t, inde
 		for thetaIndex in range(len(temperature[0])):
 			totalTemperature += temperature[rIndex][thetaIndex]
 	
-	
+
+	print(rMesh[0])
+	xPosition = 0
+	yPosition = 0
 	for rIndex in range(len(temperature)):
 		for thetaIndex in range(len(temperature[0])):
+
+			r = rMesh[rIndex]
+			theta = thetaMesh[thetaIndex]
+
+			x = r*math.cos(theta)
+			y = r*math.sin(theta)
+
+			xPosition += x*temperature[rIndex][thetaIndex]/totalTemperature
+			yPosition += y*temperature[rIndex][thetaIndex]/totalTemperature
+
+
+
+
 			rCenter += rMesh[rIndex]*temperature[rIndex][thetaIndex]/totalTemperature
-			thetaCenter += (thetaMesh[thetaIndex] )*temperature[rIndex][thetaIndex]/totalTemperature
+			##thetaCenter += (thetaMesh[thetaIndex] )*temperature[rIndex][thetaIndex]/totalTemperature
+
+	##rCenter = (xPosition**2 + yPosition**2)**(0.5)
+	if (xPosition > 0 and yPosition >= 0):
+		thetaCenter = math.atan(abs(yPosition/xPosition))
+	if (xPosition < 0 and yPosition >= 0):
+		thetaCenter = math.pi - math.atan(abs(yPosition/xPosition))
+	if (xPosition < 0 and yPosition < 0):
+		thetaCenter = math.pi + math.atan(abs(yPosition/xPosition))
+	if (xPosition > 0 and yPosition < 0):
+		thetaCenter = 2*math.pi - math.atan(abs(yPosition/xPosition))
+
 			
 	##rCenter = myRound(rCenter)
 	##thetaCenter = myRound(thetaCenter)
@@ -375,11 +392,6 @@ def main():
 	
 	totalQ = []
 	time = []
-	
-	
-	
-	
-	
 	
 	simulationSettings['rho0'] = 1000
 	##simulationSettings['alpha'] = 210*10**(-6) 
