@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  18 OCT 2021 22:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.9.21)  19 OCT 2021 19:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -96,272 +96,42 @@ Package: afterpage 2014/10/28 v1.08 After-Page Package (DPC)
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
-Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
-nment
 
-(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count179
-\float@exts=\toks20
-\float@box=\box48
-\@float@everytoks=\toks21
-\@floatcapt=\box49
-)
-\@float@every@algorithm=\toks22
-\c@algorithm=\count180
-)
-(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
-Package: algpseudocode 
+! LaTeX Error: File `algorithm.sty' not found.
 
-(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
-Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
 
-Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count181
-\c@ALG@rem=\count182
-\c@ALG@nested=\count183
-\ALG@tlm=\skip51
-\ALG@thistlm=\skip52
-\c@ALG@Lnr=\count184
-\c@ALG@blocknr=\count185
-\c@ALG@storecount=\count186
-\c@ALG@tmpcounter=\count187
-\ALG@tmplength=\skip53
-)
-Document Style - pseudocode environments for use with the `algorithmicx' style
-) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2020/01/20 v2.17e AMS math features
-\@mathmargin=\skip54
+Enter file name: 
+! Interruption.
+<to be read again> 
+                   }
+l.10 \usepackage
+                {algpseudocode}^^M
+? 
 
-For additional information on amsmath, use the `?' option.
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
-Package: amstext 2000/06/29 v2.01 AMS text
+! LaTeX Error: File `algpseudocode.sty' not found.
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
-File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks23
-\ex@=\dimen145
-))
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
-Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen146
-)
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
-Package: amsopn 2016/03/08 v2.02 operator names
-)
-\inf@bad=\count188
-LaTeX Info: Redefining \frac on input line 227.
-\uproot@=\count189
-\leftroot@=\count190
-LaTeX Info: Redefining \overline on input line 389.
-\classnum@=\count191
-\DOTSCASE@=\count192
-LaTeX Info: Redefining \ldots on input line 486.
-LaTeX Info: Redefining \dots on input line 489.
-LaTeX Info: Redefining \cdots on input line 610.
-\Mathstrutbox@=\box50
-\strutbox@=\box51
-\big@size=\dimen147
-LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
-\macc@depth=\count193
-\c@MaxMatrixCols=\count194
-\dotsspace@=\muskip17
-\c@parentequation=\count195
-\dspbrk@lvl=\count196
-\tag@help=\toks24
-\row@=\count197
-\column@=\count198
-\maxfields@=\count199
-\andhelp@=\toks25
-\eqnshift@=\dimen148
-\alignsep@=\dimen149
-\tagshift@=\dimen150
-\tagwidth@=\dimen151
-\totwidth@=\dimen152
-\lineht@=\dimen153
-\@envbody=\toks26
-\multlinegap=\skip55
-\multlinetaggap=\skip56
-\mathdisplay@stack=\toks27
-LaTeX Info: Redefining \[ on input line 2859.
-LaTeX Info: Redefining \] on input line 2860.
-)
-(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
-File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count266
-\l__pdf_internal_box=\box52
-)
-(./report.aux)
-\openout1 = `report.aux'.
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 22.
-LaTeX Font Info:    ... okay on input line 22.
+Enter file name: x
 
-(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count267
-\scratchdimen=\dimen154
-\scratchbox=\box53
-\nofMPsegments=\count268
-\nofMParguments=\count269
-\everyMPshowfont=\toks28
-\MPscratchCnt=\count270
-\MPscratchDim=\dimen155
-\MPnumerator=\count271
-\makeMPintoPDFobject=\count272
-\everyMPtoPDFconversion=\toks29
-) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
-Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-
-(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
-Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/grfext/grfext.sty
-Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
-Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
-Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
-Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
-Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
-)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-85.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 504.
-
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-))
-*geometry* driver: auto-detecting
-*geometry* detected driver: pdftex
-*geometry* verbose mode - [ preamble ] result:
-* driver: pdftex
-* paper: a4paper
-* layout: <same size as paper>
-* layoutoffset:(h,v)=(0.0pt,0.0pt)
-* modes: 
-* h-part:(L,W,R)=(89.62709pt, 418.25368pt, 89.6271pt)
-* v-part:(T,H,B)=(101.40665pt, 591.5302pt, 152.11pt)
-* \paperwidth=597.50787pt
-* \paperheight=845.04684pt
-* \textwidth=418.25368pt
-* \textheight=591.5302pt
-* \oddsidemargin=17.3571pt
-* \evensidemargin=17.3571pt
-* \topmargin=-7.86334pt
-* \headheight=12.0pt
-* \headsep=25.0pt
-* \topskip=10.0pt
-* \footskip=30.0pt
-* \marginparwidth=65.0pt
-* \marginparsep=11.0pt
-* \columnsep=10.0pt
-* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
-* \hoffset=0.0pt
-* \voffset=0.0pt
-* \mag=1000
-* \@twocolumnfalse
-* \@twosidefalse
-* \@mparswitchfalse
-* \@reversemarginfalse
-* (1in=72.27pt=25.4mm, 1cm=28.453pt)
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--39
-
- []
-
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-<D2Q9Lattice.jpg, id=27, 190.7125pt x 189.70876pt>
-File: D2Q9Lattice.jpg Graphic file (type jpg)
-<use D2Q9Lattice.jpg>
-Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 225.
-(pdftex.def)             Requested size: 190.71202pt x 189.70828pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[4] [5 <./D2Q9Lattice.jpg>]
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<frog.png, id=36, 348.30125pt x 281.05pt>
-File: frog.png Graphic file (type png)
-<use frog.png>
-Package pdftex.def Info: frog.png  used on input line 322.
-(pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
-File: frog.png Graphic file (type png)
-<use frog.png>
-Package pdftex.def Info: frog.png  used on input line 331.
-(pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
-File: frog.png Graphic file (type png)
-<use frog.png>
-Package pdftex.def Info: frog.png  used on input line 339.
-(pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
-(./report.bbl [6] [7 <./frog.png>] [8] [9]) [10] (./report.aux) ) 
+ )
+(\end occurred when \ifx on line 11 was incomplete)
+(\end occurred when \ifx on line 11 was incomplete) 
 Here is how much of TeX's memory you used:
- 3579 strings out of 481239
- 50947 string characters out of 5920377
- 308457 words of memory out of 5000000
- 18785 multiletter control sequences out of 15000+600000
- 538674 words of font info for 46 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 34i,9n,29p,595b,277s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (10 pages, 252210 bytes).
+ 1364 strings out of 483183
+ 18223 string characters out of 5966292
+ 250867 words of memory out of 5000000
+ 16422 multiletter control sequences out of 15000+600000
+ 532338 words of font info for 24 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 30i,1n,33p,234b,36s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+No pages of output.
 PDF statistics:
- 111 PDF objects out of 1000 (max. 8388607)
- 78 compressed objects within 1 object stream
+ 0 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
