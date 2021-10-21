@@ -254,10 +254,10 @@ func collisionStep(f D2Field, feq D2Field, l lattice) D2Field{
 func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lattice) D2Field{
 	// pingback
 	
-	var rtn D2Field
+	//var rtn D2Field
 	//entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
-	rtn.entries = D3Constant(l.nx, l.ny, l.Q, 0.0)
-	rtn.name = "f"
+	//rtn.entries = D3Constant(l.nx, l.ny, l.Q, 0.0)
+	//rtn.name = "f"
 	
 	for dIndex, d := range l.directions{
 		for xIndex:=0;xIndex<l.nx;xIndex++{
@@ -270,14 +270,14 @@ func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lat
 				
 
 				if (dIndex == 0){
-					rtn.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + 0.0
+					f.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + 0.0
 				} else{
 
 					//term := -1/(l.tau_grav) * 3.0 * l.weights[dIndex] * float64(d[1]) * (-rho.entries[xIndex][yIndex]) * l.alpha * 1.0 * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) )
 					//term = 0.0
 					term := -1.0/(l.tau_grav) * l.weights[dIndex] * rho.entries[xIndex][yIndex] * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) ) * l.alpha * math.Pow( math.Pow(float64(d[0]), 2.0) + math.Pow(float64(d[1]), 2.0), -0.5) * (grav.entries[xIndex][yIndex][0]*float64(d[0]) + grav.entries[xIndex][yIndex][1]*float64(d[1]))
 					//fmt.Println(term)
-					rtn.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + term
+					f.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + term
 				}
 				
 				/*
@@ -292,7 +292,7 @@ func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lat
 			}
 		}
 	}
-	return rtn 
+	return f 
 }
 
 
@@ -390,6 +390,14 @@ func testArrayNaN3D(array [][][]float64) bool{
 		}	
 	}
 	return false
+}
+
+
+func elapsed(what string) func() {
+    start := time.Now()
+    return func() {
+        fmt.Printf("%s took %v\n", what, time.Since(start))
+    }
 }
 
 func main(){
@@ -560,6 +568,8 @@ func main(){
 	fmt.Println("starting computation")
 
 	for n:=0;n<nt;n++{
+
+		
 		fmt.Printf("\rstarting loop" + strconv.Itoa(n))
 
 		// fix the ep value (fix the temperature)
@@ -612,20 +622,10 @@ func main(){
 		*/
 
 
-
-
-		
-		
-		
-
-		
-		
-		
-		
-	
-		
+		start := time.Now()
 		fstream = streamingStep2D(f, D2Q9, circleBoundaryThousand)
 		gstream = streamingStep2D(g, D2Q9, circleBoundaryThousand) // there is a problem here, somehow g gets to be (after this) such that ep grows very big/wrong
+		fmt.Println("streaming took", time.Since(start))
 		f = fstream
 		g = gstream
 		
@@ -633,7 +633,9 @@ func main(){
 		
 		
 		//rho, u = getMacro2D(f, D2Q9, circleBoundaryThousand) // this is used for the code without thermally driven flows
+		start = time.Now()
 		rho, ep, u = getMacro2DWithEp(f, g, D2Q9, circleBoundaryThousand)
+		fmt.Println("getting macros took", time.Since(start))
 
 
 		if ( n % 100  == 0){
@@ -666,15 +668,20 @@ func main(){
 		
 		//feq = getEq2D(rho, u, D2Q9) // this is used for the code without thermally driven flows
 		
+		start = time.Now()
 		geq = getEq2Dg(rho, ep, u, D2Q9)
 		feq = getEq2Df(rho, u, D2Q9)
+		fmt.Println("getting eq took", time.Since(start))
 
+
+		start = time.Now()
 		f = collisionStep(f, feq, D2Q9)
-		
 		g = collisionStep(g, geq, D2Q9)
+		fmt.Println("collisin took", time.Since(start))
 
-		
+		start = time.Now()
 		f = gravityAffect(f, gravity, rho, ep, D2Q9)
+		fmt.Println("gravity took", time.Since(start))
 		
 		// theres another term isnt there?
 
