@@ -46,6 +46,10 @@ type lattice struct{ // defines the lattice we are solving the problem on
 	tau_grav float64 // relaxation time for gravity term
 	rho float64 // reference density
 	alpha float64 // thermal expansion coeffecient
+
+	Cv float64 // specific heat at constant volume
+	Heat float64 // heat generated per unit volume
+
 }
 
 type boundary func(cord1 int, cord2 int) bool 
@@ -53,14 +57,16 @@ type boundary func(cord1 int, cord2 int) bool
 func streamingStep2D(f1 D2Field, l lattice, b boundary) D2Field{
 	var f2 D2Field
 	entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
-	f2.entries = entries
+	f2.entries = entries 
 	f2.name = f1.name
+	//copy(f2.entries, f1.entries)
+
+
+
 
 	for dIndex, d := range l.directions{
 	for i:=0;i<l.nx;i++{		
 		for j:=0;j<l.ny;j++{
-
-
 				if (b(i-d[0],j-d[1])){
 					f2.entries[i][j][dIndex] = f1.entries[i][j][l.opposites[dIndex]]
 				} else{
@@ -254,10 +260,10 @@ func collisionStep(f D2Field, feq D2Field, l lattice) D2Field{
 func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lattice) D2Field{
 	// pingback
 	
-	//var rtn D2Field
-	//entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
-	//rtn.entries = D3Constant(l.nx, l.ny, l.Q, 0.0)
-	//rtn.name = "f"
+	var rtn D2Field
+	entries := D3Constant(l.nx, l.ny, l.Q, 0.0)
+	rtn.entries = entries
+	rtn.name = "f"
 	
 	for dIndex, d := range l.directions{
 		for xIndex:=0;xIndex<l.nx;xIndex++{
@@ -270,14 +276,14 @@ func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lat
 				
 
 				if (dIndex == 0){
-					f.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + 0.0
+					rtn.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + 0.0
 				} else{
 
 					//term := -1/(l.tau_grav) * 3.0 * l.weights[dIndex] * float64(d[1]) * (-rho.entries[xIndex][yIndex]) * l.alpha * 1.0 * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) )
 					//term = 0.0
 					term := -1.0/(l.tau_grav) * l.weights[dIndex] * rho.entries[xIndex][yIndex] * ( ep.entries[xIndex][yIndex]*2.0/float64(l.D) ) * l.alpha * math.Pow( math.Pow(float64(d[0]), 2.0) + math.Pow(float64(d[1]), 2.0), -0.5) * (grav.entries[xIndex][yIndex][0]*float64(d[0]) + grav.entries[xIndex][yIndex][1]*float64(d[1]))
 					//fmt.Println(term)
-					f.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + term
+					rtn.entries[xIndex][yIndex][dIndex] = f.entries[xIndex][yIndex][dIndex] + term
 				}
 				
 				/*
@@ -292,7 +298,7 @@ func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lat
 			}
 		}
 	}
-	return f 
+	return rtn
 }
 
 
@@ -331,18 +337,12 @@ func D2Constant(size1 int, size2 int, c float64) [][]float64{
 }
 
 
-func circleBoundaryThousand(xIndex int, yIndex int) bool{
-
-	if (0<=xIndex && 200>xIndex && 0<=yIndex && 100>yIndex){
+func circleBoundaryR50(xIndex int, yIndex int) bool{	
+	if (  math.Pow( float64(xIndex - 51), 2.0) + math.Pow(float64(yIndex - 51), 2.0) <= math.Pow(float64(50), 2.0) ){
 		return false
 	}
 	return true
-	/*
-	if (  math.Pow( float64(xIndex - 50), 2.0) + math.Pow(float64(yIndex - 50), 2.0) < math.Pow(float64(45), 2.0) ){
-		return false
-	}
-	return true
-	*/
+	
 }
 
 
@@ -393,13 +393,6 @@ func testArrayNaN3D(array [][][]float64) bool{
 }
 
 
-func elapsed(what string) func() {
-    start := time.Now()
-    return func() {
-        fmt.Printf("%s took %v\n", what, time.Since(start))
-    }
-}
-
 func main(){
 	s1 := rand.NewSource(time.Now().UnixNano())
 	rand.New(s1)
@@ -441,8 +434,8 @@ func main(){
 	
 	// define the discritization
 	nt := 10000000
-	nx := 200
-	ny := 100
+	nx := 103
+	ny := 103
 		
 	D2Q9.weights = ws
 	D2Q9.directions = cs
@@ -455,6 +448,11 @@ func main(){
 	D2Q9.dt = dt
 	D2Q9.dx = dx
 	D2Q9.S = S
+	D2Q9.Cv = 400
+	D2Q9.Heat = 0.001
+
+
+
 	
 	
 	
@@ -472,7 +470,7 @@ func main(){
 	
 	
 	var rhoBack float64 = 1000.0
-	var alpha float64 = 1
+	var alpha float64 = 0.1
 	
 	// set some fluid properties
 	D2Q9.rho = rhoBack
@@ -485,6 +483,12 @@ func main(){
 	D2Q9.tau_f = tau_f
 	D2Q9.tau_g = tau_g
 	D2Q9.tau_grav = tau_grav
+
+	maxG := -1.0
+	Ra := maxG*D2Q9.alpha*D2Q9.Heat*math.Pow(50.0, 5.0)/(D2Q9.rho * vf * math.Pow(vg, 2.0)*D2Q9.Cv )
+	Pr := vf/vg
+	fmt.Println("Ra: ", Ra)
+	fmt.Println("Pr:", Pr)
 	
 
 	
@@ -519,10 +523,32 @@ func main(){
 	// populate gravity Here I will assume a very simple gravitational field which we can change later
 	gravity.name = "gravity"
 	gravity.entries = D3Constant(nx, ny, 2, 0.0)
+	gravityx := D2Constant(nx, ny, 0)
+	gravityy := D2Constant(nx, ny, 0)
 	for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-			gravity.entries[xIndex][yIndex][0] = 0
-			gravity.entries[xIndex][yIndex][1] = 1 // will need to check the units on this later
+			xCord := float64(xIndex - 51)
+			yCord := float64(yIndex - 51)
+
+			theta := 0.0
+			if (xCord == 0 && yCord > 0){
+				theta = math.Pi/2
+			} else if (xCord == 0 && yCord <= 0){
+				theta = 3*math.Pi/2
+			} else if (xCord > 0 && yCord >=0){
+				theta = math.Atan(math.Abs(yCord/xCord))
+			} else if (xCord <= 0 && yCord >= 0){
+				theta = math.Pi - math.Atan(math.Abs(yCord/xCord))
+			} else if (xCord <= 0 && yCord < 0){
+				theta = math.Pi + math.Atan(math.Abs(yCord/xCord))
+			} else if (xCord > 0 && yCord < 0){
+				theta = math.Pi*2 - math.Atan(math.Abs(yCord/xCord))
+			}
+
+			gravity.entries[xIndex][yIndex][0] = maxG*math.Sqrt( math.Pow(xCord, 2.0) + math.Pow(yCord, 2.0))/50.0 * math.Cos(theta)
+			gravity.entries[xIndex][yIndex][1] = maxG*math.Sqrt( math.Pow(xCord, 2.0) + math.Pow(yCord, 2.0))/50.0 * math.Sin(theta)
+			gravityx[xIndex][yIndex] = gravity.entries[xIndex][yIndex][0]
+			gravityy[xIndex][yIndex] = gravity.entries[xIndex][yIndex][1]
 		}
 	}
 	
@@ -532,17 +558,9 @@ func main(){
 	fmt.Println("starting initial conditions")
 	for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-			if (!circleBoundaryThousand(xIndex, yIndex)){
+			if (!circleBoundaryR50(xIndex, yIndex)){
 				for dIndex, _ := range D2Q9.directions{
-
-					f.entries[xIndex][yIndex][dIndex] = D2Q9.weights[dIndex]
-					/*
-					if (dIndex == 0){
-						f.entries[xIndex][yIndex][dIndex] = 0.001	
-					} else {
-						f.entries[xIndex][yIndex][dIndex] = 0.0
-					}
-					*/
+					f.entries[xIndex][yIndex][dIndex] = D2Q9.weights[dIndex] * D2Q9.rho
 				}				
 			}
 		}
@@ -552,13 +570,14 @@ func main(){
 	ux := D2Constant(nx, ny, 0.0)
 	uy := D2Constant(nx, ny, 0.0)
 
-	randomNumbers1 := make([]float64, 0)
-	randomNumbers2 := make([]float64, 0)
+	randomNumbers1 := D2Constant(nx, ny, 0.0)
+	randomNumbers2 := D2Constant(nx, ny, 0.0)
 
 	for index:=0;index<D2Q9.nx;index++{
-
-		randomNumbers1 = append(randomNumbers1, (2.0*rand.Float64() - 1.0))
-		randomNumbers2 = append(randomNumbers2, (2.0*rand.Float64() - 1.0))
+		for innerIndex :=0;innerIndex<D2Q9.ny;innerIndex++{
+			randomNumbers1[index][innerIndex] = (2.0*rand.Float64() - 1.0)
+			randomNumbers2[index][innerIndex] = (2.0*rand.Float64() - 1.0)
+		}
 	}
 
 
@@ -566,7 +585,7 @@ func main(){
 
 	
 	fmt.Println("starting computation")
-
+	displayTimes := false
 	for n:=0;n<nt;n++{
 
 		
@@ -577,6 +596,32 @@ func main(){
 		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
 
+				/*
+				if ( math.Pow(float64(xIndex - 51),2.0) + math.Pow(float64(yIndex-51),2.0) <= math.Pow(25,2.0) ){
+					for dIndex, _ := range D2Q9.directions{
+						g.entries[xIndex][yIndex][dIndex] += rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D) * D2Q9.Heat/D2Q9.Cv)*(1+0.8*randomNumbers1[xIndex][yIndex]) * D2Q9.weights[dIndex]
+					}
+				} else{
+					for dIndex, _ := range D2Q9.directions{
+						g.entries[xIndex][yIndex][dIndex] -= rho.entries[xIndex][yIndex] * 1.0/3.0 * (2.0/float64(D2Q9.D) * D2Q9.Heat/D2Q9.Cv)*(1+0.8*randomNumbers2[xIndex][yIndex])  * D2Q9.weights[dIndex]
+					}
+
+				}
+				*/
+				if (xIndex > 50+10 && xIndex < 50+15 && yIndex > 50+10 && yIndex < 50+15 ){
+					for dIndex, _ := range D2Q9.directions{
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * 1.0/3.0 * (2.0/float64(D2Q9.D) * 0.01) * D2Q9.weights[dIndex]
+					}
+				}
+
+				if (xIndex < 50-10 && xIndex > 50-15 && yIndex < 50-10 && yIndex > 50-15 ){
+					for dIndex, _ := range D2Q9.directions{
+						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * 1.0/3.0 * (2.0/float64(D2Q9.D) * 0.01) * D2Q9.weights[dIndex]
+					}
+				}
+
+
+				/*
 				if (yIndex<3){
 					//ep.entries[xIndex][yIndex] = -0.001 + 0.00025*(math.Sin( 1.0/10.0 * float64(xIndex)))
 
@@ -596,36 +641,18 @@ func main(){
 					}
 
 				}
+				*/
 
 			}	
 		}
-
-
-		
-
-		
-		/*
-		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
-			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-				if (45<xIndex && 55>xIndex && 45 < yIndex && 55>yIndex){
-
-					ep.entries[xIndex][yIndex] = 0.001
-
-					for dIndex, _ := range D2Q9.directions{
-						g.entries[xIndex][yIndex][dIndex] = rho.entries[xIndex][yIndex] * (2.0/float64(D2Q9.D)) * ep.entries[xIndex][yIndex] * D2Q9.weights[dIndex]
-					}
-
-				}
-
-			}	
-		}
-		*/
 
 
 		start := time.Now()
-		fstream = streamingStep2D(f, D2Q9, circleBoundaryThousand)
-		gstream = streamingStep2D(g, D2Q9, circleBoundaryThousand) // there is a problem here, somehow g gets to be (after this) such that ep grows very big/wrong
-		fmt.Println("streaming took", time.Since(start))
+		fstream = streamingStep2D(f, D2Q9, circleBoundaryR50)
+		gstream = streamingStep2D(g, D2Q9, circleBoundaryR50) // there is a problem here, somehow g gets to be (after this) such that ep grows very big/wrong
+		if (displayTimes){
+			fmt.Println("streaming took", time.Since(start))
+		}
 		f = fstream
 		g = gstream
 		
@@ -634,8 +661,12 @@ func main(){
 		
 		//rho, u = getMacro2D(f, D2Q9, circleBoundaryThousand) // this is used for the code without thermally driven flows
 		start = time.Now()
-		rho, ep, u = getMacro2DWithEp(f, g, D2Q9, circleBoundaryThousand)
-		fmt.Println("getting macros took", time.Since(start))
+		rho, ep, u = getMacro2DWithEp(f, g, D2Q9, circleBoundaryR50)
+
+		if (displayTimes){
+			fmt.Println("getting macros took", time.Since(start))
+		}
+		
 
 
 		if ( n % 100  == 0){
@@ -671,17 +702,27 @@ func main(){
 		start = time.Now()
 		geq = getEq2Dg(rho, ep, u, D2Q9)
 		feq = getEq2Df(rho, u, D2Q9)
-		fmt.Println("getting eq took", time.Since(start))
+		if (displayTimes){
+			fmt.Println("getting eq took", time.Since(start))
+		}
+		
 
 
 		start = time.Now()
 		f = collisionStep(f, feq, D2Q9)
 		g = collisionStep(g, geq, D2Q9)
-		fmt.Println("collisin took", time.Since(start))
+
+		if (displayTimes){
+			fmt.Println("collisin took", time.Since(start))
+		}
+		
 
 		start = time.Now()
 		f = gravityAffect(f, gravity, rho, ep, D2Q9)
-		fmt.Println("gravity took", time.Since(start))
+
+		if (displayTimes){
+			fmt.Println("gravity took", time.Since(start))
+		}	
 		
 		// theres another term isnt there?
 
