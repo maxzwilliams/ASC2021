@@ -197,8 +197,8 @@ def plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, index):
 	pc = ax.pcolormesh(xMesh, yMesh, temperature, antialiased=False)
 	x = [xPosition]
 	y = [yPosition]
-	print(t, index, x, y)
-	plt.plot(x, y, 'or')
+	##print(t, index, x, y)
+	##plt.plot(x, y, 'or')
 	plt.colorbar(pc)
 	plt.xlabel("x (horizontal)")
 	plt.ylabel("y (vertical)")
@@ -261,24 +261,24 @@ def main():
 	scale = 1 ## length scale of the box in meters
 	n = 50
 	timesteps = 10000000
-	dt = 0.05
+	dt = 0.01
 	
 	iterations = 1000
-	epsilon = 0.0001
+	epsilon = 0.0001/35**2 * n**2
 	omega = 1.5
 	
 	h = 1/(n-1) * scale
 	Cp=4000
-	kappa=0
+	kappa=0.0000000001
 	
 	Touter=0
 	rho0=1000
 	##alpha=10**(-7)
-	alpha=0
+	alpha=1
 	nu=10**(-10)
-	g=-10
+	g=-100
 	t = 0
-	
+	Heat = 1000
 	
 	xs = np.arange(0, scale+h, h)
 	ys = np.arange(0, scale+h, h)
@@ -288,7 +288,11 @@ def main():
 	TotalQ = []
 	times = []
 	
+
+	Pr = nu/alpha
+	Ra = g * alpha * scale**5 * Heat/(nu * kappa**2 * Cp)
 	
+	print("Pr:",Pr, "Ra:", Ra)
 		
 	
 	temperature = [[0 for i in range(n)] for j in range(n)]
@@ -303,29 +307,21 @@ def main():
 	vorticity = [[0 for i in range(n)] for j in range(n)]
 	
 	heat = [[0 for i in range(n)] for j in range(n)]
-	
-	
-	streamfunction1 = [[-0.0005*(i+j)/math.sqrt(2) for i in range(n)] for j in range(n)]
-	streamfunction2 = [[0.0005*(i+j)/math.sqrt(2) for i in range(n)] for j in range(n)]
-	
-	interval = 6
 
-	for xIndex in range(20, 30):
-		for yIndex in range(20, 30):
-			temperature[xIndex][yIndex] = 1
+	for xIndex in range(n):
+		for yIndex in range(n):
+			if (yIndex < 3):
+				heat[xIndex][yIndex] = Heat + 0.00001*(2.0*random.uniform(0,1) -1.0)
+			if (yIndex > n-3):
+				heat[xIndex][yIndex] = -Heat + 0.00001*(2.0*random.uniform(0,1) -1.0)
 
+	print("starting the loop")
 	for timestep in range(timesteps):
 
+		print("timestep:", timestep, end="\r")
 
-		if (t < interval):
-			streamfunction = streamfunction1
-		elif (t < 3*interval):
-			print("back it up")
-			streamfunction = streamfunction2
-		elif (t < 4*interval):
-			streamfunction = streamfunction1
-		else:
-			streamfunction = [[0 for i in range(n)] for j in range(n) ]
+
+
 	
 
 	
@@ -337,16 +333,20 @@ def main():
 		
 		##print("loop: " + str(timestep))
 
-		if ( timestep % 1 == 0):
+		if ( timestep % 100 == 0):
 			plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, timestep)
 			plt.plot(times, TotalQ)
 			plt.ylabel("Total Energy (arb. units)")
 			plt.xlabel("time (arb units)")
 			plt.savefig("totalq.png")
 	
-		##streamfunction = updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega, h)
+		streamfunction = updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega, h)
 		
 		temperature, error = updateTemperature(streamfunction, temperature, heat, h, n, Cp, kappa, Touter,dt)
+
+		for xIndex in range(n):
+			for yIndex in range(n):
+				temperature[xIndex][yIndex] += heat[xIndex][yIndex]/Cp * dt
 
 		if (error != None):
 			streamfunction = oldstreamfunction
