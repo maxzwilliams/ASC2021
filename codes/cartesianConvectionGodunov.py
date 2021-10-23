@@ -166,7 +166,7 @@ def updateTemperature(streamfunction, temperature, heat, h, n, kappa, dt):
 	
 
 
-def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0, h, n, dt):
+def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, gravity, rho0, h, n, dt):
 	"""
 	update the vorticity at every point
 
@@ -176,7 +176,7 @@ def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0, 
 		streamfunction (n lists of size n): streamfunction at each point in the domain
 		nu (float): kinematic viscousity
 		alpha (float): Thermal expansion coeffecient
-		g (float): gravitational field
+		gravity (n lists of size n): gravitational field at each computational point
 		rho0 (float64): reference density
 		h (float): mesh size (distance between adjacent mesh points)
 
@@ -205,7 +205,7 @@ def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0, 
 	## for all internal points get the update part for the vortivity
 	for i in range(n):
 		for j in range(1, n-1):
-			update[i][j] = -g*alpha/rho0 * ( temperature[(i+1)%n][j] - temperature[(i-1)%n][j])/(2*h) + nu*( (vorticity[(i+1)%n][j] - 2*vorticity[i][j] + vorticity[(i-1)%n][j]  )/(h**2) + (vorticity[i][j+1] -2*vorticity[i][j] + vorticity[i][j-1])/(h**2) ) 
+			update[i][j] = -gravity[i][j]*alpha/rho0 * ( temperature[(i+1)%n][j] - temperature[(i-1)%n][j])/(2*h) + nu*( (vorticity[(i+1)%n][j] - 2*vorticity[i][j] + vorticity[(i-1)%n][j]  )/(h**2) + (vorticity[i][j+1] -2*vorticity[i][j] + vorticity[i][j-1])/(h**2) ) 
 			
 	
 	## sum the current vorticity and the update together
@@ -353,18 +353,20 @@ def main():
 	streamfunction = [[0 for i in range(n)] for j in range(n)]
 	vorticity = [[0 for i in range(n)] for j in range(n)]
 	heat = [[0 for i in range(n)] for j in range(n)]
+	gravity = [ [g * yIndex/(n-1) for _ in range(n)] for yIndex in range(n)]
+
 
 
 
 	for xIndex in range(n):
 		for yIndex in range(n):
 			if (yIndex < 3):
-				heat[xIndex][yIndex] += Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0)) 
+				heat[xIndex][yIndex] = Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0)) 
 			if (yIndex > n-3):
-				heat[xIndex][yIndex] += -Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0)) 
+				heat[xIndex][yIndex] = -Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0)) 
 
 
-	
+
 
 
 	## iterate over time
@@ -417,7 +419,7 @@ def main():
 			continue ## go back to the top of the loop and redo the previous timestep
 			
 		## update the vortcity
-		vorticity = updateVorticity(vorticity, temperature, streamfunction, nu, alpha, g, rho0, h, n, dt)
+		vorticity = updateVorticity(vorticity, temperature, streamfunction, nu, alpha, gravity, rho0, h, n, dt)
 
 
 		t = t + dt ## keep track of time
