@@ -359,9 +359,9 @@ def main():
 	for xIndex in range(n):
 		for yIndex in range(n):
 			if (yIndex < 3):
-				heat[xIndex][yIndex] = Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0))
+				heat[xIndex][yIndex] += Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0)) 
 			if (yIndex > n-3):
-				heat[xIndex][yIndex] = -Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0))
+				heat[xIndex][yIndex] += -Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0)) 
 
 
 	## iterate over time

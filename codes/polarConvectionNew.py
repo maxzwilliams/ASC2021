@@ -13,6 +13,10 @@ import numpy as np
 
 
 def updateStreamFunctionFast(vorticity, streamfunction, simulationSettings):
+	"""
+	updates the streamfunction using the jacobi method with SOR.	
+	"""
+
 	vorticity = np.array(vorticity)
 	streamfunction = np.array(streamfunction)
 	dPhi = simulationSettings['dPhi']
@@ -189,7 +193,7 @@ def updateTemperature(streamfunction, temperature, heat, simulationSettings):
 			term1 = ( advTemp - 2*oldTemperature[rIndex][phiIndex] + preTemp)/(dRadius**2)
 			term2 = 1/r *(advTemp - preTemp)/(2*dRadius)
 			term3 = 1/r**2 *(oldTemperature[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - 2*oldTemperature[rIndex][phiIndex] + oldTemperature[rIndex][ (phiIndex-1)%simulationSettings['phiSteps']]  )/(dPhi**2)
-			term4 = heat[rIndex][phiIndex]/(Cp*rho0)
+			term4 = heat[rIndex][phiIndex]
 			
 			
 			if (abs(u)*dt/dRadius >= 1 or abs(v)*dt/(r*dPhi) >= 1):
@@ -365,8 +369,8 @@ def main():
 	simulationSettings = dict()
 	simulationSettings['outerRadius'] = 1
 	simulationSettings['innerRadius'] = 0.1
-	simulationSettings['radiusSteps'] = 100
-	simulationSettings['phiSteps'] = 100
+	simulationSettings['radiusSteps'] = 50
+	simulationSettings['phiSteps'] = 50
 	simulationSettings['dRadius'] = (simulationSettings['outerRadius'] - simulationSettings['innerRadius'])/simulationSettings['radiusSteps']
 	##simulationSettings['dRadius'] = simulationSettings['radiusSteps']/(simulationSettings['outerRadius'] - simulationSettings['innerRadius'])
 	simulationSettings['dPhi'] = 2*math.pi/(simulationSettings['phiSteps']-1)
@@ -378,7 +382,7 @@ def main():
 	simulationSettings['kappa'] = 0.00000001
 	simulationSettings['nu'] = 10**(-6)
 	simulationSettings['G'] = -6.7*10**(-11)
-	simulationSettings['Heat'] = 1
+	simulationSettings['Heat'] = 0.0001
 	rs = np.arange(simulationSettings['innerRadius'], simulationSettings['outerRadius'], simulationSettings['dRadius'] )
 	thetas = np.arange(0, 2*math.pi+simulationSettings['dPhi'], simulationSettings['dPhi'] )
 
@@ -403,15 +407,11 @@ def main():
 
 	streamfunction, vorticity, temperature, heat = generateFields(simulationSettings)
 	
-	##streamfunction1 = [[ vel*( (j*simulationSettings['dRadius'])**2 ) for i in range(simulationSettings['phiSteps'])] for j in range(simulationSettings['radiusSteps'])]
-	##streamfunction2 = [[ -vel*( (j*simulationSettings['dRadius'])**2) for i in range(simulationSettings['phiSteps'])] for j in range(simulationSettings['radiusSteps'])]
-	
-	
 	analyticDynamics = dict()
 
 
-	Pr = simulationSettings['nu']/simulationSettings['alpha']
-	Ra = maxG * simulationSettings['alpha'] * simulationSettings['Heat'] * simulationSettings['outerRadius']**5 /(simulationSettings['nu'] * simulationSettings['kappa']**2 * simulationSettings['Cp'])
+	Pr = simulationSettings['nu']/simulationSettings['kappa']
+	Ra = abs(maxG) * simulationSettings['alpha'] * simulationSettings['Heat'] * simulationSettings['outerRadius']**5 /(simulationSettings['nu'] * simulationSettings['kappa']**2)
 
 	print("stats about this simulation")
 	print("Pr:", Pr, "Ra", Ra)
@@ -460,10 +460,10 @@ def main():
 		for phiIndex in range(simulationSettings['phiSteps']):
 			for rIndex in range(simulationSettings['radiusSteps']):
 				da = (simulationSettings['innerRadius'] + rIndex*simulationSettings['dRadius']) * simulationSettings['dRadius'] * simulationSettings['dPhi']
-				if (rIndex < 50):
-					temperature[rIndex][phiIndex] += (1 + 0.8 * rand1[rIndex][phiIndex] )*simulationSettings['Heat']/simulationSettings['Cp'] * simulationSettings['dt']
-				elif (rIndex >= 50):
-					temperature[rIndex][phiIndex] += -(1 + 0.8 * rand1[rIndex][phiIndex])*simulationSettings['Heat']/simulationSettings['Cp'] * simulationSettings['dt']
+				if (rIndex < 45):
+					temperature[rIndex][phiIndex] += (1 + 0.1 * rand1[rIndex][phiIndex] )*simulationSettings['Heat'] * simulationSettings['dt']
+				else:
+					temperature[rIndex][phiIndex] += -(1 + 0.1 * rand1[rIndex][phiIndex])*simulationSettings['Heat'] * simulationSettings['dt'] * (44**2/(50**2 - 44**2))
 		
 
 		
