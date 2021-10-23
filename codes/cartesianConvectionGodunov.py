@@ -86,6 +86,8 @@ def updateTemperature(streamfunction, temperature, heat, h, n, kappa, dt):
 				v = -(streamfunction[(i+1)%n][j] - streamfunction[(i-1)%n][j])/(2*h)
 				## check for stability conditions
 				if (abs(u)*dt/h >= 1 or abs(v)*dt/h >= 1):
+					print("bottom")
+					print("saw velocity of:", max(abs(u),abs(v)))
 					return temperature, 1 ## if instabiltiy is detected return whatever the current temperature is and 1 denoting an error.
 
 				## apply godanonv scheme
@@ -111,6 +113,8 @@ def updateTemperature(streamfunction, temperature, heat, h, n, kappa, dt):
 				v = -(streamfunction[(i+1)%n][j] - streamfunction[(i-1)%n][j])/(2*h)
 				## check for stability conditions
 				if (abs(u)*dt/h >= 1 or abs(v)*dt/h >= 1):
+					print("top")
+					print("saw velocity of:", max(abs(u),abs(v)))
 					return temperature, 1
 				if (u >=0):
 					Tx = (temperature[(i)%n][j] - temperature[(i-1)%n][j])/h
@@ -131,6 +135,9 @@ def updateTemperature(streamfunction, temperature, heat, h, n, kappa, dt):
 				u = (streamfunction[i][j+1] - streamfunction[i][j-1])/(2*h)
 				v = -(streamfunction[(i+1)%n][j] - streamfunction[(i-1)%n][j])/(2*h)
 				if (abs(u)*dt/h >= 1 or abs(v)*dt/h >= 1):
+					print("")
+					print("middle", i, j)
+					print("saw velocity of:", abs(u), abs(v))
 					return temperature, 1
 				if (u >=0):
 					Tx = (temperature[(i)%n][j] - temperature[(i-1)%n][j])/h
@@ -302,7 +309,7 @@ def main():
 	scale = 1 ## length scale of the box in meters
 	n = 50 ## number of compuational points along the horizontal and vertical directions
 	timesteps = 10000000 ## total number of timesteps used
-	dt = 0.01 ## length of each timestep
+	dt = 1 ## length of each timestep
 
 	## parameters for Jacobi method with SOR used for solving the streamfunction
 	## these have nothing to do with the physics, they are purely mathematical	
@@ -313,16 +320,16 @@ def main():
 	## distnace between adjacent compuational nodes
 	h = 1/(n-1) * scale 
 	##Cp=4000 
-	kappa=0.0000000001 ## thermal diffusivity
+	kappa=0.00001 ## thermal diffusivity
 	
 	
 	rho0=1000 ## reference density
 	##alpha=10**(-7) 
-	alpha=1 ## thermal expansion coeffecient
-	nu=10**(-10) ## kinematic viscousity
+	alpha=0.1 ## thermal expansion coeffecient
+	nu=5000*kappa ## kinematic viscousity
 	g=-100 ## graviational acceleration 
 	t = 0 ## current time
-	Heat = 1000 ## heating field 
+	Heat = 0.0001 ## heating field 
 	
 	## the following three lines are useful only for faster plotting, not to do with the main algorithm 
 	xs = np.arange(0, scale+h, h) ## all horizontal position values for compuational nodes 
@@ -352,9 +359,9 @@ def main():
 	for xIndex in range(n):
 		for yIndex in range(n):
 			if (yIndex < 3):
-				heat[xIndex][yIndex] = Heat + 0.00001*(2.0*random.uniform(0,1) -1.0)
+				heat[xIndex][yIndex] = Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0))
 			if (yIndex > n-3):
-				heat[xIndex][yIndex] = -Heat + 0.00001*(2.0*random.uniform(0,1) -1.0)
+				heat[xIndex][yIndex] = -Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0))
 
 
 	## iterate over time
@@ -376,6 +383,13 @@ def main():
 		TotalQ.append(getTotalQ(temperature))
 		times.append(t)
 
+
+		
+		## updat the streamfunction
+		streamfunction = updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega, h)
+		## update the temperature
+		temperature, error = updateTemperature(streamfunction, temperature, heat, h, n, kappa, dt)
+
 		## every 100 timesteps we plot and save
 		if ( timestep % 100 == 0):
 			plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, timestep)
@@ -383,11 +397,6 @@ def main():
 			plt.ylabel("Total Energy (arb. units)")
 			plt.xlabel("time (arb units)")
 			plt.savefig("totalq.png")
-		
-		## updat the streamfunction
-		streamfunction = updateStreamFunction(vorticity, streamfunction, n, iterations, epsilon, omega, h)
-		## update the temperature
-		temperature, error = updateTemperature(streamfunction, temperature, heat, h, n, kappa, dt)
 
 
 
