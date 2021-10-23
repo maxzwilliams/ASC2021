@@ -371,13 +371,14 @@ def main():
 
 
 
-
+	## index 0 to 89, then we have 90, 91, 92, 93, 94, 95, 96, 97,
+	
 	for xIndex in range(nx):
 		for yIndex in range(ny):
-			if (yIndex < 44):
+			if (yIndex < 90):
 				heat[xIndex][yIndex] = Heat * (1 + 0.01 * random.uniform(-1,1))
 			else:
-				heat[xIndex][yIndex] = -Heat *(44/(50-44)) * (1 + 0.01 *random.uniform(-1,1))
+				heat[xIndex][yIndex] = -Heat * (9/1) * (1 + 0.01 *random.uniform(-1,1))
 
 
 

@@ -477,16 +477,17 @@ def main():
 		
 		
 		##streamfunction = updateStreamFunctionFast(vorticity, streamfunction, simulationSettings)
+		rIndex
+		
 		
 		temperature, state = updateTemperature(streamfunction, temperature, heat, simulationSettings)
-
 		for phiIndex in range(simulationSettings['phiSteps']):
 			for rIndex in range(simulationSettings['radiusSteps']):
 				da = (simulationSettings['innerRadius'] + rIndex*simulationSettings['dRadius']) * simulationSettings['dRadius'] * simulationSettings['dPhi']
-				if (rIndex < 45):
+				if (rIndex < 90):
 					temperature[rIndex][phiIndex] += (1 + 0.01 * random.uniform(-1,1) )*simulationSettings['Heat'] * simulationSettings['dt']
 				else:
-					temperature[rIndex][phiIndex] += -(1 + 0.01 * random.uniform(-1,1))*simulationSettings['Heat'] * simulationSettings['dt'] * (44**2/(50**2 - 44**2))
+					temperature[rIndex][phiIndex] += -(1 + 0.01 * random.uniform(-1,1))*simulationSettings['Heat'] * simulationSettings['dt'] * (90**2/(100**2 - 90**2))
 	
 		
 		if (state == "Time Fail"):
