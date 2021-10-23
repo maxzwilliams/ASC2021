@@ -519,7 +519,7 @@ func main(){
 	var vf float64 = 0.1 // kinematic viscosity
 	var tau_f float64 = vf/(math.Pow(S/math.Sqrt(3), 2.0) * dt) + 0.5 // relaxation time for particle distribution 
 	
-	var vg float64 = 0.00002 // a measure of thermal diffusivity
+	var vg float64 = 0.00001 // a measure of thermal diffusivity
 	var tau_g float64 = vg/(math.Pow(S/math.Sqrt(3), 2.0) * dt  ) + 0.5 // relaxation time associated with thermal diffusion (associated with energy distribution function)
 
 	var vgrav float64 = 0.6 
@@ -547,7 +547,7 @@ func main(){
 	D2Q9.dx = dx
 	D2Q9.S = S
 	//D2Q9.Cv = 400
-	D2Q9.Heat = 0.0000000001
+	D2Q9.Heat = 100 * 1.0/(math.Pow(50.0, 5.0))
 	D2Q9.rho = rhoBack
 	D2Q9.alpha = alpha
 	D2Q9.tau_f = tau_f
@@ -561,7 +561,7 @@ func main(){
 	Ra := math.Abs(maxG*D2Q9.alpha*D2Q9.Heat*math.Pow(50.0, 5.0)/(vf * math.Pow(vg, 2.0) ))
 	Pr := vf/vg
 	timeScaleDiff := math.Pow(50.0, 2.0)/vg
-	timeScaleAdv := (vg*vf)/(maxG * D2Q9.alpha * D2Q9.Heat * math.Pow(50.0, 3.0))
+	timeScaleAdv := (vg*vf)/(math.Abs(maxG) * D2Q9.alpha * D2Q9.Heat * math.Pow(50.0, 3.0))
 	fmt.Println("Ra: ", Ra)
 	fmt.Println("Pr:", Pr)
 	fmt.Println("Characteristic Diffusion TimeScale:", timeScaleDiff)

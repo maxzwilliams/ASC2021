@@ -369,8 +369,8 @@ def main():
 	simulationSettings = dict()
 	simulationSettings['outerRadius'] = 1
 	simulationSettings['innerRadius'] = 0.1
-	simulationSettings['radiusSteps'] = 50
-	simulationSettings['phiSteps'] = 50
+	simulationSettings['radiusSteps'] = 100
+	simulationSettings['phiSteps'] = 100
 	simulationSettings['dRadius'] = (simulationSettings['outerRadius'] - simulationSettings['innerRadius'])/simulationSettings['radiusSteps']
 	##simulationSettings['dRadius'] = simulationSettings['radiusSteps']/(simulationSettings['outerRadius'] - simulationSettings['innerRadius'])
 	simulationSettings['dPhi'] = 2*math.pi/(simulationSettings['phiSteps']-1)

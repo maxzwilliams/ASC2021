@@ -307,7 +307,7 @@ def main():
 	## function that ties everything together
 	
 	scale = 1 ## length scale of the box in meters
-	n = 50 ## number of compuational points along the horizontal and vertical directions
+	n = 100 ## number of compuational points along the horizontal and vertical directions
 	timesteps = 10000000 ## total number of timesteps used
 	dt = 1 ## length of each timestep
 
