@@ -1,5 +1,11 @@
 \begin{thebibliography}{1}
 
+\bibitem{goluskin2016internally}
+D.~Goluskin.
+\newblock {\em Internally heated convection and Rayleigh-B{\'e}nard
+  convection}.
+\newblock Springer, 2016.
+
 \bibitem{khazaeli2015ghost}
 R.~Khazaeli, M.~Ashrafizaadeh, and S.~Mortazavi.
 \newblock A ghost fluid approach for thermal lattice boltzmann method in

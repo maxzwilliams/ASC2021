@@ -29,6 +29,8 @@
 \end{abstract}
 
 \section*{Introduction}
+In this report, we use two vastly different numerical tehcniques, the vorticity-streamfunction method and the Thermal Lattice Boltzman Method to simulate convection in an internally heated, self-gravitating bousiniesque fluid. Two codes are produced in python using the streamfunction-vorticity formulation in cartesian and polar coordinates. A single Thermal Lattice Boltzman Method (TLBM) code is produced in goLang. The python codes use limited libraries such as numpy while the goLang code uses only inbuilt libraries math, random numbers etc... 
+
 Plan:
 I want to also talk about why this is actually important, why is this something that is worth studying
 \newline
@@ -350,6 +352,20 @@ back" boundary condition was used. This is a fluid-impermiable, insulating and s
 
 \section*{Results}
 %% Here I need to get some good results from my program.
+We investigate three questions about convection in the inner core. Does the geometry matter? Does the convective behavour change between
+
+\subsection*{How much does the geomtry matter}
+Here I want to have a comparison of the convection patterns that I get from running the two codes with similar parameters. I will project the polar one back into cartesian coordinates for better veiwing. I will also have the energy graph showing that these streamfunction codes do not conserve energy very well, and so do not really work that well for this type of simulation.
+
+
+\begin{figure}
+	\centering
+	\includegraphics{frog.png}
+	\caption{Internally Heated Convection comparison between cartesian case (left) and polar case (right) $Pr=1, Ra=10^8$}
+	\label{cartesian vs polar}
+\end{figure}
+
+
 
 \subsection*{How much does the central region matter??}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  20 OCT 2021 10:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  23 OCT 2021 20:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -298,12 +298,12 @@ e
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 32--38
+Underfull \hbox (badness 10000) in paragraph at lines 34--40
 
  []
 
 
-Overfull \hbox (1.81267pt too wide) in paragraph at lines 78--79
+Overfull \hbox (1.81267pt too wide) in paragraph at lines 80--81
 \OT1/cmr/m/it/10 Two nu-mer-i-cal meth-ods are in-tro-duced for solv-ing the th
 er-mal con-vec-tion prob-lem, the Lat-tice Boltz-man Method and the streamfunct
 ion-
@@ -315,7 +315,7 @@ ion-
 <D2Q9Lattice.jpg, id=24, 190.7125pt x 189.70876pt>
 File: D2Q9Lattice.jpg Graphic file (type jpg)
 <use D2Q9Lattice.jpg>
-Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 224.
+Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 226.
 (pdftex.def)             Requested size: 190.71202pt x 189.70828pt.
 
 
@@ -325,78 +325,76 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<polarPeriodic/PolarPeriodicFigure.jpg, id=30, 316.7835pt x 262.0992pt>
+[4 <./D2Q9Lattice.jpg>]
+<polarPeriodic/PolarPeriodicFigure.jpg, id=33, 316.7835pt x 262.0992pt>
 File: polarPeriodic/PolarPeriodicFigure.jpg Graphic file (type jpg)
 <use polarPeriodic/PolarPeriodicFigure.jpg>
 Package pdftex.def Info: polarPeriodic/PolarPeriodicFigure.jpg  used on input l
-ine 323.
+ine 325.
 (pdftex.def)             Requested size: 316.78271pt x 262.09854pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<polarDiagonal/PolarDiagonalFigure.jpg, id=31, 291.2481pt x 256.0767pt>
+<polarDiagonal/PolarDiagonalFigure.jpg, id=34, 291.2481pt x 256.0767pt>
 File: polarDiagonal/PolarDiagonalFigure.jpg Graphic file (type jpg)
 <use polarDiagonal/PolarDiagonalFigure.jpg>
 Package pdftex.def Info: polarDiagonal/PolarDiagonalFigure.jpg  used on input l
-ine 332.
+ine 334.
 (pdftex.def)             Requested size: 291.24738pt x 256.07608pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<cartesianPeriodic/CartesianPeriodicFigure.jpg, id=32, 322.0833pt x 260.8947pt>
+<cartesianPeriodic/CartesianPeriodicFigure.jpg, id=35, 322.0833pt x 260.8947pt>
 
 File: cartesianPeriodic/CartesianPeriodicFigure.jpg Graphic file (type jpg)
 <use cartesianPeriodic/CartesianPeriodicFigure.jpg>
 Package pdftex.def Info: cartesianPeriodic/CartesianPeriodicFigure.jpg  used on
- input line 339.
+ input line 341.
 (pdftex.def)             Requested size: 322.0825pt x 260.89404pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<cartesianDiagonal/CartesianDiagonalFigure.jpg, id=33, 334.3692pt x 264.2673pt>
+<cartesianDiagonal/CartesianDiagonalFigure.jpg, id=36, 334.3692pt x 264.2673pt>
 
 File: cartesianDiagonal/CartesianDiagonalFigure.jpg Graphic file (type jpg)
 <use cartesianDiagonal/CartesianDiagonalFigure.jpg>
 Package pdftex.def Info: cartesianDiagonal/CartesianDiagonalFigure.jpg  used on
- input line 346.
+ input line 348.
 (pdftex.def)             Requested size: 334.36838pt x 264.26665pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-(./report.bbl [4 <./D2Q9Lattice.jpg>]
-Overfull \vbox (124.33755pt too high) has occurred while \output is active []
-
-
-[5 <./polarPeriodic/PolarPeriodicFigure.jpg>]) [6 <./polarDiagonal/polarDiagona
-lFigure.jpg> <./cartesianPeriodic/cartesianPeriodicFigure.jpg>] [7 <./cartesian
-Diagonal/CartesianDiagonalFigure.jpg>] (./report.aux) ) 
+[5] [6 <./polarPeriodic/PolarPeriodicFigure.jpg> <./polarDiagonal/polarDiagonal
+Figure.jpg>] (./report.bbl) [7 <./cartesianPeriodic/cartesianPeriodicFigure.jpg
+> <./cartesianDiagonal/CartesianDiagonalFigure.jpg>] (./report.aux) ) 
 Here is how much of TeX's memory you used:
- 3604 strings out of 481239
- 52048 string characters out of 5920377
- 311530 words of memory out of 5000000
- 18804 multiletter control sequences out of 15000+600000
+ 3606 strings out of 481239
+ 52080 string characters out of 5920377
+ 310533 words of memory out of 5000000
+ 18806 multiletter control sequences out of 15000+600000
  538674 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,9n,33p,705b,277s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-mi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmti10.pfb>
-Output written on report.pdf (7 pages, 644528 bytes).
+</usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmti10.pfb>
+Output written on report.pdf (7 pages, 648614 bytes).
 PDF statistics:
  105 PDF objects out of 1000 (max. 8388607)
  72 compressed objects within 1 object stream
