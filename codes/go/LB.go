@@ -546,8 +546,8 @@ func main(){
 	D2Q9.dt = dt
 	D2Q9.dx = dx
 	D2Q9.S = S
-	D2Q9.Cv = 400
-	D2Q9.Heat = 0.001
+	//D2Q9.Cv = 400
+	D2Q9.Heat = 0.000001
 	D2Q9.rho = rhoBack
 	D2Q9.alpha = alpha
 	D2Q9.tau_f = tau_f
@@ -558,10 +558,14 @@ func main(){
 
 	maxG := -1.0 // define maximum gravity (gravity at exterior of boundary)
 	// Get important dimensionless parameters and print them out
-	Ra := maxG*D2Q9.alpha*D2Q9.Heat*math.Pow(50.0, 5.0)/(D2Q9.rho * vf * math.Pow(vg, 2.0)*D2Q9.Cv )
+	Ra := math.Abs(maxG*D2Q9.alpha*D2Q9.Heat*math.Pow(50.0, 5.0)/(vf * math.Pow(vg, 2.0) ))
 	Pr := vf/vg
+	timeScaleDiff := math.Pow(50.0, 2.0)/vg
+	timeScaleAdv := (vg*vf)/(maxG * D2Q9.alpha * D2Q9.Heat * math.Pow(50.0, 3.0))
 	fmt.Println("Ra: ", Ra)
 	fmt.Println("Pr:", Pr)
+	fmt.Println("Characteristic Diffusion TimeScale:", timeScaleDiff)
+	fmt.Println("Characteristic Advection TimeScale:", timeScaleAdv)
 	
 
 	
@@ -685,9 +689,9 @@ func main(){
 
 					if (!circleBoundaryR50(xIndex, yIndex)){
 						if (  math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < innerRadius){
-							g.entries[xIndex][yIndex][dIndex] += rho.entries[xIndex][yIndex] * D2Q9.heat * D2Q9.weights[dIndex]
+							g.entries[xIndex][yIndex][dIndex] += rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex]
 						} else {
-							g.entries[xIndex][yIndex][dIndex] += -rho.entries[xIndex][yIndex] * D2Q9.heat * D2Q9.weights[dIndex] * (innerCounter/outerCounter)
+							g.entries[xIndex][yIndex][dIndex] += -rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (innerCounter/outerCounter)
 						}
 					}
 				}

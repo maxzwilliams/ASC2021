@@ -370,6 +370,19 @@ back" boundary condition was used. This is a fluid-impermiable, insulating and s
 We assume that the Earth is homogenous accross polar and azimuthal variations. By applying Gauss's law to this that 
 
 
+\subsection*{Some Scales that I used}
+This is an important source here \cite{goluskin2016internally}.
+\newline
+We chose the following legnth scales for the problem. For length we used $d$, the height or radius of the domain, 
+for timescale we used $\frac{d^2}{\kappa}$, for pressure we used $\frac{\rho_0 d^2}{\kappa}$, for temperature we used $\frac{d^2 H}{\kappa}$. 
+I took the rayleigh number as $Ra = \frac{g \alpha H d^5}{\nu \kappa^2}$ and the Prantl number $Pr = \frac{\nu}{\kappa}$. I additionally define a timescale for transport via flow:
+\begin{equation}
+	\tau = \frac{\kappa \nu}{g \alpha H d^3}
+\end{equation}
+
+
+
+
 \bibliographystyle{abbrv}
 \bibliography{ref.bib}
 
