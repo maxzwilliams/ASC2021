@@ -364,6 +364,9 @@ def main():
 				heat[xIndex][yIndex] += -Heat * (1 + 0.01*(2.0*random.uniform(0,1) - 1.0)) 
 
 
+	
+
+
 	## iterate over time
 	for timestep in range(timesteps):
 
