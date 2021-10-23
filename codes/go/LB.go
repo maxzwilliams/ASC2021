@@ -547,7 +547,7 @@ func main(){
 	D2Q9.dx = dx
 	D2Q9.S = S
 	//D2Q9.Cv = 400
-	D2Q9.Heat = 0.000001
+	D2Q9.Heat = 0.0000000001
 	D2Q9.rho = rhoBack
 	D2Q9.alpha = alpha
 	D2Q9.tau_f = tau_f
@@ -666,9 +666,9 @@ func main(){
 	outerCounter := 0.0
 	for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-			if (math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < innerRadius){
+			if (math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < math.Pow(float64(innerRadius), 2.0)) {
 				innerCounter += 1.0
-			} else{
+			}else {
 				outerCounter += 1.0
 			}
 		}
@@ -688,10 +688,10 @@ func main(){
 				for dIndex, _ := range D2Q9.directions{
 
 					if (!circleBoundaryR50(xIndex, yIndex)){
-						if (  math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < innerRadius){
-							g.entries[xIndex][yIndex][dIndex] += rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex]
+						if (  math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < math.Pow(float64(innerRadius) ,2.0) )   {
+							g.entries[xIndex][yIndex][dIndex] += rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (1 + 0.1*randomNumbers1[xIndex][yIndex])
 						} else {
-							g.entries[xIndex][yIndex][dIndex] += -rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (innerCounter/outerCounter)
+							g.entries[xIndex][yIndex][dIndex] += -rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (innerCounter/outerCounter) * (1 + 0.1*randomNumbers1[xIndex][yIndex])
 						}
 					}
 				}
