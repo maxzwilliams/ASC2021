@@ -280,7 +280,7 @@ def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh, t, inde
 	rCenter = 0
 	thetaCenter = 0
 	
-	totalTemperature = 0
+	totalTemperature = 0.0000000000000000000000001
 	for rIndex in range(len(temperature)):
 		for thetaIndex in range(len(temperature[0])):
 			totalTemperature += temperature[rIndex][thetaIndex]
@@ -323,7 +323,7 @@ def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh, t, inde
 	theta = [thetaCenter%(2*math.pi)]
 	r = [rCenter]
 	##plt.plot(theta, r, 'or')
-	ax.set_rorigin(-0.1)
+	ax.set_rorigin(-0.3)
 	cb = plt.colorbar(pc)
 	cb.set_label("Temperature (arb. units)")
 	plt.title(t)
@@ -351,7 +351,7 @@ def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh, t, inde
 	
 	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
 	pc = ax.pcolormesh(thetaMesh, rMesh, streamfunction, antialiased=False)
-	ax.set_rorigin(-0.1)
+	ax.set_rorigin(-0.3)
 	plt.title(t)
 	cb = plt.colorbar(pc)
 	cb.set_label("Streamfunction (m^2/s)")
@@ -362,7 +362,7 @@ def plotFields(temperature, vorticity, streamfunction, rMesh, thetaMesh, t, inde
 	
 	fig, ax = plt.subplots(dpi=120, subplot_kw=dict(projection='polar'))
 	pc = ax.pcolormesh(thetaMesh, rMesh, vorticity, antialiased=False)
-	ax.set_rorigin(-0.1)
+	ax.set_rorigin(-0.3)
 	plt.title(t)
 	cb = plt.colorbar(pc)
 	cb.set_label("Vorticity (1/s)")
@@ -391,7 +391,7 @@ def main():
 	## settings for the simulation, how large our space is, how fine our grid is
 	simulationSettings = dict()
 	simulationSettings['outerRadius'] = 1
-	simulationSettings['innerRadius'] = 0.1
+	simulationSettings['innerRadius'] = 0.3
 	simulationSettings['radiusSteps'] = 100
 	simulationSettings['phiSteps'] = 100
 	simulationSettings['dRadius'] = (simulationSettings['outerRadius'] - simulationSettings['innerRadius'])/(simulationSettings['radiusSteps']-1)
@@ -400,7 +400,7 @@ def main():
 	simulationSettings['poissonIterations'] = 1000
 	simulationSettings['poissonError'] = 0.001
 	simulationSettings['SORParam'] = 0.5
-	simulationSettings['dt'] = 10
+	simulationSettings['dt'] = 5
 	##simulationSettings['Cp'] = 4000
 	simulationSettings['kappa'] = 0.000001
 	simulationSettings['rho0'] = 1000
@@ -409,7 +409,8 @@ def main():
 	simulationSettings['Heat'] = 0.0001
 	
 	simulationSettings['alpha'] = 0.000001
-	rs = np.arange(simulationSettings['innerRadius'], simulationSettings['outerRadius'], simulationSettings['dRadius'] )
+	rs = [simulationSettings['innerRadius'] + simulationSettings['dRadius']* rIndex for rIndex in range(simulationSettings['radiusSteps']) ]
+	##rs = np.arange(simulationSettings['innerRadius'], simulationSettings['outerRadius'], simulationSettings['dRadius'] )
 	thetas = np.arange(0, 2*math.pi+simulationSettings['dPhi'], simulationSettings['dPhi'] )
 
 

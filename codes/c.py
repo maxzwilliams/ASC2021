@@ -321,7 +321,7 @@ def main():
 	nx = 100
 	ny = 100
 	timesteps = 10000000 ## total number of timesteps used
-	dt = 10 ## length of each timestep
+	dt = 1 ## length of each timestep
 
 	## parameters for Jacobi method with SOR used for solving the streamfunction
 	## these have nothing to do with the physics, they are purely mathematical	
@@ -395,7 +395,7 @@ def main():
 		
 		
 		## every 100 timesteps we plot and save
-		if ( timestep % 100 == 0):
+		if ( timestep % 1000 == 0):
 			plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, timestep)
 			plt.plot(times, TotalQ)
 			plt.ylabel("Total Energy (arb. units)")

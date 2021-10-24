@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  24 OCT 2021 12:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.9.21)  24 OCT 2021 14:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -96,43 +96,29 @@ Package: afterpage 2014/10/28 v1.08 After-Page Package (DPC)
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
-Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
-nment
 
-(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count179
-\float@exts=\toks20
-\float@box=\box48
-\@float@everytoks=\toks21
-\@floatcapt=\box49
-)
-\@float@every@algorithm=\toks22
-\c@algorithm=\count180
-)
-(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
-Package: algpseudocode 
+! LaTeX Error: File `algorithm.sty' not found.
 
-(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
-Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
 
-Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count181
-\c@ALG@rem=\count182
-\c@ALG@nested=\count183
-\ALG@tlm=\skip51
-\ALG@thistlm=\skip52
-\c@ALG@Lnr=\count184
-\c@ALG@blocknr=\count185
-\c@ALG@storecount=\count186
-\c@ALG@tmpcounter=\count187
-\ALG@tmplength=\skip53
-)
-Document Style - pseudocode environments for use with the `algorithmicx' style
-) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Enter file name: 
+! Interruption.
+<to be read again> 
+                   }
+l.10 \usepackage
+                {algpseudocode}^^M
+? 
+
+! LaTeX Error: File `algpseudocode.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2020/01/20 v2.17e AMS math features
-\@mathmargin=\skip54
+\@mathmargin=\skip51
 
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
@@ -140,7 +126,7 @@ Package: amstext 2000/06/29 v2.01 AMS text
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks23
+\@emptytoks=\toks20
 \ex@=\dimen145
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -150,48 +136,48 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count188
+\inf@bad=\count179
 LaTeX Info: Redefining \frac on input line 227.
-\uproot@=\count189
-\leftroot@=\count190
+\uproot@=\count180
+\leftroot@=\count181
 LaTeX Info: Redefining \overline on input line 389.
-\classnum@=\count191
-\DOTSCASE@=\count192
+\classnum@=\count182
+\DOTSCASE@=\count183
 LaTeX Info: Redefining \ldots on input line 486.
 LaTeX Info: Redefining \dots on input line 489.
 LaTeX Info: Redefining \cdots on input line 610.
-\Mathstrutbox@=\box50
-\strutbox@=\box51
+\Mathstrutbox@=\box48
+\strutbox@=\box49
 \big@size=\dimen147
 LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
-\macc@depth=\count193
-\c@MaxMatrixCols=\count194
+\macc@depth=\count184
+\c@MaxMatrixCols=\count185
 \dotsspace@=\muskip17
-\c@parentequation=\count195
-\dspbrk@lvl=\count196
-\tag@help=\toks24
-\row@=\count197
-\column@=\count198
-\maxfields@=\count199
-\andhelp@=\toks25
+\c@parentequation=\count186
+\dspbrk@lvl=\count187
+\tag@help=\toks21
+\row@=\count188
+\column@=\count189
+\maxfields@=\count190
+\andhelp@=\toks22
 \eqnshift@=\dimen148
 \alignsep@=\dimen149
 \tagshift@=\dimen150
 \tagwidth@=\dimen151
 \totwidth@=\dimen152
 \lineht@=\dimen153
-\@envbody=\toks26
-\multlinegap=\skip55
-\multlinetaggap=\skip56
-\mathdisplay@stack=\toks27
+\@envbody=\toks23
+\multlinegap=\skip52
+\multlinetaggap=\skip53
+\mathdisplay@stack=\toks24
 LaTeX Info: Redefining \[ on input line 2859.
 LaTeX Info: Redefining \] on input line 2860.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count266
-\l__pdf_internal_box=\box52
+\l__kernel_color_stack_int=\count191
+\l__pdf_internal_box=\box50
 )
 (./report.aux)
 \openout1 = `report.aux'.
@@ -213,17 +199,17 @@ LaTeX Font Info:    ... okay on input line 21.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count267
+\scratchcounter=\count192
 \scratchdimen=\dimen154
-\scratchbox=\box53
-\nofMPsegments=\count268
-\nofMParguments=\count269
-\everyMPshowfont=\toks28
-\MPscratchCnt=\count270
+\scratchbox=\box51
+\nofMPsegments=\count193
+\nofMParguments=\count194
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count195
 \MPscratchDim=\dimen155
-\MPnumerator=\count271
-\makeMPintoPDFobject=\count272
-\everyMPtoPDFconversion=\toks29
+\MPnumerator=\count196
+\makeMPintoPDFobject=\count197
+\everyMPtoPDFconversion=\toks26
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 
@@ -323,89 +309,96 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [3]
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+! LaTeX Error: Environment algorithm undefined.
 
-[4 <./D2Q9Lattice.jpg>]
-<polarPeriodic/PolarPeriodicFigure.jpg, id=33, 316.7835pt x 262.0992pt>
-File: polarPeriodic/PolarPeriodicFigure.jpg Graphic file (type jpg)
-<use polarPeriodic/PolarPeriodicFigure.jpg>
-Package pdftex.def Info: polarPeriodic/PolarPeriodicFigure.jpg  used on input l
-ine 325.
-(pdftex.def)             Requested size: 316.78271pt x 262.09854pt.
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.280 \begin{algorithm}
+                       [h!]
+? 
 
+! LaTeX Error: \caption outside float.
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.281 \caption
+              {Thermal Lattice Boltzman Algorithm}\label{alg:TLBM}
+? 
 
-<polarDiagonal/PolarDiagonalFigure.jpg, id=34, 291.2481pt x 256.0767pt>
-File: polarDiagonal/PolarDiagonalFigure.jpg Graphic file (type jpg)
-<use polarDiagonal/PolarDiagonalFigure.jpg>
-Package pdftex.def Info: polarDiagonal/PolarDiagonalFigure.jpg  used on input l
-ine 332.
-(pdftex.def)             Requested size: 291.24738pt x 256.07608pt.
+! LaTeX Error: Environment algorithmic undefined.
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<cartesianPeriodic/CartesianPeriodicFigure.jpg, id=35, 322.0833pt x 260.8947pt>
-
-File: cartesianPeriodic/CartesianPeriodicFigure.jpg Graphic file (type jpg)
-<use cartesianPeriodic/CartesianPeriodicFigure.jpg>
-Package pdftex.def Info: cartesianPeriodic/CartesianPeriodicFigure.jpg  used on
- input line 339.
-(pdftex.def)             Requested size: 322.0825pt x 260.89404pt.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<cartesianDiagonal/CartesianDiagonalFigure.jpg, id=36, 334.3692pt x 264.2673pt>
-
-File: cartesianDiagonal/CartesianDiagonalFigure.jpg Graphic file (type jpg)
-<use cartesianDiagonal/CartesianDiagonalFigure.jpg>
-Package pdftex.def Info: cartesianDiagonal/CartesianDiagonalFigure.jpg  used on
- input line 346.
-(pdftex.def)             Requested size: 334.36838pt x 264.26665pt.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-LaTeX Warning: Reference `stability equation' on page 5 undefined on input line
- 351.
-
-<frog.png, id=37, 348.30125pt x 281.05pt>
-File: frog.png Graphic file (type png)
-<use frog.png>
-Package pdftex.def Info: frog.png  used on input line 373.
-(pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-File: frog.png Graphic file (type png)
-<use frog.png>
-Package pdftex.def Info: frog.png  used on input line 386.
-(pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
-[5]
-Overfull \vbox (58.31172pt too high) has occurred while \output is active []
-
-
-[6 <./polarPeriodic/PolarPeriodicFigure.jpg> <./polarDiagonal/polarDiagonalFigu
-re.jpg>] (./report.bbl [7 <./cartesianPeriodic/cartesianPeriodicFigure.jpg> <./
-cartesianDiagonal/CartesianDiagonalFigure.jpg>]) [8 <./frog.png>] [9]
-(./report.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.282 \begin{algorithmic}
+                         
+? 
+! Undefined control sequence.
+l.284 \State
+             $f_{\alpha} = \rho_0 w_{\alpha}$
+? 
+! Undefined control sequence.
+l.285 \State
+             $\epsilon = 0$
+? 
+! Undefined control sequence.
+l.286 \State
+             $\epsilon_b$
+? 
+! Interruption.
+<to be read again> 
+                   $
+l.286 \State $
+              \epsilon_b$
+? 
+! Undefined control sequence.
+l.287 \State
+             $\rho = 0$
+? 
+! Interruption.
+<to be read again> 
+                   $
+l.287 \State $
+              \rho = 0$
+? 
+! Undefined control sequence.
+l.288 \State
+             $\vec{u} = 0$
+? 
+! Interruption.
+<to be read again> 
+                   $
+l.288 \State $
+              \vec{u} = 0$
+? 
+! Undefined control sequence.
+l.289 \While
+            {Simulation Running}
+? 
+! Interruption.
+<to be read again> 
+                   {
+l.289 \While{
+             Simulation Running}
+? x
+ 
 Here is how much of TeX's memory you used:
- 3616 strings out of 481239
- 52202 string characters out of 5920377
- 310549 words of memory out of 5000000
- 18814 multiletter control sequences out of 15000+600000
+ 3002 strings out of 483183
+ 42703 string characters out of 5966292
+ 292338 words of memory out of 5000000
+ 17977 multiletter control sequences out of 15000+600000
  538674 words of font info for 46 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 34i,9n,33p,817b,277s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf
+ 14 hyphenation exceptions out of 8191
+ 34i,9n,33p,700b,218s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
@@ -418,10 +411,10 @@ sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (9 pages, 663552 bytes).
+Output written on report.pdf (3 pages, 207135 bytes).
 PDF statistics:
- 112 PDF objects out of 1000 (max. 8388607)
- 76 compressed objects within 1 object stream
+ 83 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

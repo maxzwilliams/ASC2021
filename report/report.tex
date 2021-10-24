@@ -386,27 +386,32 @@ balence the total heat generation. Note this heat field is different in
 the cartesian and polar cases. In all heating fields time-independent 
 random flucations of $\approx 1 \%$ were set to faciliate instabilities.
 
-\begin{figure}
+\begin{figure}[h!]
 	\centering
-	\includegraphics{frog.png}
+	\includegraphics{big fig.png}
 	\caption{Internally Heated Convection comparison between cartesian 
-	case (left) and polar case (right) $Pr=1, Ra=10^8$}
+	case (left) and polar case (right) $Pr=1, Ra=10^8$. Times are given as headings. All other compuation parameter settings are equivilent.}
 	\label{cartesian vs polar}
 \end{figure}
 
+As seen in figure \ref{cartesian vs polar}, the two geometries give vastly different convective behaviour. The cartesian geometry (left) begins forming convective plumes at time $\approx 143000$, long after the time $25000$ when the polar (right) model begins to convect. The convection patterns formed in the cartesian model are consistant in time, forming the typical convection cells. The polar case is much more eratic, not forming typical convection cells. Finally, the wavelength for conevtion patterns in the cartesian case is approximately 1/5 that produced by t polar case. In general, the polar case shows more vigourous convection characteristic of a higher effective rayleigh number. 
 
 
+\begin{figure}
+	\centering
+	\includegraphics{totalQ.png}
+	\caption{Total heat energy in cartesian (left) and polar (right) simulation through time in figure \ref{cartesian vs polar}}
+	\label{cartesian vs polar energy}
+\end{figure}
 
-\subsection*{How much does the central region matter?}
 
-
-
-
-
+\subsection*{Does the inner circle matter?}
+{\it{Here I keep the polar geometry and change the size of the central region to test its importance to the solution}}
 
 
 
 \subsection*{Thermal Lattice Boltzman Simulations}
+We have seen from the streamfunction-vorticity codes that geometry and internal region alter convection significantly, however, neither streamfunction-vorticty code can incorporate both. 
 
 
 

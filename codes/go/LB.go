@@ -527,7 +527,7 @@ func main(){
 	
 	
 	var rhoBack float64 = 1000.0 // background density
-	var alpha float64 = 0.1 // thermal expansion coeffecient
+	var alpha float64 = 0.0001 // thermal expansion coeffecient
 	
 	// define the discritization
 	nt := 10000000 // timesteps
@@ -547,7 +547,7 @@ func main(){
 	D2Q9.dx = dx
 	D2Q9.S = S
 	//D2Q9.Cv = 400
-	D2Q9.Heat = 100 * 1.0/(math.Pow(50.0, 5.0))
+	D2Q9.Heat = 1 * 1.0/(math.Pow(50.0, 5.0))
 	D2Q9.rho = rhoBack
 	D2Q9.alpha = alpha
 	D2Q9.tau_f = tau_f
@@ -580,6 +580,7 @@ func main(){
 	var ep D2Property
 	var u D2Field
 	var gravity D2Field
+
 	// populate these
 	f.entries = D3Constant(nx, ny, Q, 0.0)
 	f.name = "f" 
