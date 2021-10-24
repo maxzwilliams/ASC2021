@@ -153,7 +153,6 @@ def updateStreamFunction(vorticity, streamfunction, simulationSettings):
 	return streamfunction
 
 def updateTemperature(streamfunction, temperature, heat, simulationSettings):
-	Cp = simulationSettings['Cp']
 	kappa = simulationSettings['kappa']
 	dt = simulationSettings['dt']
 	dPhi = simulationSettings['dPhi']
@@ -193,6 +192,7 @@ def updateTemperature(streamfunction, temperature, heat, simulationSettings):
 			term1 = ( advTemp - 2*oldTemperature[rIndex][phiIndex] + preTemp)/(dRadius**2)
 			term2 = 1/r *(advTemp - preTemp)/(2*dRadius)
 			term3 = 1/r**2 *(oldTemperature[rIndex][(phiIndex+1)%simulationSettings['phiSteps']] - 2*oldTemperature[rIndex][phiIndex] + oldTemperature[rIndex][ (phiIndex-1)%simulationSettings['phiSteps']]  )/(dPhi**2)
+			
 			term4 = heat[rIndex][phiIndex]
 			
 			
@@ -401,7 +401,7 @@ def main():
 	simulationSettings['poissonError'] = 0.001
 	simulationSettings['SORParam'] = 0.5
 	simulationSettings['dt'] = 10
-	simulationSettings['Cp'] = 4000
+	##simulationSettings['Cp'] = 4000
 	simulationSettings['kappa'] = 0.000001
 	simulationSettings['rho0'] = 1000
 	simulationSettings['nu'] = 1 * simulationSettings['kappa'] 
@@ -429,6 +429,14 @@ def main():
 
 
 	streamfunction, vorticity, temperature, heat = generateFields(simulationSettings)
+	
+	for rIndex in range(simulationSettings['radiusSteps']):
+		for phiIndex in range(simulationSettings['phiSteps']):
+			if (rIndex < 90):
+				heat[rIndex][phiIndex] = simulationSettings['Heat'] * (1 + 0.01*random.uniform(-1,1))
+			else:
+				heat[rIndex][phiIndex] =  -simulationSettings['Heat'] * 90**2/(100**2 - 90**2) * (1 + 0.01*random.uniform(-1,1))
+	
 	
 	analyticDynamics = dict()
 
@@ -477,17 +485,18 @@ def main():
 		
 		
 		##streamfunction = updateStreamFunctionFast(vorticity, streamfunction, simulationSettings)
-		rIndex
-		
 		
 		temperature, state = updateTemperature(streamfunction, temperature, heat, simulationSettings)
+		
+		"""
 		for phiIndex in range(simulationSettings['phiSteps']):
 			for rIndex in range(simulationSettings['radiusSteps']):
 				da = (simulationSettings['innerRadius'] + rIndex*simulationSettings['dRadius']) * simulationSettings['dRadius'] * simulationSettings['dPhi']
 				if (rIndex < 90):
-					temperature[rIndex][phiIndex] += (1 + 0.01 * random.uniform(-1,1) )*simulationSettings['Heat'] * simulationSettings['dt']
+					temperature[rIndex][phiIndex] += (1 + 0.01 * rand1[rIndex][phiIndex] ) * simulationSettings['Heat'] * simulationSettings['dt']
 				else:
-					temperature[rIndex][phiIndex] += -(1 + 0.01 * random.uniform(-1,1))*simulationSettings['Heat'] * simulationSettings['dt'] * (90**2/(100**2 - 90**2))
+					temperature[rIndex][phiIndex] += -(1 + 0.01 * rand1[rIndex][phiIndex])*simulationSettings['Heat'] * simulationSettings['dt'] * (90**2/(100**2-90**2))
+		"""
 	
 		
 		if (state == "Time Fail"):

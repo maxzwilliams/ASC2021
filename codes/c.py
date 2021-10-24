@@ -392,6 +392,15 @@ def main():
 	for timestep in range(timesteps):
 
 		print("timestep:", timestep, end="\r")
+		
+		
+		## every 100 timesteps we plot and save
+		if ( timestep % 100 == 0):
+			plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, timestep)
+			plt.plot(times, TotalQ)
+			plt.ylabel("Total Energy (arb. units)")
+			plt.xlabel("time (arb units)")
+			plt.savefig("cartesianTotalQ.png")
 
 
 
@@ -417,20 +426,15 @@ def main():
 		## addapted to VAR
 		temperature, error = updateTemperature(streamfunction, temperature, heat, hx, hy, nx, ny, kappa, dt)
 
-		## every 100 timesteps we plot and save
-		if ( timestep % 100 == 0):
-			plotFields(temperature, vorticity, streamfunction, xMesh, yMesh, t, timestep)
-			plt.plot(times, TotalQ)
-			plt.ylabel("Total Energy (arb. units)")
-			plt.xlabel("time (arb units)")
-			plt.savefig("cartesianTotalQ.png")
+	
 
 
-
+		"""
 		## apply heating conditions to the temperature
 		for xIndex in range(nx):
 			for yIndex in range(ny):
 				temperature[xIndex][yIndex] += heat[xIndex][yIndex] * dt
+		"""
 
 		if (error != None): ## if we got an error due to instability conditions from updating temperature
 			## reset everything back one timestep 

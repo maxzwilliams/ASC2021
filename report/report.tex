@@ -327,8 +327,6 @@ back" boundary condition was used. This is a fluid-impermiable, insulating and s
 	the fluid and is taken as the location of the temperature 1 zone. Fluid is advected by an anticlockwise flow. Cronological order is Top left, top right, bottom left, bottom right. Top left shows the initial condition. Top right shows advection across periodic boundary. Bottom left is state when an exact scheme would have returned to the original position. Bottom right is the final state after being advected around one rotation.}
 	\label{polar periodic advection}
 \end{figure}
-
-
 \begin{figure}[h!]
 	\centering
 	\includegraphics{polarDiagonal/PolarDiagonalFigure.jpg}
@@ -350,27 +348,65 @@ back" boundary condition was used. This is a fluid-impermiable, insulating and s
 	\label{cartesian diagonal advection}
 \end{figure}
 
-\section*{Results}
-%% Here I need to get some good results from my program.
-We investigate three questions about convection in the inner core. Does the geometry matter? Does the convective behavour change between
+\noindent The advection results for both codes are similar. For the periodic advection test figures \ref{polar periodic advection} and \ref{cartesian periodic advection} the temperature 1 region was advected across the periodic boundary without additional distortion. The centroid (red dot) also lagged the advection field by $\approx 1 \%$ and $\approx 10 \%$ for the cartesian (figure \ref{cartesian periodic advection}) and polar case (figure \ref{polar periodic advection}) respectively. It is unknown why these differ substantually, but a probable cause is a smaller timestep used to produce the polar tests. In all cases, the bluring shows numerical diffusion which happens along the direction of the advection field as predicted by equation \ref{stability equation}.
 
-\subsection*{How much does the geomtry matter}
-Here I want to have a comparison of the convection patterns that I get from running the two codes with similar parameters. I will project the polar one back into cartesian coordinates for better veiwing. I will also have the energy graph showing that these streamfunction codes do not conserve energy very well, and so do not really work that well for this type of simulation.
 
+\section*{Simulations}
+
+The cartesian and polar streamfunction-vorticity codes are limited in two 
+distinct ways. The polar geometry of the 2-dimensional inner core is well 
+suited to polar coorindates. However, by using polar coorindates, a 
+singularity in the governing equations occures at the center 
+$r \rightarrow 0$. For standard regularly spaced meshes as is used here, 
+this causes the lattice spacing near the center to become infinicimal 
+requiring small timesteps and large amounts of compute time. For this 
+reason, the inner region of the polar domain is exlcuded leaving out a 
+critical region in the simulation. In cartesian coorindates, there is no 
+singularity and the full domain is included, however it becomes difficult 
+to recreate the polar geometry and enforce boundary conditions. Because of 
+this, we approximate the 2-dimensional inner core by ''unrolling" as shown 
+in figure \ref{unrolling}, losing the affect of the polar geometry. 
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics{frog.png}
+	\caption{figure showing how the 2-dimensional polar domain is ''unrolled" into a 2-dimensional cartesian domain.}
+	\label{unrolling}
+\end{figure}
+
+\subsection*{How much does the geometry matter}
+{\it{In this section I compaire the results from the polar and cartesian streamfunction-vorticity codes with similar Prantl and Rayleigh number to see how the geometry affects convection.}}
+
+A gravitational field linearly proportional to height and radius for the 
+cartesian and polar codes respectively was set. A constant internal 
+heating field $H$ was set for all but the upper $10 \%$ of both domains. A 
+compensating heating field was set at the remaining top of the domain to 
+balence the total heat generation. Note this heat field is different in 
+the cartesian and polar cases. In all heating fields time-independent 
+random flucations of $\approx 1 \%$ were set to faciliate instabilities.
 
 \begin{figure}
 	\centering
 	\includegraphics{frog.png}
-	\caption{Internally Heated Convection comparison between cartesian case (left) and polar case (right) $Pr=1, Ra=10^8$}
+	\caption{Internally Heated Convection comparison between cartesian 
+	case (left) and polar case (right) $Pr=1, Ra=10^8$}
 	\label{cartesian vs polar}
 \end{figure}
 
 
 
-\subsection*{How much does the central region matter??}
+
+\subsection*{How much does the central region matter?}
 
 
-\subsection*{Conditions For Convection In The Inner Core}
+
+
+
+
+
+
+\subsection*{Thermal Lattice Boltzman Simulations}
 
 
 

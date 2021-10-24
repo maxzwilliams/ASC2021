@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  23 OCT 2021 20:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  24 OCT 2021 12:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -340,7 +340,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: polarDiagonal/PolarDiagonalFigure.jpg Graphic file (type jpg)
 <use polarDiagonal/PolarDiagonalFigure.jpg>
 Package pdftex.def Info: polarDiagonal/PolarDiagonalFigure.jpg  used on input l
-ine 334.
+ine 332.
 (pdftex.def)             Requested size: 291.24738pt x 256.07608pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -350,7 +350,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: cartesianPeriodic/CartesianPeriodicFigure.jpg Graphic file (type jpg)
 <use cartesianPeriodic/CartesianPeriodicFigure.jpg>
 Package pdftex.def Info: cartesianPeriodic/CartesianPeriodicFigure.jpg  used on
- input line 341.
+ input line 339.
 (pdftex.def)             Requested size: 322.0825pt x 260.89404pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -360,44 +360,68 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: cartesianDiagonal/CartesianDiagonalFigure.jpg Graphic file (type jpg)
 <use cartesianDiagonal/CartesianDiagonalFigure.jpg>
 Package pdftex.def Info: cartesianDiagonal/CartesianDiagonalFigure.jpg  used on
- input line 348.
+ input line 346.
 (pdftex.def)             Requested size: 334.36838pt x 264.26665pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5] [6 <./polarPeriodic/PolarPeriodicFigure.jpg> <./polarDiagonal/polarDiagonal
-Figure.jpg>] (./report.bbl) [7 <./cartesianPeriodic/cartesianPeriodicFigure.jpg
-> <./cartesianDiagonal/CartesianDiagonalFigure.jpg>] (./report.aux) ) 
+
+LaTeX Warning: Reference `stability equation' on page 5 undefined on input line
+ 351.
+
+<frog.png, id=37, 348.30125pt x 281.05pt>
+File: frog.png Graphic file (type png)
+<use frog.png>
+Package pdftex.def Info: frog.png  used on input line 373.
+(pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+File: frog.png Graphic file (type png)
+<use frog.png>
+Package pdftex.def Info: frog.png  used on input line 386.
+(pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
+[5]
+Overfull \vbox (58.31172pt too high) has occurred while \output is active []
+
+
+[6 <./polarPeriodic/PolarPeriodicFigure.jpg> <./polarDiagonal/polarDiagonalFigu
+re.jpg>] (./report.bbl [7 <./cartesianPeriodic/cartesianPeriodicFigure.jpg> <./
+cartesianDiagonal/CartesianDiagonalFigure.jpg>]) [8 <./frog.png>] [9]
+(./report.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3606 strings out of 481239
- 52080 string characters out of 5920377
- 310533 words of memory out of 5000000
- 18806 multiletter control sequences out of 15000+600000
+ 3616 strings out of 481239
+ 52202 string characters out of 5920377
+ 310549 words of memory out of 5000000
+ 18814 multiletter control sequences out of 15000+600000
  538674 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,9n,33p,705b,277s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (7 pages, 648614 bytes).
+ 34i,9n,33p,817b,277s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on report.pdf (9 pages, 663552 bytes).
 PDF statistics:
- 105 PDF objects out of 1000 (max. 8388607)
- 72 compressed objects within 1 object stream
+ 112 PDF objects out of 1000 (max. 8388607)
+ 76 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
