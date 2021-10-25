@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.9.21)  24 OCT 2021 14:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  25 OCT 2021 21:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -96,29 +96,43 @@ Package: afterpage 2014/10/28 v1.08 After-Page Package (DPC)
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
 
-! LaTeX Error: File `algorithm.sty' not found.
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count179
+\float@exts=\toks20
+\float@box=\box48
+\@float@everytoks=\toks21
+\@floatcapt=\box49
+)
+\@float@every@algorithm=\toks22
+\c@algorithm=\count180
+)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
-Enter file name: 
-! Interruption.
-<to be read again> 
-                   }
-l.10 \usepackage
-                {algpseudocode}^^M
-? 
-
-! LaTeX Error: File `algpseudocode.sty' not found.
-
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count181
+\c@ALG@rem=\count182
+\c@ALG@nested=\count183
+\ALG@tlm=\skip51
+\ALG@thistlm=\skip52
+\c@ALG@Lnr=\count184
+\c@ALG@blocknr=\count185
+\c@ALG@storecount=\count186
+\c@ALG@tmpcounter=\count187
+\ALG@tmplength=\skip53
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2020/01/20 v2.17e AMS math features
-\@mathmargin=\skip51
+\@mathmargin=\skip54
 
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
@@ -126,7 +140,7 @@ Package: amstext 2000/06/29 v2.01 AMS text
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks20
+\@emptytoks=\toks23
 \ex@=\dimen145
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -136,114 +150,138 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count179
+\inf@bad=\count188
 LaTeX Info: Redefining \frac on input line 227.
-\uproot@=\count180
-\leftroot@=\count181
+\uproot@=\count189
+\leftroot@=\count190
 LaTeX Info: Redefining \overline on input line 389.
-\classnum@=\count182
-\DOTSCASE@=\count183
+\classnum@=\count191
+\DOTSCASE@=\count192
 LaTeX Info: Redefining \ldots on input line 486.
 LaTeX Info: Redefining \dots on input line 489.
 LaTeX Info: Redefining \cdots on input line 610.
-\Mathstrutbox@=\box48
-\strutbox@=\box49
+\Mathstrutbox@=\box50
+\strutbox@=\box51
 \big@size=\dimen147
 LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
-\macc@depth=\count184
-\c@MaxMatrixCols=\count185
+\macc@depth=\count193
+\c@MaxMatrixCols=\count194
 \dotsspace@=\muskip17
-\c@parentequation=\count186
-\dspbrk@lvl=\count187
-\tag@help=\toks21
-\row@=\count188
-\column@=\count189
-\maxfields@=\count190
-\andhelp@=\toks22
+\c@parentequation=\count195
+\dspbrk@lvl=\count196
+\tag@help=\toks24
+\row@=\count197
+\column@=\count198
+\maxfields@=\count199
+\andhelp@=\toks25
 \eqnshift@=\dimen148
 \alignsep@=\dimen149
 \tagshift@=\dimen150
 \tagwidth@=\dimen151
 \totwidth@=\dimen152
 \lineht@=\dimen153
-\@envbody=\toks23
-\multlinegap=\skip52
-\multlinetaggap=\skip53
-\mathdisplay@stack=\toks24
+\@envbody=\toks26
+\multlinegap=\skip55
+\multlinetaggap=\skip56
+\mathdisplay@stack=\toks27
 LaTeX Info: Redefining \[ on input line 2859.
 LaTeX Info: Redefining \] on input line 2860.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2020/01/17 v1.23 mathematical typesetting tools
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count266
+\calc@Bcount=\count267
+\calc@Adimen=\dimen154
+\calc@Bdimen=\dimen155
+\calc@Askip=\skip57
+\calc@Bskip=\skip58
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count268
+\calc@Cskip=\skip59
+)
+(/usr/share/texlive/texmf-dist/tex/latex/mathtools/mhsetup.sty
+Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
+)
+LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count269
+\l_MT_multwidth_dim=\dimen156
+\origjot=\skip60
+\l_MT_shortvdotswithinadjustabove_dim=\dimen157
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen158
+\l_MT_above_intertext_sep=\dimen159
+\l_MT_below_intertext_sep=\dimen160
+\l_MT_above_shortintertext_sep=\dimen161
+\l_MT_below_shortintertext_sep=\dimen162
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
+\col@sep=\dimen163
+\ar@mcellbox=\box52
+\extrarowheight=\dimen164
+\NC@list=\toks28
+\extratabsurround=\skip61
+\backup@length=\skip62
+\ar@cellbox=\box53
+)
+\TX@col@width=\dimen165
+\TX@old@table=\dimen166
+\TX@old@col=\dimen167
+\TX@target=\dimen168
+\TX@delta=\dimen169
+\TX@cols=\count270
+\TX@ftn=\toks29
+)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count191
-\l__pdf_internal_box=\box50
+\l__kernel_color_stack_int=\count271
+\l__pdf_internal_box=\box54
 )
 (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
-LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count192
-\scratchdimen=\dimen154
-\scratchbox=\box51
-\nofMPsegments=\count193
-\nofMParguments=\count194
-\everyMPshowfont=\toks25
-\MPscratchCnt=\count195
-\MPscratchDim=\dimen155
-\MPnumerator=\count196
-\makeMPintoPDFobject=\count197
-\everyMPtoPDFconversion=\toks26
+\scratchcounter=\count272
+\scratchdimen=\dimen170
+\scratchbox=\box55
+\nofMPsegments=\count273
+\nofMParguments=\count274
+\everyMPshowfont=\toks30
+\MPscratchCnt=\count275
+\MPscratchDim=\dimen171
+\MPnumerator=\count276
+\makeMPintoPDFobject=\count277
+\everyMPtoPDFconversion=\toks31
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-
-(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
-Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/grfext/grfext.sty
-Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
-Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
-Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
-Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
-)
-(/usr/share/texlive/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
-Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
-)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 504.
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
@@ -284,12 +322,12 @@ e
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 34--40
+Underfull \hbox (badness 10000) in paragraph at lines 35--41
 
  []
 
 
-Overfull \hbox (1.81267pt too wide) in paragraph at lines 80--81
+Overfull \hbox (1.81267pt too wide) in paragraph at lines 81--82
 \OT1/cmr/m/it/10 Two nu-mer-i-cal meth-ods are in-tro-duced for solv-ing the th
 er-mal con-vec-tion prob-lem, the Lat-tice Boltz-man Method and the streamfunct
 ion-
@@ -297,108 +335,140 @@ ion-
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (15.0pt too wide) in paragraph at lines 117--117
+[][] 
+ []
+
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 137--137
+[][] 
+ []
+
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 171--171
+[][] 
+ []
+
+[2]
 <D2Q9Lattice.jpg, id=24, 190.7125pt x 189.70876pt>
 File: D2Q9Lattice.jpg Graphic file (type jpg)
 <use D2Q9Lattice.jpg>
-Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 226.
+Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 233.
 (pdftex.def)             Requested size: 190.71202pt x 189.70828pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 262--262
+[][] 
+ []
+
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 273--273
+[][] 
+ []
+
 [3]
+Overfull \hbox (15.0pt too wide) in paragraph at lines 292--292
+[][] 
+ []
 
-! LaTeX Error: Environment algorithm undefined.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.280 \begin{algorithm}
-                       [h!]
-? 
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-! LaTeX Error: \caption outside float.
+<polarPeriodic/PolarPeriodicFigure.jpg, id=30, 316.7835pt x 262.0992pt>
+File: polarPeriodic/PolarPeriodicFigure.jpg Graphic file (type jpg)
+<use polarPeriodic/PolarPeriodicFigure.jpg>
+Package pdftex.def Info: polarPeriodic/PolarPeriodicFigure.jpg  used on input l
+ine 346.
+(pdftex.def)             Requested size: 316.78271pt x 262.09854pt.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.281 \caption
-              {Thermal Lattice Boltzman Algorithm}\label{alg:TLBM}
-? 
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-! LaTeX Error: Environment algorithmic undefined.
+<polarDiagonal/PolarDiagonalFigure.jpg, id=31, 291.2481pt x 256.0767pt>
+File: polarDiagonal/PolarDiagonalFigure.jpg Graphic file (type jpg)
+<use polarDiagonal/PolarDiagonalFigure.jpg>
+Package pdftex.def Info: polarDiagonal/PolarDiagonalFigure.jpg  used on input l
+ine 353.
+(pdftex.def)             Requested size: 291.24738pt x 256.07608pt.
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.282 \begin{algorithmic}
-                         
-? 
-! Undefined control sequence.
-l.284 \State
-             $f_{\alpha} = \rho_0 w_{\alpha}$
-? 
-! Undefined control sequence.
-l.285 \State
-             $\epsilon = 0$
-? 
-! Undefined control sequence.
-l.286 \State
-             $\epsilon_b$
-? 
-! Interruption.
-<to be read again> 
-                   $
-l.286 \State $
-              \epsilon_b$
-? 
-! Undefined control sequence.
-l.287 \State
-             $\rho = 0$
-? 
-! Interruption.
-<to be read again> 
-                   $
-l.287 \State $
-              \rho = 0$
-? 
-! Undefined control sequence.
-l.288 \State
-             $\vec{u} = 0$
-? 
-! Interruption.
-<to be read again> 
-                   $
-l.288 \State $
-              \vec{u} = 0$
-? 
-! Undefined control sequence.
-l.289 \While
-            {Simulation Running}
-? 
-! Interruption.
-<to be read again> 
-                   {
-l.289 \While{
-             Simulation Running}
-? x
- 
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<cartesianPeriodic/CartesianPeriodicFigure.jpg, id=32, 322.0833pt x 260.8947pt>
+
+File: cartesianPeriodic/CartesianPeriodicFigure.jpg Graphic file (type jpg)
+<use cartesianPeriodic/CartesianPeriodicFigure.jpg>
+Package pdftex.def Info: cartesianPeriodic/CartesianPeriodicFigure.jpg  used on
+ input line 360.
+(pdftex.def)             Requested size: 322.0825pt x 260.89404pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<cartesianDiagonal/CartesianDiagonalFigure.jpg, id=33, 334.3692pt x 264.2673pt>
+
+File: cartesianDiagonal/CartesianDiagonalFigure.jpg Graphic file (type jpg)
+<use cartesianDiagonal/CartesianDiagonalFigure.jpg>
+Package pdftex.def Info: cartesianDiagonal/CartesianDiagonalFigure.jpg  used on
+ input line 367.
+(pdftex.def)             Requested size: 334.36838pt x 264.26665pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: Reference `stability equation' on page 4 undefined on input line
+ 372.
+
+[4 <./D2Q9Lattice.jpg>]
+<frog.png, id=37, 348.30125pt x 281.05pt>
+File: frog.png Graphic file (type png)
+<use frog.png>
+Package pdftex.def Info: frog.png  used on input line 394.
+(pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[5 <./polarPeriodic/PolarPeriodicFigure.jpg>]
+<big fig.png, id=42, 336.0555pt x 674.52pt>
+File: big fig.png Graphic file (type png)
+<use big fig.png>
+Package pdftex.def Info: big fig.png  used on input line 412.
+(pdftex.def)             Requested size: 336.05467pt x 674.51836pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[6 <./polarDiagonal/polarDiagonalFigure.jpg> <./cartesianPeriodic/cartesianPeri
+odicFigure.jpg>]
+<totalQ.png, id=47, 296.0661pt x 118.5228pt>
+File: totalQ.png Graphic file (type png)
+<use totalQ.png>
+Package pdftex.def Info: totalQ.png  used on input line 423.
+(pdftex.def)             Requested size: 296.06537pt x 118.52249pt.
+ [7 <./cartesianDiagonal/CartesianDiagonalFigure.jpg> <./frog.png>]
+Overfull \vbox (75.79439pt too high) has occurred while \output is active []
+
+
+[8 <./big fig.png>] (./report.bbl) [9 <./totalQ.png>] (./report.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3002 strings out of 483183
- 42703 string characters out of 5966292
- 292338 words of memory out of 5000000
- 17977 multiletter control sequences out of 15000+600000
+ 3859 strings out of 481239
+ 55960 string characters out of 5920377
+ 319644 words of memory out of 5000000
+ 19068 multiletter control sequences out of 15000+600000
  538674 words of font info for 46 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 34i,9n,33p,700b,218s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf
+ 1141 hyphenation exceptions out of 8191
+ 30i,11n,33p,1008b,284s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
@@ -411,10 +481,10 @@ sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (3 pages, 207135 bytes).
+Output written on report.pdf (9 pages, 1258653 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
- 59 compressed objects within 1 object stream
+ 117 PDF objects out of 1000 (max. 8388607)
+ 77 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

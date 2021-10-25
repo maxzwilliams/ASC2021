@@ -11,6 +11,8 @@
 
 \usepackage{amsmath}
 
+\usepackage{mathtools}
+\usepackage{tabularx}
 
 
 
@@ -23,20 +25,13 @@
 \maketitle
 
 \begin{abstract}
-	Convection in the Earth's inner core has been a contentious topic in geoscience. Recently, it has been proposed through siesmic observations that Earths inner core is convecting. Here we numerically model convection in the Inner core, using the streamfunction-vorticity formulation and lattice boltzman method in 2-dimensions. 
-	
+	Convection in the Earth's inner core has been a contentious topic in geoscience. Recently, it has been proposed through siesmic observations that Earths inner core is convecting. Here we numerically model the Earth's inner core as a self-gravitating internally heated fluid bousinesque fluid in 2-dimensions using a streamfunction-vorticity method and Thermal Lattice Boltzman approach. The streamfunction-vorticity approach is studied using two codes in cartesian and polar coorindates. The streamfunction and Thermal Lattice Boltzman codes are written from scratch in python3 and goLang. 
  
 \end{abstract}
 
 \section*{Introduction}
-In this report, we use two vastly different numerical tehcniques, the vorticity-streamfunction method and the Thermal Lattice Boltzman Method to simulate convection in an internally heated, self-gravitating bousiniesque fluid. Two codes are produced in python using the streamfunction-vorticity formulation in cartesian and polar coordinates. A single Thermal Lattice Boltzman Method (TLBM) code is produced in goLang. The python codes use limited libraries such as numpy while the goLang code uses only inbuilt libraries math, random numbers etc... 
 
-Plan:
-I want to also talk about why this is actually important, why is this something that is worth studying
-\newline
-Here I want to introduce the physics of what I want to talk about. I want to introduce 
-the basic equations that I will use.
-\newline
+
 
 
 
@@ -47,30 +42,34 @@ the basic equations that I will use.
 {\it{In this section I introduce the physics of the problem; the governing equations that we wish to numerically solve.}}
 \vspace{0.3cm}
 \newline
-\noindent Throughout analysis we describe the fluid in the Eularian frame under a graviational acceleration $\vec{g}$ which may vary in space. We give each location in the fluid a velocity $\vec{u}$ and density $\rho$ that vary in space $\vec{x}$ and time $t$. We assume the fluids viscosity $\mu$, thermal diffusivity $\kappa$ and specific heat capacity $C_p$ are all constants. By conserving fluid momentum, we produce the navier stokes equation:
+\noindent Throughout analysis we describe the fluid in the Eularian frame under a graviational acceleration $\vec{g}$ which may vary in space. We give each location in the fluid a velocity $\vec{u}$ and density $\rho$ that vary in space $\vec{x}$ and time $t$. We assume the fluids viscosity $\mu$ and  thermal diffusivity $\kappa$ are constant. By conserving fluid momentum, we produce the navier stokes equation:
 \begin{equation}
 	\rho \frac{D \vec{u}}{D t} = \rho \vec{g} - \nabla p + \mu \nabla^2 \vec{u},
 	\label{NSE}
 \end{equation}
 where $\frac{D}{D t} = \frac{\partial }{\partial t} + (\vec{u} \cdot \nabla)$ is the material derivative, $p$ the pressure of the fluid and $\nabla$ the del operator. The dynamics of fluid temperature $T$ are described the inhomoenous advection diffusion equation:
 \begin{equation}
-	\frac{D T}{D t} = \kappa \nabla^2 T + \frac{Q}{C_v \rho},
+	\frac{D T}{D t} = \kappa \nabla^2 T + H,
 	\label{adeT}
 \end{equation}
-where $Q$ is the heat generated per unit volume per unit time, $C_v$ the specific heat at constant volume and $\rho$ the fluid density. The density of the fluid $\rho$ is assumed to vary linearly in temeprature according to the equation of state:
+where $H$ is internal heating.mThe density of the fluid $\rho$ is assumed to vary linearly in temeprature according to the equation of state:
 \begin{equation}
 	\rho = \rho_0 (1- \alpha(T - T_0)),
 	\label{equation of state}
 \end{equation}
 where $\alpha$ is the volumetric expansion coeffecient and $\rho_0$ the density at a reference temperature $T_0$.
-Through siesmic imaging, variations in inner core density are $<< 1 \%$. We also assume that the inner cores evolution occures over geologic timescales, and as such take $\vec{u}$ to be first order. These assumptions allow us to make the slow flow boussinesq approximation to equation \ref{NSE}:
+Through siesmic imaging, variations in inner core density are $<< 1 \%$ (check this claim). We also assume that the inner cores evolution occures over geologic timescales, and as such take $\vec{u}$ to be first order. These assumptions allow us to make the slow flow boussinesq approximation to equation \ref{NSE}:
 \begin{equation}
 	\frac{\partial \vec{u}}{\partial t} = \frac{\rho'}{\rho} \vec{g} -   \frac{\nabla p'}{\rho_0} + \nu \nabla^2 \vec{u},
 	\label{NSE slow + boussinesq}
 \end{equation}
-where $\rho'=-\alpha(T - T_0)$, $\nu$ the kinomatic viscosity $\nu = \frac{\mu}{\rho_0}$ and $p'$ a first order pertibation to the background pressure $p_0$.
+where $\rho'=-\alpha(T - T_0)$, $\nu$ the kinomatic viscosity $\nu = \frac{\mu}{\rho_0}$ and $p'$ a first order pertibation to the background pressure $p_0$. 
 \newline
-The Earths
+We use two numbers to characterise the convection in the problem, the prantle number and the Rayleigh number. The Rayleigh number characterises 
+\begin{equation}
+	Pr = \frac{\nu}{\kappa}
+\end{equation}
+
 
 
 
@@ -101,29 +100,40 @@ Given a coordinate system, and a clever definition of $\vec{u}$ we can rewrite e
 	\label{cartesian velocities}
 \end{equation}
 allowing us to write equations \ref{adeT} and \ref{NSE slow + boussinesq} as:
+
+
+\begin{tabularx}{\textwidth}{XX}
 \begin{equation}
 	\frac{\partial T}{\partial t} + \frac{\partial \psi}{\partial y} \frac{\partial T}{\partial x} - \frac{\partial \psi}{\partial x} \frac{\partial T}{\partial y} = \kappa \nabla^2 T + \frac{Q}{\rho_0 C_v}
 	\label{adeT sfvt cartesian}
 \end{equation}
+    &
 \begin{equation}
-	\frac{\partial w}{\partial t} = -\frac{g_y}{\rho_0} \frac{\partial \rho'}{\partial x} + \nu \nabla^2 \omega
+	\frac{\partial \omega}{\partial t} = -\frac{g_y}{\rho_0} \frac{\partial \rho'}{\partial x} + \nu \nabla^2 \omega
 	\label{NSE slow + boussinesq sfvt cartesian}
 \end{equation}
+\end{tabularx}\par
+
+
 Similary, in polar coordinates (r, $\theta$) we pick:
 \begin{equation}
 	u = \frac{1}{r} \frac{\partial \psi}{\partial \theta}, v = -\frac{\partial \psi}{\partial r},
 	\label{polar velocities}
 \end{equation}
 giving:
+
+\begin{tabularx}{\textwidth}{XX}
 \begin{equation}
 	\frac{\partial T}{\partial t} + \frac{1}{r} \frac{\partial \psi}{\partial \theta} \frac{\partial T}{\partial r} - \frac{1}{r} \frac{\partial \psi}{\partial r} \frac{\partial T}{\partial \theta} = \kappa \nabla^2 T + \frac{Q}{\rho_0 C_v}
 	\label{adeT sfvt polar}
 \end{equation}
-and,
+    &
 \begin{equation}
 	\frac{\partial \omega}{\partial t} = - \frac{g_r}{\rho_0 r} \frac{\partial \rho'}{\partial \theta} +\nu \nabla^2 \omega.
 	\label{NSE slow + boussinesq sfvt polar}
 \end{equation}
+\end{tabularx}\par
+
 A full derivation of equations \ref{adeT sfvt cartesian}, \ref{NSE slow + boussinesq sfvt cartesian}, \ref{adeT sfvt polar}, \ref{NSE slow + boussinesq sfvt polar} are given in appendix.
 Importantly, our definitions of $u$ and $v$ in equations \ref{cartesian velocities} and \ref{polar velocities} satisify equation \ref{omega} and \ref{psi}. Equations \ref{psi}, \ref{adeT sfvt cartesian}, \ref{NSE slow + boussinesq sfvt cartesian} for the cartesian case and \ref{psi}, \ref{adeT sfvt polar}, \ref{NSE slow + boussinesq sfvt polar} for the polar case can be directly solved.
 
@@ -147,12 +157,16 @@ To approximate derivatives we use a finite difference approach. All time derivat
 	\label{forward time difference}
 \end{equation}
 Second order space derivatives are apprimxated by a central difference:
+
+\begin{tabularx}{\textwidth}{XX}
 \begin{equation}
 	\frac{\partial^2 f_{i,j}}{\partial {x_1}^2} = \frac{f_{i+1,j} - 2 f_{i,j} + f_{i-1,j}}{{\Delta x_1}^2},
 \end{equation}
+    &
 \begin{equation}
 	\frac{\partial^2 f_{i,j}}{\partial {x_2}^2} = \frac{f_{i,j+1} - 2 f_{i,j} + f_{i,j-1}}{{\Delta x_2}^2},
 \end{equation}
+\end{tabularx}\par
 where $x_1$ is the first coordinate and $x_2$ is the second coordinate. For example, in cartesian coordinates $(x,y)$, we would have $x_1=x$ and $x_2=y$. 
 For non advection terms, we approximate first order spatial derivaitves by:
 \begin{equation}
@@ -166,7 +180,7 @@ For advection terms, of the form $a \frac{\partial f_{i,j}}{\partial x_1}$ we em
 \begin{equation}
 	a \frac{\partial f_{i,j}}{\partial x_1} = \frac{1}{\Delta x} ( \mid a\mid (  \frac{1}{2} f_{i+1,j} - \frac{1}{2} f_{i-1,j}   ) - a ( \frac{1}{2} f_{i+1,j} -f_{i,j} - \frac{1}{2} f_{i-1,j} )).
 \end{equation}
-This scheme is always downstream, regardless of the direction of the advecting field $a$.
+This scheme is always upstream, regardless of the direction of the advecting field $a$.
 \newline
 Other more accurate, but substantually more complex methods for solving these equations, particularlly the advection equation exists such as the semi-lagrange crank-nicolson scheme.
 \newline
@@ -193,15 +207,6 @@ We then use the result of $\psi_{i,j}$ back into equation \ref{psi from omega} t
 \end{equation}
 Where the superscript $(k)$ means the result of the $k^{th}$ iteration of the above equation and this operation us applied to all points in $\mathcal{D}'$.
  We terminate this iterative method once the error $\sum_{(i,j) \in \mathcal{D'}} \mid \psi_{i,j}^{(k+1)} - \psi_{i,j}^{(k)} \mid$ gets suffeciently small. A similar method is applied to the polar coordinate case. 
- 
-
-
-
-\subsubsection*{Solution Stability and Accuracy}
-%% Here I want to look at the stabiliy of this method
-
- 
-
 
 \subsubsection*{Lattice Boltzman Method}
 {\it{In this section I give a brief introduction to the Lattice Boltzman Method and why its different from most numerical tehcniques. I introduce a 2-dimensional lattice D2Q9 and discribe the Thermal Lattice Boltzman method (TLBM) which is employed by my numerical solution to simulate convection.}}
@@ -242,35 +247,48 @@ and different collision steps:
 	\label{g collision step}
 \end{equation}
 Here $F_{\alpha}$ and $G_{\alpha}$ are the forcing terms terms and $f^{eq}_{\alpha}$ and $g^{eq}_{\alpha}$ are equilibrium distributions. The relaxation times $\tau_f$ and $\tau_g$ are related to the macroscopic thermal diffusivity ($\kappa$) and kinematic viscousity $\nu$ by:
+
+
+\begin{tabularx}{\textwidth}{XX}
 \begin{equation}
-	\tau_g = \frac{3 \kappa}{S^2 \Delta t} + \frac{1}{2}
+	\tau_g = \frac{3 \kappa}{S^2 \Delta t} + \frac{1}{2},
 \end{equation}
-and,
+    &
 \begin{equation}
 	\tau_f = \frac{3 \nu}{S^2 \Delta t} + \frac{1}{2}.
 \end{equation}
+\end{tabularx}\par
 The equilibrium distributions are given by the BKG approximation:
+
+\begin{tabularx}{\textwidth}{XX}
 \begin{equation}
 	f^{eq}_{\alpha}(\vec{x}, t)  = \rho w_{\alpha} (1 + 3 \frac{\vec{e}_{\alpha} \cdot \vec{u}}{s^2} + \frac{9}{2} \frac{(\vec{e}_{\alpha} \cdot \vec{u}  )^2}{c^4} - \frac{3}{2} \frac{\vec{u} \cdot \vec{u}}{c^2}  ),
 \end{equation}
+    &
 \begin{equation}
-	g^{eq}_{\alpha}(\vec{x}, t)  = \epsilon \rho w_{\alpha} (1 + 3 \frac{\vec{e}_{\alpha} \cdot \vec{u}}{s^2} + \frac{9}{2} \frac{(\vec{e}_{\alpha} \cdot \vec{u}  )^2}{c^4} - \frac{3}{2} \frac{\vec{u} \cdot \vec{u}}{c^2}  ),
+	g^{eq}_{\alpha}(\vec{x}, t)  = \epsilon \rho w_{\alpha} (1 + 3 \frac{\vec{e}_{\alpha} \cdot \vec{u}}{s^2} + \frac{9}{2} \frac{(\vec{e}_{\alpha} \cdot \vec{u}  )^2}{c^4} - \frac{3}{2} \frac{\vec{u} \cdot \vec{u}}{c^2}  )
 \end{equation}
+\end{tabularx}\par
 
 Here $\rho$, $\epsilon$ and $\vec{u}$ are the macroscopic density, internal energy and velocity given by:
+
+\begin{tabularx}{\textwidth}{XXX}
 \begin{equation}
 	\rho = \sum_{i=0}^{8} f_{i},
 	\label{LBM rho}
 \end{equation}
+    &
 \begin{equation}
 	\rho \vec{u} = \sum_{i=0}^{i=8} f_{i} \vec{e}_{i}
 	\label{LBM u}
 \end{equation}
-and,
+	&
 \begin{equation}
 	\rho \epsilon = \sum_{i=0}^{i=8} g_{i}.
 	\label{LBM ep}
 \end{equation}
+\end{tabularx}\par
+
 The forcing terms $F_i$ and $G_i$ are problem dependent. For thermal convection $G_i=0$ and $F_i$ is a gravitational term ${\Delta f}_{\alpha}$:
 \begin{equation}
 	{\Delta f}_{\alpha} = - w_{\alpha} \rho \alpha \epsilon \frac{\vec{e}_{\alpha}}{\mid \vec{e}_{\alpha} \mid} \cdot \vec{g} \frac{1}{\tau_{grav}},
@@ -312,8 +330,9 @@ where $\mid \mid$ is the vector norm and $\vec{g}$ is the gravitational accelera
 \subsubsection*{Boundary Conditions}
 %% here I want to go over the boundary conditions that I used 
 %% I might not have space to go over exactly how I did this here. Maybe that can be in the appendix.
-In both streamfunction-vorticity codes, boundaries were assumed to be fluid-impermiable, non-slip and insulating. In the Lattice Boltzman code, ''bounce 
-back" boundary condition was used. This is a fluid-impermiable, insulating and slip boundry.
+In both streamfunction-vorticity codes, boundaries are set to be fluid-impermiable, non-slip and insulating. In the Lattice Boltzman code, ''bounce back" boundary condition was used. This is a fluid-impermiable, insulating and slip boundry.
+
+
 
 \section*{Advection tests}
 {\it{Here I pressent some simple tests that show how accurately my advection scheme is performing in both geometries.}}

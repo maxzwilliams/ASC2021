@@ -80,6 +80,12 @@ def updateTemperature(streamfunction, temperature, heat, hx, hy, nx, ny, kappa, 
 	for i in range(nx): 
 		for j in range(0, ny):
 
+
+
+			## I want to introduce a boundary that conducts away.
+
+
+
 			## if at bottom boundary we have to handle velocities and boundary temperatures differently
 			if (j == 0):
 				## in this if statement, we have to use temperature[i][1] rather than temperature[i][j-1]
@@ -108,7 +114,12 @@ def updateTemperature(streamfunction, temperature, heat, hx, hy, nx, ny, kappa, 
 				term3 = kappa * (  (temperature[(i+1)%nx][j] - 2*temperature[i][j] + temperature[(i-1)%nx][j])/(hx**2) + (temperature[i][j+1] - 2*temperature[i][j] + temperature[i][1])/(hy**2)  )
 			
 			## if at top boundary we have to handle velocities and boundary temperatures differently
+			## we are going to have a conducting boundary at the top.
 			if (j == ny-1):
+
+				ghostTemperature = temperature[i][ny-2] 
+
+
 				## in this if statement, we have to use temperature[i][n-2] rather than temperature[i][j+1]
 				## set velocities
 				u = 0
@@ -118,6 +129,7 @@ def updateTemperature(streamfunction, temperature, heat, hx, hy, nx, ny, kappa, 
 					print("top")
 					print("saw velocity of:", max(abs(u),abs(v)))
 					return temperature, 1
+
 				if (u >=0):
 					Tx = (temperature[(i)%nx][j] - temperature[(i-1)%nx][j])/hx
 				else:
@@ -126,11 +138,11 @@ def updateTemperature(streamfunction, temperature, heat, hx, hy, nx, ny, kappa, 
 				if (v >=0):
 					Ty = (temperature[i][j] - temperature[i][j-1])/hy
 				else:
-					Ty = (temperature[i][ny-2] - temperature[i][j])/hy
+					Ty = (ghostTemperature - temperature[i][j])/hy
 				
 				term1 = -u*Tx
 				term2 = -v*Ty
-				term3 = kappa * (  (temperature[(i+1)%nx][j] - 2*temperature[i][j] + temperature[(i-1)%nx][j])/(hx**2) + (temperature[i][ny-2] - 2*temperature[i][j] + temperature[i][j-1])/(hy**2)  )
+				term3 = kappa * (  (temperature[(i+1)%nx][j] - 2*temperature[i][j] + temperature[(i-1)%nx][j])/(hx**2) + (ghostTemperature - 2*temperature[i][j] + temperature[i][j-1])/(hy**2)  )
 			
 			## if not at the top or bottom boundaries 
 			if (j!= 0 and j!= ny-1):
@@ -226,9 +238,16 @@ def updateVorticity(vorticity, temperature, streamfunction, nu, alpha, gravity, 
 BEGIN HELPER FUNCTION SECTION
 """
 def getTotalQ(T):
+	positive = 0
+	negitive = 0
 	s = 0
 	for row in T:
 		for el in row:
+
+			if (el > 0):
+				positive += el
+			if (el < 0):
+				negitive += el
 			s += el
 	return s
 
@@ -315,8 +334,8 @@ def main():
 	## function that ties everything together
 	
 	
-	yScale=  1 ## vertical scale 
-	xScale = 2*math.pi * yScale ## horizontal scale 
+	yScale = 100 ## vertical scale 
+	xScale = 100 ## horizontal scale 
 	##n = 50 ## number of compuational points along the horizontal and vertical directions
 	nx = 100
 	ny = 100
@@ -334,16 +353,16 @@ def main():
 	hy = 1/(ny - 1) * yScale
 
 	##Cp=4000 
-	kappa=0.000001 ## thermal diffusivity
+	kappa=0.00002 ## thermal diffusivity
 	
 	
 	rho0=1000 ## reference density
 	##alpha=10**(-7) 
-	alpha=0.000001 ## thermal expansion coeffecient
-	nu=1*kappa ## kinematic viscousity
+	alpha=0.1 ## thermal expansion coeffecient
+	nu=0.1 ## kinematic viscousity
 	g=-1 ## graviational acceleration 
 	t = 0 ## current time
-	Heat = 0.0001 ## heating field 
+	Heat = 0.001 ## heating field 
 	
 	## the following three lines are useful only for faster plotting, not to do with the main algorithm 
 	xs = np.arange(0, xScale+hx, hx) ## all horizontal position values for compuational nodes 
@@ -356,7 +375,10 @@ def main():
 	
 
 	Pr = nu/kappa ## Prantl number
+
+
 	Ra = g * alpha * yScale**5 * Heat/(nu * kappa**2) ## Rayleigh number
+	Ra =  g * alpha * yScale**3 * (2*Heat)/(nu * kappa)
 
 	print("")
 	print("Pr:",Pr, "Ra:", Ra)
@@ -366,19 +388,25 @@ def main():
 	temperature = [[0 for i in range(ny)] for j in range(nx)] 
 	streamfunction = [[0 for i in range(ny)] for j in range(nx)]
 	vorticity = [[0 for i in range(ny)] for j in range(nx)]
-	heat = [[0 for i in range(ny)] for j in range(ny)]
-	gravity = [ [g * yIndex/(ny-1) for yIndex in range(ny)] for xIndex in range(nx)]
+	heat = [[0 for i in range(ny)] for j in range(nx)]
+
+	gravity = [ [g  for yIndex in range(ny)] for xIndex in range(nx)]
 
 
 
 	## index 0 to 89, then we have 90, 91, 92, 93, 94, 95, 96, 97,
 	
+	"""
 	for xIndex in range(nx):
 		for yIndex in range(ny):
-			if (yIndex < 90):
-				heat[xIndex][yIndex] = Heat * (1 + 0.01 * random.uniform(-1,1))
-			else:
-				heat[xIndex][yIndex] = -Heat * (9/1) * (1 + 0.01 *random.uniform(-1,1))
+			if (yIndex < 5):
+				heat[xIndex][yIndex] = 0.001 * (1 + 0.8 * random.uniform(-1,1))
+			if (yIndex >94):
+				heat[xIndex][yIndex] = -0.001 * (1 + 0.8 *random.uniform(-1,1))
+	"""
+	
+	rands = [[ random.uniform(-1,1) for yIndex in range(ny)] for xIndex in range(nx)]
+	
 
 
 
@@ -425,6 +453,13 @@ def main():
 
 		## addapted to VAR
 		temperature, error = updateTemperature(streamfunction, temperature, heat, hx, hy, nx, ny, kappa, dt)
+
+		for xIndex in range(nx):
+			for yIndex in range(ny):
+				if (yIndex < 4):
+					temperature[xIndex][yIndex] = 0.001 * (1 + 0.5 * rands[xIndex][yIndex])
+				if (yIndex > 94):
+					temperature[xIndex][yIndex] = -0.001 * (1 + 0.5 *rands[xIndex][yIndex])
 
 	
 
