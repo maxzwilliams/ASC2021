@@ -678,21 +678,16 @@ func main(){
 	// main loop
 	for n:=0;n<nt;n++{
 		fmt.Printf("\rstarting loop" + strconv.Itoa(n))
-
-
-
-
-
 		// set energy distribution field according to heat source
 		for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
 				for dIndex, _ := range D2Q9.directions{
 
 					if (!circleBoundaryR50(xIndex, yIndex)){
-						if (  math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < math.Pow(float64(innerRadius) ,2.0) )   {
-							g.entries[xIndex][yIndex][dIndex] += rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (1 + 0.1*randomNumbers1[xIndex][yIndex])
+						if (  math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < math.Pow(float64(innerRadius), 2.0) )   {
+							g.entries[xIndex][yIndex][dIndex] += rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (1 + 0.8*randomNumbers1[xIndex][yIndex])
 						} else {
-							g.entries[xIndex][yIndex][dIndex] += -rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (innerCounter/outerCounter) * (1 + 0.1*randomNumbers1[xIndex][yIndex])
+							g.entries[xIndex][yIndex][dIndex] += -rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (innerCounter/outerCounter) * (1 + 0.8*randomNumbers1[xIndex][yIndex])
 						}
 					}
 				}
