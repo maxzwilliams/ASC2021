@@ -382,7 +382,7 @@ func gravityAffect(f D2Field, grav D2Field, rho D2Property, ep D2Property, l lat
 
 // Radius 50 boundary function for a 102 by 102 lattice
 func circleBoundaryR50(xIndex int, yIndex int) bool{	
-	if (  math.Pow( float64(xIndex - 51), 2.0) + math.Pow(float64(yIndex - 51), 2.0) <= math.Pow(float64(50), 2.0) ){
+	if (  math.Pow( float64(xIndex - 51), 2.0) + math.Pow(float64(yIndex - 51), 2.0) < math.Pow(float64(50), 2.0) ){
 		return false
 	}
 	return true
@@ -516,10 +516,10 @@ func main(){
 	// constants used in finding equilibrium distributions
 	vels := []float64{ 1.0, 3.0/(math.Pow(S, 2.0)), 9.0/(2.0*math.Pow(S,4.0)), -3.0/(2.0*math.Pow(S, 2.0))}
 
-	var vf float64 = 0.1 // kinematic viscosity
+	var vf float64 = 0.125 // kinematic viscosity
 	var tau_f float64 = vf/(math.Pow(S/math.Sqrt(3), 2.0) * dt) + 0.5 // relaxation time for particle distribution 
 	
-	var vg float64 = 0.00001 // a measure of thermal diffusivity
+	var vg float64 = 0.000025 // a measure of thermal diffusivity
 	var tau_g float64 = vg/(math.Pow(S/math.Sqrt(3), 2.0) * dt  ) + 0.5 // relaxation time associated with thermal diffusion (associated with energy distribution function)
 
 	var vgrav float64 = 0.6 
@@ -527,7 +527,7 @@ func main(){
 	
 	
 	var rhoBack float64 = 1000.0 // background density
-	var alpha float64 = 0.0001 // thermal expansion coeffecient
+	var alpha float64 = 2.5*math.Pow(10.0, -11.0) // thermal expansion coeffecient
 	
 	// define the discritization
 	nt := 10000000 // timesteps
@@ -547,7 +547,7 @@ func main(){
 	D2Q9.dx = dx
 	D2Q9.S = S
 	//D2Q9.Cv = 400
-	D2Q9.Heat = 1 * 1.0/(math.Pow(50.0, 5.0))
+	D2Q9.Heat = 1 
 	D2Q9.rho = rhoBack
 	D2Q9.alpha = alpha
 	D2Q9.tau_f = tau_f
@@ -603,6 +603,7 @@ func main(){
 	gravity.entries = D3Constant(nx, ny, 2, 0.0)
 	gravityx := D2Constant(nx, ny, 0)
 	gravityy := D2Constant(nx, ny, 0)
+	gravityStrength := D2Constant(nx, ny, 0)
 	// Set a gravity field for a self gravitating fluid
 	for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
@@ -628,6 +629,7 @@ func main(){
 			gravity.entries[xIndex][yIndex][1] = maxG*math.Sqrt( math.Pow(xCord, 2.0) + math.Pow(yCord, 2.0))/50.0 * math.Sin(theta)
 			gravityx[xIndex][yIndex] = gravity.entries[xIndex][yIndex][0]
 			gravityy[xIndex][yIndex] = gravity.entries[xIndex][yIndex][1]
+			gravityStrength[xIndex][yIndex] = math.Pow(  math.Pow(gravity.entries[xIndex][yIndex][0], 2.0) +  math.Pow(gravity.entries[xIndex][yIndex][1], 2.0), 0.5 )
 		}
 	}
 	
@@ -662,15 +664,17 @@ func main(){
 	fmt.Println("starting computation") 
 	displayTimes := false // display computation times for each step
 
-	innerRadius := float64(45)
+	innerRadius := float64(40)
 	innerCounter := 0.0
 	outerCounter := 0.0
 	for xIndex:=0;xIndex<D2Q9.nx;xIndex++{
 		for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
-			if (math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < math.Pow(float64(innerRadius), 2.0)) {
-				innerCounter += 1.0
-			}else {
-				outerCounter += 1.0
+			if (!circleBoundaryR50(xIndex, yIndex)){
+				if (math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < math.Pow(float64(innerRadius) + 3*randomNumbers1[xIndex][yIndex], 2.0)) {
+					innerCounter += 1.0
+				}else {
+					outerCounter += 1.0
+				}
 			}
 		}
 	}
@@ -683,12 +687,14 @@ func main(){
 			for yIndex:=0;yIndex<D2Q9.ny;yIndex++{
 				for dIndex, _ := range D2Q9.directions{
 
-					if (!circleBoundaryR50(xIndex, yIndex)){
-						if (  math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < math.Pow(float64(innerRadius), 2.0) )   {
-							g.entries[xIndex][yIndex][dIndex] += rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (1 + 0.8*randomNumbers1[xIndex][yIndex])
+					if (!circleBoundaryR50(xIndex, yIndex)){		
+						if (  math.Pow(float64(xIndex - 51), 2.0) + math.Pow(  float64(yIndex - 51), 2.0 ) < math.Pow(float64(innerRadius) + 3*randomNumbers1[xIndex][yIndex], 2.0) )   {
+							g.entries[xIndex][yIndex][dIndex] += rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (1 + 0.1*randomNumbers1[xIndex][yIndex])
 						} else {
-							g.entries[xIndex][yIndex][dIndex] += -rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (innerCounter/outerCounter) * (1 + 0.8*randomNumbers1[xIndex][yIndex])
+							g.entries[xIndex][yIndex][dIndex] += -rho.entries[xIndex][yIndex] * D2Q9.Heat * D2Q9.weights[dIndex] * (innerCounter/outerCounter) * (1 + 0.1*randomNumbers1[xIndex][yIndex])
 						}
+						
+						
 					}
 				}
 
@@ -734,9 +740,9 @@ func main(){
 				}
 			}
 			name = "u//ux"+strconv.Itoa(n)+".csv"
-			writeArrayCSV(ux, name)
+			writeArrayCSV(gravityx, name)
 			name = "u//uy"+strconv.Itoa(n)+".csv"
-			writeArrayCSV(uy, name)
+			writeArrayCSV(gravityy, name)
 		}
 		
 		// get equilibrium quantities
