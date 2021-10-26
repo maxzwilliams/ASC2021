@@ -399,9 +399,10 @@ in figure \ref{unrolling}, losing the affect of the polar geometry.
 	\label{unrolling}
 \end{figure}
 
-\subsection*{How much does the geometry matter}
-{\it{In this section I compaire the results from the polar and cartesian streamfunction-vorticity codes with similar Prantl and Rayleigh number to see how the geometry affects convection.}}
-
+\subsection*{Geometry and the Central region of a self-gravitating fluid}
+{\it{In this section, I pressent results from my streamfunction-vorticity codes in cartesian and polar coorindates. I show through comparison between simulations that taking into account the geometry and center of a 2-dimensional self graivtating fluid are important and signficiantly change both the dynamics and long term convective patterns.}}
+\newline
+\vspace{0.3cm}
 A gravitational field linearly proportional to height and radius for the 
 cartesian and polar codes respectively was set. A constant internal 
 heating field $H$ was set for all but the upper $10 \%$ of both domains. A 
@@ -409,37 +410,30 @@ compensating heating field was set at the remaining top of the domain to
 balence the total heat generation. Note this heat field is different in 
 the cartesian and polar cases. In all heating fields time-independent 
 random flucations of $\approx 1 \%$ were set to faciliate instabilities.
-
 \begin{figure}[h!]
 	\centering
-	\includegraphics{big fig.png}
-	\caption{Internally Heated Convection comparison between cartesian 
-	case (left) and polar case (right) $Pr=1, Ra=10^8$. Times are given as headings. All other compuation parameter settings are equivilent.}
+	\includegraphics{streamfunctionComp.png}
+	\caption{Simulations of internally heated, self-gravitating convection in cartesian (left), polar with inner radius 0.1 (middle) and polar with inner radius 0.2 (right) coorindates. Times indiciated by headings. Appart from inner radius, simulation settings are common. $Ra=10^8, Pr=5000$.}
 	\label{cartesian vs polar}
 \end{figure}
-
-As seen in figure \ref{cartesian vs polar}, the two geometries give vastly different convective behaviour. The cartesian geometry (left) begins forming convective plumes at time $\approx 143000$, long after the time $25000$ when the polar (right) model begins to convect. The convection patterns formed in the cartesian model are consistant in time, forming the typical convection cells. The polar case is much more eratic, not forming typical convection cells. Finally, the wavelength for conevtion patterns in the cartesian case is approximately 1/5 that produced by t polar case. In general, the polar case shows more vigourous convection characteristic of a higher effective rayleigh number. 
-
-
-\begin{figure}
-	\centering
-	\includegraphics{totalQ.png}
-	\caption{Total heat energy in cartesian (left) and polar (right) simulation through time in figure \ref{cartesian vs polar}}
-	\label{cartesian vs polar energy}
-\end{figure}
-
-
-\subsection*{Does the inner circle matter?}
-{\it{Here I keep the polar geometry and change the size of the central region to test its importance to the solution}}
-
-
+As seen in figure \ref{cartesian vs polar}, the two geometries give vastly different convective behaviour. The cartesian geometry (left) begins forming 
+convective plumes at time $\approx 143000$, long after the time $25000$ when the polar (middle) model begins to convect. The convection patterns formed 
+in the cartesian model are consistant in time, forming the typical Rayleigh-Bernard convection cells, while the polar cases are much more eradic. The larger inner radius polar simulation (right) shows similar initial behavour to the smaller inernal radius polar simulation (middle), however, it initially forms higher frequency convective structures. Importantly, over large timescales, the typical wavelength for features in the cartesian geometry is $~3-5$ times longer. Therefore, in simulating a self-gravitating internally heated fluid such as the inner core accurately, the geometry and central region must be simulated. For traditional approaches which discitize a set of equations, this requires either complex spatial meshings or boundary conditions. 
 
 \subsection*{Thermal Lattice Boltzman Simulations}
+{\it{In this section, I describe how I simulate a self-gravitating fluid including its central region while respecting the geometry of the problem. I then pressent my Thermal Lattice Boltzman Results, the main results of the report and discuss them}}
+
+
 We have seen from the streamfunction-vorticity codes that geometry and internal region alter convection significantly, however, neither streamfunction-vorticty code can incorporate both. 
+\begin{figure}
+	\centering
+	\includegraphics{latticeboltzmancheck.png}
+	\caption{ Comparison between Thermal Lattice Boltzman coded here (top four figures) and Published Thermal Lattice Boltzman results (bottom figure) \cite{mora2017simulation}. Headings indicate timestep, red/yellow show hot regions while blue areas are cold. Top and bottom regions are held at constant temperature (no internal heating). All program settings used are similar. $Pr=5000, Ra=10^8$}
+	\label{Lattice Boltzman Check}
+\end{figure}
 
-
-
-\section*{Dicussion}
+\subsection*{Difficuilties when using the Thermal Lattice Boltzman Method}
+The TLBM coded here, uses a fixed unit timestep and lattice spaceing making the lattice speed $C=1$. The TLBM remains stable as long as the macroscopic velocities remain a small fraction of the lattice speed. For internally heated convective problems, the time to heat/cool the fluid before convective plumes can develop can be significant compared to the timescale for plume motion, particulaly at smaller or near critical Rayleigh numbers. Because of this, much simulation time is spent computing an uninterresting part of the solution. In future, the initial non-convective part of the solution could be skipped by initially setting the temperature of fluid regions according to simple diffusion models. 
 
 
 \section*{Conclusion}

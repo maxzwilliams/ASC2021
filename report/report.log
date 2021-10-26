@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  26 OCT 2021 08:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  26 OCT 2021 13:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -442,34 +442,32 @@ Package pdftex.def Info: frog.png  used on input line 397.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<big fig.png, id=39, 336.0555pt x 674.52pt>
-File: big fig.png Graphic file (type png)
-<use big fig.png>
-Package pdftex.def Info: big fig.png  used on input line 415.
-(pdftex.def)             Requested size: 336.05467pt x 674.51836pt.
+<streamfunctionComp.png, id=39, 494.3268pt x 669.9429pt>
+File: streamfunctionComp.png Graphic file (type png)
+<use streamfunctionComp.png>
+Package pdftex.def Info: streamfunctionComp.png  used on input line 415.
+(pdftex.def)             Requested size: 494.32558pt x 669.94125pt.
+[5 <./polarPeriodic/PolarPeriodicFigure.jpg>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5 <./polarPeriodic/PolarPeriodicFigure.jpg>]
-<totalQ.png, id=44, 296.0661pt x 118.5228pt>
-File: totalQ.png Graphic file (type png)
-<use totalQ.png>
-Package pdftex.def Info: totalQ.png  used on input line 426.
-(pdftex.def)             Requested size: 296.06537pt x 118.52249pt.
- [6 <./polarDiagonal/polarDiagonalFigure.jpg> <./cartesianPeriodic/cartesianPer
-iodicFigure.jpg>] [7 <./cartesianDiagonal/CartesianDiagonalFigure.jpg> <./frog.
-png>]
-Overfull \vbox (73.84995pt too high) has occurred while \output is active []
-
-
-[8 <./big fig.png>] (./report.bbl) [9 <./totalQ.png>] (./report.aux)
+[6 <./polarDiagonal/polarDiagonalFigure.jpg> <./cartesianPeriodic/cartesianPeri
+odicFigure.jpg>]
+<latticeboltzmancheck.png, id=47, 358.7001pt x 469.755pt>
+File: latticeboltzmancheck.png Graphic file (type png)
+<use latticeboltzmancheck.png>
+Package pdftex.def Info: latticeboltzmancheck.png  used on input line 430.
+(pdftex.def)             Requested size: 358.69922pt x 469.75386pt.
+ [7 <./cartesianDiagonal/CartesianDiagonalFigure.jpg> <./frog.png>] [8 <./strea
+mfunctionComp.png>] [9 <./latticeboltzmancheck.png>]
+(./report.bbl) [10] (./report.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
  5014 strings out of 481239
- 76858 string characters out of 5920377
+ 77003 string characters out of 5920377
  338960 words of memory out of 5000000
  20215 multiletter control sequences out of 15000+600000
  538674 words of font info for 46 fonts, out of 8000000 for 9000
@@ -492,10 +490,10 @@ sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (9 pages, 1257272 bytes).
+Output written on report.pdf (10 pages, 2715516 bytes).
 PDF statistics:
- 117 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
+ 120 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
