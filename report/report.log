@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  26 OCT 2021 21:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  27 OCT 2021 18:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -272,28 +272,25 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count275
 \l__pdf_internal_box=\box54
 )
-(./report.aux
-
-LaTeX Warning: Label `streaming step' multiply defined.
-
-)
+(./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
- (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count276
 \scratchdimen=\dimen177
@@ -352,35 +349,35 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--76
+Underfull \hbox (badness 10000) in paragraph at lines 76--79
 
  []
 
 
-LaTeX Warning: Reference `Rayleigh number' on page 1 undefined on input line 80
+LaTeX Warning: Reference `Rayleigh number' on page 1 undefined on input line 83
 .
 
 
-Overfull \hbox (1.81267pt too wide) in paragraph at lines 92--93
+Overfull \hbox (7.43486pt too wide) in paragraph at lines 95--96
 \OT1/cmr/m/it/10 Two nu-mer-i-cal meth-ods are in-tro-duced for solv-ing the th
-er-mal con-vec-tion prob-lem, the Lat-tice Boltz-man Method and the streamfunct
-ion-
+er-mal con-vec-tion prob-lem, the Lat-tice Boltz-mann Method and the streamfunc
+tion-
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (177.41695pt too wide) in paragraph at lines 114--126
+Overfull \hbox (177.41695pt too wide) in paragraph at lines 117--129
 \OT1/cmr/m/n/10 allowing us to write equa-tions 2[] and 4[] as: [] 
  []
 
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 146--146
+Overfull \hbox (15.0pt too wide) in paragraph at lines 149--149
 [][] 
  []
 
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 178--178
+Overfull \hbox (15.0pt too wide) in paragraph at lines 181--181
 [][] 
  []
 
@@ -388,10 +385,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 178--178
 <D2Q9Lattice.jpg, id=24, 190.7125pt x 189.70876pt>
 File: D2Q9Lattice.jpg Graphic file (type jpg)
 <use D2Q9Lattice.jpg>
-Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 242.
+Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 245.
 (pdftex.def)             Requested size: 190.71202pt x 189.70828pt.
 
-Overfull \hbox (129.2398pt too wide) in paragraph at lines 239--257
+Overfull \hbox (129.2398pt too wide) in paragraph at lines 242--259
 \OT1/cmr/m/n/10 ing $\OML/cmm/m/it/10 f$ \OT1/cmr/m/n/10 and $\OML/cmm/m/it/10 
 g$\OT1/cmr/m/n/10 , a stream-ing step: [] 
  []
@@ -400,25 +397,12 @@ g$\OT1/cmr/m/n/10 , a stream-ing step: []
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 270--270
-[][] 
- []
-
-
-Overfull \hbox (336.61638pt too wide) in paragraph at lines 271--280
-\OT1/cmr/m/n/10 lated to the macro-scopic ther-mal dif-fu-siv-ity ($\OML/cmm/m/
-it/10 ^^T$\OT1/cmr/m/n/10 ) and kine-matic vis-cousity $\OML/cmm/m/it/10 ^^W$ \
-OT1/cmr/m/n/10 by: [] 
+Overfull \hbox (102.33348pt too wide) in paragraph at lines 260--271
+[]\OT1/cmr/m/n/10 and a col-li-sion step: [] 
  []
 
 [3]
-Overfull \hbox (307.93004pt too wide) in paragraph at lines 281--290
-[]\OT1/cmr/m/n/10 The equi-lib-rium dis-tri-bu-tions are given by the BKG ap-pr
-ox-i-ma-tion: [] 
- []
-
-
-Overfull \hbox (15.0pt too wide) in paragraph at lines 309--309
+Overfull \hbox (15.0pt too wide) in paragraph at lines 312--312
 [][] 
  []
 
@@ -429,7 +413,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: polarPeriodic/PolarPeriodicFigure.jpg Graphic file (type jpg)
 <use polarPeriodic/PolarPeriodicFigure.jpg>
 Package pdftex.def Info: polarPeriodic/PolarPeriodicFigure.jpg  used on input l
-ine 364.
+ine 366.
 (pdftex.def)             Requested size: 316.78271pt x 262.09854pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -438,7 +422,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: polarDiagonal/PolarDiagonalFigure.jpg Graphic file (type jpg)
 <use polarDiagonal/PolarDiagonalFigure.jpg>
 Package pdftex.def Info: polarDiagonal/PolarDiagonalFigure.jpg  used on input l
-ine 371.
+ine 373.
 (pdftex.def)             Requested size: 291.24738pt x 256.07608pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -448,7 +432,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: cartesianPeriodic/CartesianPeriodicFigure.jpg Graphic file (type jpg)
 <use cartesianPeriodic/CartesianPeriodicFigure.jpg>
 Package pdftex.def Info: cartesianPeriodic/CartesianPeriodicFigure.jpg  used on
- input line 378.
+ input line 380.
 (pdftex.def)             Requested size: 322.0825pt x 260.89404pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -458,66 +442,99 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: cartesianDiagonal/CartesianDiagonalFigure.jpg Graphic file (type jpg)
 <use cartesianDiagonal/CartesianDiagonalFigure.jpg>
 Package pdftex.def Info: cartesianDiagonal/CartesianDiagonalFigure.jpg  used on
- input line 385.
+ input line 387.
 (pdftex.def)             Requested size: 334.36838pt x 264.26665pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 LaTeX Warning: Reference `stability equation' on page 4 undefined on input line
- 390.
+ 392.
 
-[4 <./D2Q9Lattice.jpg>]
-Overfull \vbox (3.30988pt too high) has occurred while \output is active []
+[4 <./D2Q9Lattice.jpg>] [5 <./polarPeriodic/PolarPeriodicFigure.jpg>]
 
+LaTeX Warning: Reference `Lattice Boltzmann Check' on page 6 undefined on input
+ line 397.
 
-[5 <./polarPeriodic/PolarPeriodicFigure.jpg>]
-<frog.png, id=41, 348.30125pt x 281.05pt>
-File: frog.png Graphic file (type png)
-<use frog.png>
-Package pdftex.def Info: frog.png  used on input line 412.
-(pdftex.def)             Requested size: 348.3004pt x 281.0493pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<streamfunctionComp.png, id=42, 494.3268pt x 669.9429pt>
-File: streamfunctionComp.png Graphic file (type png)
-<use streamfunctionComp.png>
-Package pdftex.def Info: streamfunctionComp.png  used on input line 430.
-(pdftex.def)             Requested size: 494.32558pt x 669.94125pt.
 [6 <./polarDiagonal/polarDiagonalFigure.jpg> <./cartesianPeriodic/cartesianPeri
 odicFigure.jpg>]
+<latticeboltzmancheck.png, id=44, 358.7001pt x 469.755pt>
+File: latticeboltzmancheck.png Graphic file (type png)
+<use latticeboltzmancheck.png>
+Package pdftex.def Info: latticeboltzmancheck.png  used on input line 417.
+(pdftex.def)             Requested size: 502.17671pt x 657.65253pt.
+ [7 <./cartesianDiagonal/CartesianDiagonalFigure.jpg>] [8 <./latticeboltzmanche
+ck.png>]
+
+LaTeX Warning: Reference `unrollings' on page 9 undefined on input line 433.
+
+<unrap image.jpg, id=54, 1208.515pt x 1777.64125pt>
+File: unrap image.jpg Graphic file (type jpg)
+<use unrap image.jpg>
+Package pdftex.def Info: unrap image.jpg  used on input line 438.
+(pdftex.def)             Requested size: 302.128pt x 444.40923pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 444--447
+
+ []
+
+[9
+
+ <./unrap image.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 473--476
+
+ []
+
+<initialState.png, id=58, 172.2435pt x 131.0496pt>
+File: initialState.png Graphic file (type png)
+<use initialState.png>
+Package pdftex.def Info: initialState.png  used on input line 495.
+(pdftex.def)             Requested size: 258.36461pt x 196.5739pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 523--527
+
+ []
+
+[10]
+<streamfunctionComp.png, id=62, 494.3268pt x 669.9429pt>
+File: streamfunctionComp.png Graphic file (type png)
+<use streamfunctionComp.png>
+Package pdftex.def Info: streamfunctionComp.png  used on input line 536.
+(pdftex.def)             Requested size: 494.32558pt x 669.94125pt.
+
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[7 <./cartesianDiagonal/CartesianDiagonalFigure.jpg> <./frog.png>]
-Overfull \vbox (13.56458pt too high) has occurred while \output is active []
+[11 <./initialState.png>] [12 <./streamfunctionComp.png>]
+<latticeBoltzmanHighRa.png, id=71, 527.571pt x 702.7053pt>
+File: latticeBoltzmanHighRa.png Graphic file (type png)
+<use latticeBoltzmanHighRa.png>
+Package pdftex.def Info: latticeBoltzmanHighRa.png  used on input line 536.
+(pdftex.def)             Requested size: 527.56972pt x 702.7036pt.
+ [13 <./latticeBoltzmanHighRa.png>]
+<latticeBoltzmanLowRa.png, id=77, 352.6776pt x 703.428pt>
+File: latticeBoltzmanLowRa.png Graphic file (type png)
+<use latticeBoltzmanLowRa.png>
+Package pdftex.def Info: latticeBoltzmanLowRa.png  used on input line 536.
+(pdftex.def)             Requested size: 352.67673pt x 703.42628pt.
+ [14 <./latticeBoltzmanLowRa.png>] (./report.bbl) [15
 
 
-[8 <./streamfunctionComp.png>]
-<latticeboltzmancheck.png, id=55, 358.7001pt x 469.755pt>
-File: latticeboltzmancheck.png Graphic file (type png)
-<use latticeboltzmancheck.png>
-Package pdftex.def Info: latticeboltzmancheck.png  used on input line 445.
-(pdftex.def)             Requested size: 358.69922pt x 469.75386pt.
- [9 <./latticeboltzmancheck.png>] (./report.bbl)
-[10] (./report.aux)
+
+]
+(./report.aux)
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
  ) 
 Here is how much of TeX's memory you used:
- 5016 strings out of 481239
- 77028 string characters out of 5920377
- 343009 words of memory out of 5000000
- 20217 multiletter control sequences out of 15000+600000
+ 5039 strings out of 481239
+ 77600 string characters out of 5920377
+ 342101 words of memory out of 5000000
+ 20237 multiletter control sequences out of 15000+600000
  538674 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,12n,42p,1008b,385s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,12n,46p,1048b,385s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
@@ -535,10 +552,10 @@ sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (10 pages, 2718313 bytes).
+Output written on report.pdf (15 pages, 3753758 bytes).
 PDF statistics:
- 120 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
+ 142 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
