@@ -4,45 +4,45 @@ The top-level auxiliary file: report.aux
 The style file: abbrv.bst
 Database file #1: ref.bib
 Warning--empty journal in khazaeli2015ghost
-You've used 3 entries,
+You've used 6 entries,
             2118 wiz_defined-function locations,
-            515 strings with 4259 characters,
-and the built_in function-call counts, 858 in all, are:
-= -- 80
-> -- 38
+            537 strings with 4871 characters,
+and the built_in function-call counts, 1772 in all, are:
+= -- 168
+> -- 87
 < -- 0
-+ -- 16
-- -- 12
-* -- 55
-:= -- 154
-add.period$ -- 9
-call.type$ -- 3
-change.case$ -- 14
++ -- 37
+- -- 28
+* -- 126
+:= -- 315
+add.period$ -- 18
+call.type$ -- 6
+change.case$ -- 31
 chr.to.int$ -- 0
-cite$ -- 4
-duplicate$ -- 33
-empty$ -- 69
-format.name$ -- 12
-if$ -- 171
+cite$ -- 7
+duplicate$ -- 65
+empty$ -- 135
+format.name$ -- 28
+if$ -- 353
 int.to.chr$ -- 0
-int.to.str$ -- 3
-missing$ -- 4
-newline$ -- 18
-num.names$ -- 6
-pop$ -- 19
+int.to.str$ -- 6
+missing$ -- 7
+newline$ -- 33
+num.names$ -- 12
+pop$ -- 30
 preamble$ -- 1
-purify$ -- 12
+purify$ -- 26
 quote$ -- 0
-skip$ -- 21
+skip$ -- 44
 stack$ -- 0
-substring$ -- 47
-swap$ -- 2
+substring$ -- 92
+swap$ -- 5
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 10
+type$ -- 22
 warning$ -- 1
-while$ -- 8
-width$ -- 4
-write$ -- 32
+while$ -- 17
+width$ -- 7
+write$ -- 65
 (There was 1 warning)

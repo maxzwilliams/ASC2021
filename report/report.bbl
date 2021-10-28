@@ -1,5 +1,12 @@
 \begin{thebibliography}{1}
 
+\bibitem{earn2017investigation}
+L.~C. Earn, T.~W. Yen, and T.~L. Ken.
+\newblock The investigation on simple and simpler algorithm through lid driven
+  cavity.
+\newblock {\em Journal of Advanced Research in Fluid Mechanics and Thermal
+  Sciences}, 29(1):10--22, 2017.
+
 \bibitem{goluskin2016internally}
 D.~Goluskin.
 \newblock {\em Internally heated convection and Rayleigh-B{\'e}nard
@@ -17,5 +24,16 @@ R.~Khazaeli, M.~Ashrafizaadeh, and S.~Mortazavi.
 P.~Mora and D.~A. Yuen.
 \newblock Simulation of plume dynamics by the lattice boltzmann method.
 \newblock {\em Geophysical Journal International}, 210(3):1932--1937, 2017.
+
+\bibitem{qian1992lattice}
+Y.-H. Qian, D.~d'Humi{\`e}res, and P.~Lallemand.
+\newblock Lattice bgk models for navier-stokes equation.
+\newblock {\em EPL (Europhysics Letters)}, 17(6):479, 1992.
+
+\bibitem{spiegelman2006semi}
+M.~Spiegelman and R.~F. Katz.
+\newblock A semi-lagrangian crank-nicolson algorithm for the numerical solution
+  of advection-diffusion problems.
+\newblock {\em Geochemistry, Geophysics, Geosystems}, 7(4), 2006.
 
 \end{thebibliography}
