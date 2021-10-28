@@ -1,11 +1,21 @@
 \begin{thebibliography}{1}
 
+\bibitem{bolt1970pdp}
+B.~A. Bolt.
+\newblock Pdp and pkikp waves and diffracted pcp waves.
+\newblock {\em Geophysical Journal International}, 20(4):367--382, 1970.
+
 \bibitem{earn2017investigation}
 L.~C. Earn, T.~W. Yen, and T.~L. Ken.
 \newblock The investigation on simple and simpler algorithm through lid driven
   cavity.
 \newblock {\em Journal of Advanced Research in Fluid Mechanics and Thermal
   Sciences}, 29(1):10--22, 2017.
+
+\bibitem{fowler1990solid}
+C.~M.~R. Fowler, C.~M.~R. Fowler, and M.~Fowler.
+\newblock {\em The solid earth: an introduction to global geophysics}.
+\newblock Cambridge University Press, 1990.
 
 \bibitem{goluskin2016internally}
 D.~Goluskin.
@@ -35,5 +45,11 @@ M.~Spiegelman and R.~F. Katz.
 \newblock A semi-lagrangian crank-nicolson algorithm for the numerical solution
   of advection-diffusion problems.
 \newblock {\em Geochemistry, Geophysics, Geosystems}, 7(4), 2006.
+
+\bibitem{tkalvcic2018shear}
+H.~Tkalcic and T.-S. Pham.
+\newblock Shear properties of earth’s inner core constrained by a detection
+  of j waves in global correlation wavefield.
+\newblock {\em Science}, 362(6412):329--332, 2018.
 
 \end{thebibliography}

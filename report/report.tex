@@ -8,17 +8,14 @@
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-
 \usepackage{amsmath}
-
 \usepackage{mathtools}
 \usepackage{tabularx}
-
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{afterpage}
-
 \usepackage{titlepic}
+\usepackage{gensymb}
 
 
 \title{%
@@ -36,16 +33,18 @@
 
 \begin{abstract}
 
-	\noindent Whether the Earth's Inner core convects or not has been a contentious topic ins geoscience. Recently, it has been proposed through seismic 
-	observations that Earth's inner core is convecting. 
-
-
-
-	Here we numerically model the Earth's inner core as a self-gravitating internally heated fluid 
-	in 2-dimensions using a streamfunction-vorticity method and a Thermal Lattice Boltzman approach coded from scratch in Python3 and goLang. By 
+	\noindent Whether the Earth's inner core convects or not has been a contentious topic 
+	in geoscience. Here we numerically model the Earth's inner core as a self-gravitating 
+	internally heated fluid 
+	in 2-dimensions using a streamfunction-vorticity method and a Thermal Lattice Boltzman 
+	approach coded from scratch in Python3 and goLang. By 
 	comparing results of two simple 
-	streamfunction-vorticity codes we conclude that the polar geometry of our 2-dimensional inner core model and the central region are important in 
-	modelling convection. Using a Thermal Lattice Boltzmann method (TLBM) we simulate the entire domain while respecting the geometry. Our TLBM simulations are in the high Prandtl number limit with $Pr=5000$ and give an upper bound on the critical internally heated Rayleigh number of $10^5$. 
+	streamfunction-vorticity codes we conclude that the polar geometry of our 2-dimensional
+	inner core model and the central region are important in 
+	modelling convection. Using a Thermal Lattice Boltzmann method (TLBM) we simulate the 
+	entire domain while respecting the geometry. Our TLBM simulations are in the high 
+	Prandtl number limit with $Pr=5000$ and give an upper bound on the critical internally 
+	heated Rayleigh number of $10^5$. 
  
 \end{abstract}
 
@@ -54,16 +53,16 @@
 
 %% the hardest part, the introduction.
 
-The Earth's inner core is a particularly interesting subtaranial region as tt helps maintain Earths magnetic field which shields life on Earth from solar 
-radiation. Yet this critical region of Earth is relatively poorly understood. It sits within the liquid outer core, which shares a boundary with a sharp density change with the lower mantle and is opeque to s-waves. 
-
-
-
-which does not transmit S 
-waves and has a sharp density change between it and the lower mantle. This makes seismic signals which pass through the inner core such as () highly sensitive to incident angle, weak and therefore hard to detect. The inner core is also one of the most extreme enviroments, with temperatures above () and pressures exceeding () which are 
-largly outside of experimental material physics, making composition and physical properties difficult to obtain. 
-\newline
-Ignoring these difficulties, modelling convection in the inner core is also non-trivial. Its thought to be internally heated and due to its proximity to the center of the Earth has non constant gravity. Emulating varying gravitation and internal heating directly in experiment is difficult. Analytical models do exsit, and methods such as the spectral method have been used to investigate this very question. However, these analytical models tend to make great simplifications, which dont give them the same resolution as numerical methods. For this reason, the problem of convection in the inner core is well suited to numerical methods such as those explored in this report.
+The Earth's inner core is a particularly interesting subterannean  region as it helps maintain Earth's magnetic field which shields life on Earth from
+solar 
+radiation. Yet this critical region of the Earth is relatively poorly understood. It sits within the liquid outer core, which shares a boundary with a sharp 
+density change with the lower mantle and is opaque to S-waves \cite{fowler1990solid}. This makes seismic signals which pass through the inner core such 
+as PKJKP and PKIKP waves difficult to detect \cite{tkalvcic2018shear, bolt1970pdp} . The inner core is also one of the most extreme environments, with 
+temperatures exceeding $5000^{\circ}$C and pressures exceeding 3 million atmospheres which are 
+largely outside of experimental material physics, making composition and physical properties difficult to obtain. Ignoring these difficulties, modelling 
+convection in the inner core is also non-trivial due to internal heating and non constant gravity. Emulating varying gravitation and internal heating 
+directly in experiment is difficult. For this reason, the problem of convection in the inner core is well suited to numerical methods such as those 
+explored in this report.
 
 
 %% why do we even want to talk about the inner core???
@@ -81,15 +80,15 @@ Ignoring these difficulties, modelling convection in the inner core is also non-
 {\it{In this section I introduce the physics of the problem; the governing equations that we wish to numerically solve.}}
 \vspace{0.3cm}
 \newline
-\noindent Throughout analysis we describe the fluid in the Eulerian frame under a gravitational acceleration $\vec{g}$ which may vary in space. We give 
-each location in the fluid a time and space dependent velocity $\vec{u}$ and density $\rho$. We assume that fluid is incompressible and its viscosity $\
+\noindent Throughout the  analysis we describe the fluid in the Eulerian frame under a gravitational acceleration $\vec{g}$ which may vary in space. We give 
+each location in the fluid a time and space dependent velocity $\vec{u}$ and density $\rho$. We assume that  the fluid is incompressible and its viscosity $\
 mu$ and thermal diffusivity $\kappa$ are constant. By conserving fluid momentum, we produce the Navier-Stokes equation:
 \begin{equation}
 	\rho \frac{D \vec{u}}{D t} = \rho \vec{g} - \nabla p + \mu \nabla^2 \vec{u},
 	\label{NSE}
 \end{equation}
 where $\frac{D}{D t} = \frac{\partial }{\partial t} + (\vec{u} \cdot \nabla)$ is the material derivative, $p$ the pressure and $\nabla$ the del 
-operator. The dynamics of fluid temperature $T$ are described the inhomogenous advection diffusion equation:
+operator. The dynamics of fluid temperature $T$ are described the the inhomogenous advection diffusion equation:
 \begin{equation}
 	\frac{D T}{D t} = \kappa \nabla^2 T + H,
 	\label{adeT}
@@ -101,7 +100,7 @@ where $H$ is internal heating. The density of the fluid $\rho$ is assumed to var
 \end{equation}
 where $\alpha$ is the volumetric expansion coefficient and $\rho_0$ the density at a reference temperature $T_0$. We assume the density variations are 
 small and that the inner core is evolving on geologic timescales, allowing us to take the velocities $\vec{u}$ to be first order. These assumptions give 
-the slow flow boussinesq approximation to equation \ref{NSE}:
+the slow flow Boussinesq approximation to equation \ref{NSE}:
 \begin{equation}
 	\frac{\partial \vec{u}}{\partial t} = \frac{\rho'}{\rho} \vec{g} -   \frac{\nabla p'}{\rho_0} + \nu \nabla^2 \vec{u},
 	\label{NSE slow + boussinesq}
@@ -114,9 +113,10 @@ p_0$.
 	\label{prantl}
 \end{equation}
 We use two numbers to characterise the problem, the Prandtl number and the Rayleigh number. The Prandtl number $Pr$ (equation \ref{prantl}) is the ratio 
-of momentum and thermal diffusivity. WE also use the Rayleigh number $Ra$ (equation \ref{Rayleigh number}):
+of momentum and thermal diffusivity. We also use the Rayleigh number $Ra$ (equation \ref{Rayleigh number}):
 \begin{equation}
 	Ra = \frac{g \alpha \Delta T  d^3}{\nu \kappa},
+	\label{Rayleigh number}
 \end{equation}
 where $\Delta T$ is the variation over the length scale of the problem $d$. The Rayleigh number is the ratio of timescales for thermal diffusion and 
 thermal convection. High Rayleigh numbers $>\approx 650$ imply thermal convection. For internally heated problems such as ours, the temperature 
@@ -130,7 +130,7 @@ variation is poorly defined and so we use $\Delta T = \frac{H d^2}{\kappa}$ inst
 
 \subsection*{Physical Picture}
 {\it{Here I talk about what I am modelling and my assumptions about the inner core.}}
-Throughout this report, we approximate the Earth's inner core as a perfect sphere and model a 2-dimensinal cross-section. We take the inner core as being internally heated except for a thin outer layer that is cooled. We ignore all affects of rotation or precession, assuming the core is in an inertial reference frame. We assume that the earth above the Inner core is spherically symetric in all respects and so model no variations in pressure or gravitation across the inner core's surface.
+Throughout this report, we approximate the Earth's inner core as a perfect sphere and model a 2-dimensional cross-section. We take the inner core as being internally heated except for a thin outer layer that is cooled. We ignore all affects of rotation or precession, assuming the core is in an inertial reference frame. We assume that the earth above the inner core is spherically symmetric in all respects and so model no variations in pressure or gravitation across the inner core's surface.
 
 
 \section*{Numerical Methods}
@@ -155,7 +155,7 @@ where the $z$ subscript $z$ is out of the simulation plane, and scalar streamfun
 	\omega = - \nabla^2 \psi.
 	\label{psi}
 \end{equation}
-Given a coordinate system, and a clever definition of velocitites $\vec{u}$ we can rewrite equations \ref{adeT} and \ref{NSE slow + boussinesq} in terms of $\omega$ and $\psi$ rather than $\vec{u}$ and $p$. In Cartesian coordinates $(x,y)$ we pick 
+Given a coordinate system, and a clever definition of velocities $\vec{u}$ we can rewrite equations \ref{adeT} and \ref{NSE slow + boussinesq} in terms of $\omega$ and $\psi$ rather than $\vec{u}$ and $p$. In Cartesian coordinates $(x,y)$ we pick 
 \begin{equation}
 	u = \frac{\partial \psi}{\partial y}, v = -\frac{\partial \psi}{\partial x},
 	\label{cartesian velocities}
@@ -211,6 +211,7 @@ To approximate derivatives we use a finite difference approach. All time derivat
 	\label{forward time difference}
 \end{equation}
 Second order space derivatives are approximated by a central difference:
+
 \begin{tabularx}{\textwidth}{XX}
 \begin{equation}
 	\frac{\partial^2 f_{i,j}}{\partial {x_1}^2} = \frac{f_{i+1,j} - 2 f_{i,j} + f_{i-1,j}}{{\Delta x_1}^2},
@@ -219,7 +220,7 @@ Second order space derivatives are approximated by a central difference:
 \begin{equation}
 	\frac{\partial^2 f_{i,j}}{\partial {x_2}^2} = \frac{f_{i,j+1} - 2 f_{i,j} + f_{i,j-1}}{{\Delta x_2}^2},
 \end{equation}
-\end{tabularx}\par
+\end{tabularx}
 where $x_1$ is the first coordinate and $x_2$ is the second coordinate. For example, in Cartesian coordinates $(x,y)$, we would have $x_1=x$ and $x_2=y$. 
 For non advection terms, we approximate first order spatial derivatives by:
 \begin{equation}
@@ -242,7 +243,7 @@ Using $\psi$ we update $T$ on $\mathcal{D}'$ using equation \ref{adeT sfvt carte
 equation \ref{NSE slow + boussinesq sfvt cartesian} (\ref{NSE slow + boussinesq sfvt polar} for polar). This process is repeated.
 
 \subsubsection*{The Jacobi Method}
-{\it{Here the Jocobi Method for solving the Poisson equation, like \ref{psi} is introduced. This is the method used for solving \ref{psi} used in my streamfunction-vorticity codes.}}
+{\it{Here the Jacobi Method for solving the Poisson equation, like (\ref{psi}) is introduced. This is the method used for solving \ref{psi} used in my streamfunction-vorticity codes.}}
 \vspace{0.3cm}
 \newline
 We cannot solve for $\psi$ explicitly in equation \ref{psi}. Instead we use an iterative Jacobi method. In Cartesian coordinates, equation \ref{psi} is:
@@ -288,6 +289,7 @@ w_i = \begin{cases}
 	\label{D2Q9}
 \end{figure}
 \noindent We wish to simulate convection. For this, we require the particle motion and the internal energy throughout the lattice. We define two distribution functions $f_{\alpha}(\vec{x}, t)$ and $g_{\alpha}(\vec{x}, t)$ denoting the particle and internal energy distributions along direction $\alpha$ at lattice points $\vec{x}$ and times $t$. The direction can be thought of as the direction of flow for particles or energy. Each timestep there are two steps to updating $f$ and $g$, a streaming step:
+\newline
 \begin{tabularx}{\textwidth}{XX}
 \begin{equation}
 	f_{\alpha}(\vec{x} + \vec{e}_\alpha, t + \Delta t) = f_{\alpha}(\vec{x}, t),
@@ -298,7 +300,8 @@ w_i = \begin{cases}
 	g_{\alpha}(\vec{x} + \vec{e}_\alpha, t + \Delta t) = g_{\alpha}(\vec{x}, t),
 \end{equation}
 \end{tabularx}\par
-and a collision step:
+\noindent and a collision step:
+\newline
 \begin{tabularx}{\textwidth}{XX}
 \begin{equation}
 	f_{\alpha}(\vec{x} + \vec{e}_{\alpha}, t + \Delta t) = f_{\alpha}(\vec{x}, t) + \frac{1}{\tau_f} (f^{eq}_{\alpha}(\vec{x}, t)  - f_{\alpha}(\vec{x}, t)) + F_{\alpha}
@@ -321,7 +324,7 @@ and a collision step:
 	\tau_f = \frac{3 \nu}{S^2 \Delta t} + \frac{1}{2}.
 \end{equation}
 \end{tabularx}\par
-The equilibrium distributions are given by the BKG approximation \cite{qian1992lattice}:
+\noindent The equilibrium distributions are given by the BKG approximation \cite{qian1992lattice}:
 \newline
 \begin{tabularx}{\textwidth}{XX}
 \begin{equation}
@@ -333,7 +336,7 @@ The equilibrium distributions are given by the BKG approximation \cite{qian1992l
 \end{equation}
 \end{tabularx}\par
 
-Here $\rho$, $\epsilon$ and $\vec{u}$ are the macroscopic density, internal energy and velocity given by \cite{mora2017simulation}:
+\noindent Here $\rho$, $\epsilon$ and $\vec{u}$ are the macroscopic density, internal energy and velocity given by \cite{mora2017simulation}:
 
 \begin{tabularx}{\textwidth}{XXX}
 \begin{equation}
@@ -352,11 +355,18 @@ Here $\rho$, $\epsilon$ and $\vec{u}$ are the macroscopic density, internal ener
 \end{equation}
 \end{tabularx}\par
 
-The forcing terms $F_i$ and $G_i$ are problem dependent. For thermal convection $G_i=0$ and $F_i$ is a gravitational term ${\Delta f}_{\alpha}$:
+\noindent The forcing terms $F_i$ and $G_i$ are problem dependent. For thermal convection 
+$G_i=0$ and $F_i$ is a gravitational term ${\Delta f}_{\alpha}$:
 \begin{equation}
-	{\Delta f}_{\alpha} = - w_{\alpha} \rho \alpha \epsilon \frac{\vec{e}_{\alpha}}{\mid \vec{e}_{\alpha} \mid} \cdot \vec{g} \frac{1}{\tau_{grav}},
+	{\Delta f}_{\alpha} = - 
+	\frac{w_{\alpha} \rho \alpha \epsilon}{\tau_{grav}}
+	 \frac{\vec{e}_{\alpha}}{\mid \vec{e}_{\alpha} \mid} \cdot \vec{g} ,
 \end{equation}
-where $\mid \mid$ is the vector norm and $\vec{g}$ is the gravitational acceleration. Here $\tau_{grav}$ is the relaxation time for the gravitational field. We take $\tau_g=0.6$ here, following \cite{mora2017simulation}. The algorithm used to evolve the above TLBM equations is given in algorithm \ref{alg:TLBM} and closely follows \cite{mora2017simulation}.
+\noindent where $\mid \cdot \mid$ is the vector norm and $\vec{g}$ is the gravitational 
+acceleration. Here $\tau_{grav}$ is the relaxation time for the gravitational field. We 
+take $\tau_g=0.6$ here, following \cite{mora2017simulation}. The algorithm used to evolve 
+the above TLBM equations is given in algorithm \ref{alg:TLBM} and closely follows 
+\cite{mora2017simulation}.
 
 \begin{algorithm}[h!]
 \caption{Thermal Lattice Boltzmann Algorithm}\label{alg:TLBM}
@@ -365,11 +375,11 @@ where $\mid \mid$ is the vector norm and $\vec{g}$ is the gravitational accelera
 \State $f_{\alpha} = \rho_0 w_{\alpha}$ \Comment{Set particle distribution in domain}
 \State $g_{\alpha} = 0$ \Comment{Set internal energy zero in domain}
 \State $\epsilon = 0$ \Comment{Allocate memory for internal energy}
-\State $H$ \Comment{Set heat field in the domain}
+\State $\epsilon_b$ \Comment{Set heat field in the domain}
 \State $\rho = 0$ \Comment{Allocate memory for density}
 \State $\vec{u} = 0$ \Comment{Allocate memory for velocities}
 \While{Simulation Running} \Comment{Begin main simulation loop}
-	\State $g_{\alpha} += \rho \epsilon_b w_{\alpha} $ \Comment{At each timestep, add the affect of the heating field}
+	\State $g_{\alpha} \mathrel{+}= \rho \epsilon_b w_{\alpha} $ \Comment{At each timestep, add the affect of the heating field}
 	\If{$x-\vec{e}_{\alpha}$ is solid} \Comment{The following 3 lines enforce bounce-back boundary conditions}
 		\State $f_{\alpha}(x) = f_{\alpha'}(x)$
 		\State $g_{\alpha}(x) = g_{\alpha'}(x)$
@@ -393,11 +403,12 @@ where $\mid \mid$ is the vector norm and $\vec{g}$ is the gravitational accelera
 
 
 \subsubsection*{Boundary Conditions}
-In both streamfunction-vorticity and Thermal Lattice Boltzmann code, the boundaries are fluid-impermeable, non-slip and thermally insulating. In the 
-streamfunction-vorticity code this is done by directly imposing that the $\psi=0$ on the boundaries and manually setting tnagential velocities to zero. 
-From this $\omega$ boundary conditions arrise. In the Thermal Lattice Boltzman code, these conditions are imposed by ''bounce back" boundary conditions 
+\noindent In both streamfunction-vorticity and Thermal Lattice Boltzmann code, the 
+boundaries are fluid-impermeable, non-slip and thermally insulating. In the 
+streamfunction-vorticity code this is done by directly imposing that the $\psi=0$ on the boundaries and manually setting tangential velocities to zero. 
+From this $\omega$ boundary conditions arise. In the Thermal Lattice Boltzmann code, these conditions are imposed by ''bounce back" boundary conditions 
 where during the streaming step (equation \ref{streaming step}) distributions $f$ and $g$ are reflected off the boundaries. These boundary conditions 
-were selected as they are easily implimented in both codes, particulaly the Lattice Boltzmann codes. To generate a cooling boundary condition, the 
+were selected as they are easily implemented in both codes, particularly the Lattice Boltzmann codes. To generate a cooling boundary condition, the 
 heating field near the boundary was set negative. This method is crude and necessary to avoid greater complexity in the Lattice Boltzmann case, but 
 should in future be replaced with the traditional method of fixing heat flux across the boundary in the streamfunction case.
 
@@ -406,7 +417,7 @@ should in future be replaced with the traditional method of fixing heat flux acr
 {\it{A particularly difficult part of the streamfunction-vorticity simulation is correctly modelling advection. In this section, I perform some tests to show that my advection scheme works.}}
 \vspace{0.3cm}
 \newline
-\noindent Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero to avoid convection. The fluid was set to temperature 0 (arb. units) except a small segment which was set to $1$ shown in yellow top left of figure \ref{polar periodic advection}, \ref{polar diagonal advection}, \ref{cartesian periodic advection}, \ref{cartesian diagonal advection}. A streamfunction $\psi_c$ was enforced to produce diagonal back and forth motion or a continuous horizontal or azimuthal motion to cross a periodic boundary. Details of the streamfunctions used are given in appendix.
+\noindent Thermal diffusivity ($\kappa$) and thermal expansion ($\alpha$) were set to zero to avoid convection. The fluid was set to temperature 0 (arb. units) except a small segment which was set to $1$ shown in yellow top left of figures \ref{periodic advection figure} and \ref{diagonal advection figure}. A streamfunction $\psi_c$ was enforced to produce diagonal back and forth motion or a continuous horizontal or azimuthal motion to cross a periodic boundary. Details of the streamfunctions used are given in appendix.
 
 \begin{sidewaysfigure}
 	\center
@@ -425,45 +436,41 @@ should in future be replaced with the traditional method of fixing heat flux acr
 
 
 
-\noindent The advection results for both codes are similar. For the periodic advection test, top row figure \ref{periodic advection figure} and \ref{diagonal advection figure} the temperature 1 region is advected across the periodic boundary conditions without distortion. The centroid (red dot) lagged the advection field by $\approx 1 \%$ and $\approx 10 \%$ in the horizontal and azimuthal advection case (figure \ref{periodic advection figure}) respectively. It is unknown exactly why these differe substantually, however a probable cause is the smaller timestep use to produce the polar tests. In all cases, the bluring shows numerical diffusion along the direction of travel which is predicted by equation \ref{stability equation} (equation not produced here). The discontinuity in temperature in the bottom row third column of figure \ref{diagonal advection figure} near the $0, 360$ azimuthal angle boundary is a direct result of manually setting the streamfunction.
+\noindent The advection results for both codes are similar. For the periodic advection test, top row figure \ref{periodic advection figure} and \ref{diagonal advection figure} the temperature 1 region is advected across the periodic boundary conditions without distortion. The centroid (red dot) lagged the advection field by $\approx 1 \%$ and $\approx 10 \%$ in the horizontal and azimuthal advection case (figure \ref{periodic advection figure}) respectively. It is unknown exactly why these differe substantually, however a probable cause is the smaller timestep use to produce the polar tests. In all cases, the blurring shows numerical diffusion along the direction of travel which is consistent with the MEPDE for equation \ref{adeT} using our numerical scheme. The discontinuity in temperature in the bottom row third column of figure \ref{diagonal advection figure} near the $0, 360$ azimuthal angle boundary is a direct result of manually setting the streamfunction.
 
 \section*{Thermal Lattice Boltzmann Tests}
-To test the validity of my thermal lattice Boltzmann code I replicated results from \cite{mora2017simulation} in figure \ref{Lattice Boltzmann 
-Check}. I used a ''bounceback" boundary condition on all walls of the domain (figure \ref{Lattice Boltzman Check} top four panes) which was compared against a simulation (figure \ref{Lattice Boltzman Check} bottom) with the vertical walls having periodic boundary conditions. In addition, I used random flucations in boundary temperature of $10 \%$ while \cite{mora2017simulation} used random flucations of $25 \%$. This explains the slower onset of instabilities in my code.
+To test the validity of my thermal lattice Boltzmann code, results from  \cite{mora2017simulation} are replicated in in figure \ref{Lattice Boltzmann 
+Check}. I used a ''bounceback" boundary condition on all walls of the domain (figure \ref{Lattice Boltzmann Check} top four panes) which was compared 
+against a simulation (figure \ref{Lattice Boltzmann Check} bottom) with the vertical walls having periodic boundary conditions. In addition, I used 
+random fluctuations in boundary temperature of $10 \%$ while \cite{mora2017simulation} used random fluctuations of $25 \%$. The results are similar in 
+convective plume size, quantity and definition. The convection begins slower in the simulation written here, but this can be accounted for by the smaller 
+random noise used.
+
 
 \afterpage{%
 \begin{figure}
 	\centering
 	\includegraphics[scale=1.4]{latticeboltzmancheck.png}
 	\caption{ Comparison between Thermal Lattice Boltzmann coded here (top four figures) and Published Thermal Lattice Boltzmann results (bottom figure) \cite{mora2017simulation}. Headings indicate timestep, red/yellow show hot regions while blue areas are cold. Top and bottom regions are held at constant temperature (no internal heating). All program settings used are similar. $Pr=5000, Ra=10^8$}
-	\label{Lattice Boltzman Check}
+	\label{Lattice Boltzmann Check}
 \end{figure}
 \clearpage
 }
 
 
-
-\subsection*{Conservation of heat in the streamfunction code / tests for if the streamfunction code is working as it should / tests for how well my wacko boundary conditions match proper constant heat flux conditions}
-This section isn't done. I may not get time to do it. We will see how the time goes. Priority is:
-\newline
-1. check streamfunction reproduces results from other codes (might just check it against LBM)
-2. check boundary conditions work
-3. discussion of heat conservation.
-
-
 \section*{Simulations}
 The Cartesian and polar streamfunction-vorticity codes are limited in two 
 distinct ways. The polar geometry of the 2-dimensional inner core is well 
-suited to polar coorindates. However, by using polar coorindates, a 
+suited to polar coordinates. However, by using polar coordinates, a 
 singularity in the governing equations occurs at the center 
 $r \rightarrow 0$. For standard regularly spaced meshes as is used here, 
 this causes the lattice spacing near the center to become infinitesimal 
 requiring small timesteps and large amounts of compute time. For this 
-reason, a substantual part of the inner region of the polar domain is excluded leaving out a 
-critical region in the simulation. In Cartesian coorindates, there is no 
+reason, a substantial part of the inner region of the polar domain is excluded leaving out a 
+critical region in the simulation. In Cartesian coordinates, there is no 
 singularity and the full domain is included, however it becomes difficult 
 to recreate the polar geometry while enforcing boundary conditions. Because of this, in the Cartesian case, we approximate the 2-dimensional inner core 
-by ''unrolling" the polar domain as shown in figure \ref{unrollings}, losing the polar geometry.
+by ''unrolling" the polar domain as shown in figure \ref{unrolling}, losing the polar geometry.
 
 
 \begin{figure}[h!]
@@ -474,7 +481,7 @@ by ''unrolling" the polar domain as shown in figure \ref{unrollings}, losing the
 \end{figure}
 
 \subsection*{Geometry and the Central region of a self-gravitating fluid}
-{\it{In this section, I present results from my streamfunction-vorticity codes in Cartesian and polar coorindates. I show through comparison between simulations that taking into account the geometry and center of a 2-dimensional self gravitating fluid are important and significantly change both the dynamics and long term convective patterns.}}
+{\it{In this section, I present results from my streamfunction-vorticity codes in Cartesian and polar coordinates. I show through comparison between simulations that taking into account the geometry and center of a 2-dimensional self gravitating fluid are important and significantly change both the dynamics and long term convective patterns.}}
 \vspace{0.3cm}
 \newline
 
@@ -489,7 +496,7 @@ random fluctuations of $\approx 1 \%$ were set to facilitate instabilities.
 \begin{figure}[h!]
 	\centering
 	\includegraphics{streamfunctionComp.png}
-	\caption{Simulations of internally heated, self-gravitating convection in Cartesian (left), polar with inner radius 0.1 (middle) and polar with inner radius 0.2 (right) coorindates. Times indicated by headings. Apart from inner radius, simulation settings are common. $Ra_H=10^8, Pr=5000$.}
+	\caption{Simulations of internally heated, self-gravitating convection in Cartesian (left), polar with inner radius 0.1 (middle) and polar with inner radius 0.2 (right) coordinates. Times indicated by headings. Apart from inner radius, simulation settings are common. $Ra_H=10^8, Pr=5000$.}
 	\label{cartesian vs polar}
 \end{figure}
 \clearpage
