@@ -6,6 +6,13 @@ D.~Adair and M.~Jaeger.
   navier--stokes equations.
 \newblock 2015.
 
+\bibitem{babskii1971convection}
+V.~Babskii and I.~Sklovskaia.
+\newblock On convection onset in a self-gravitating fluid sphere with internal
+  heating: Pmm vol. 35, n= 6, pp. 1000--1014, 1971.
+\newblock {\em Journal of Applied Mathematics and Mechanics}, 35(6):951--965,
+  1971.
+
 \bibitem{bolt1970pdp}
 B.~A. Bolt.
 \newblock Pdp and pkikp waves and diffracted pcp waves.
@@ -50,6 +57,12 @@ R.~Khazaeli, M.~Ashrafizaadeh, and S.~Mortazavi.
   dealing with heat flux boundary condition in thermal problems with complex
   geometries.
 \newblock 2015.
+
+\bibitem{mora2020concise}
+P.~Mora, G.~Morra, and D.~A. Yuen.
+\newblock A concise python implementation of the lattice boltzmann method on
+  hpc for geo-fluid flow.
+\newblock {\em Geophysical Journal International}, 220(1):682--702, 2020.
 
 \bibitem{mora2017simulation}
 P.~Mora and D.~A. Yuen.

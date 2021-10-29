@@ -3,49 +3,48 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: report.aux
 The style file: abbrv.bst
 Database file #1: ref.bib
-Warning--I didn't find a database entry for "mora2020concise"
 Warning--empty journal in adair2015developing
 Warning--empty journal in khazaeli2015ghost
 Warning--empty publisher in rothman2004lattice
-You've used 17 entries,
+You've used 19 entries,
             2118 wiz_defined-function locations,
-            601 strings with 6412 characters,
-and the built_in function-call counts, 4669 in all, are:
-= -- 440
-> -- 209
+            613 strings with 6791 characters,
+and the built_in function-call counts, 5368 in all, are:
+= -- 512
+> -- 240
 < -- 1
-+ -- 89
-- -- 66
-* -- 296
-:= -- 816
-add.period$ -- 50
-call.type$ -- 17
-change.case$ -- 78
++ -- 102
+- -- 76
+* -- 353
+:= -- 932
+add.period$ -- 56
+call.type$ -- 19
+change.case$ -- 89
 chr.to.int$ -- 0
-cite$ -- 20
-duplicate$ -- 186
-empty$ -- 386
-format.name$ -- 66
-if$ -- 949
+cite$ -- 22
+duplicate$ -- 208
+empty$ -- 440
+format.name$ -- 76
+if$ -- 1090
 int.to.chr$ -- 0
-int.to.str$ -- 17
-missing$ -- 22
-newline$ -- 87
-num.names$ -- 34
-pop$ -- 101
+int.to.str$ -- 19
+missing$ -- 24
+newline$ -- 97
+num.names$ -- 38
+pop$ -- 108
 preamble$ -- 1
-purify$ -- 67
+purify$ -- 76
 quote$ -- 0
-skip$ -- 120
+skip$ -- 135
 stack$ -- 0
-substring$ -- 234
-swap$ -- 16
+substring$ -- 295
+swap$ -- 18
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 56
+type$ -- 64
 warning$ -- 3
-while$ -- 46
-width$ -- 19
-write$ -- 176
-(There were 4 warnings)
+while$ -- 54
+width$ -- 21
+write$ -- 198
+(There were 3 warnings)

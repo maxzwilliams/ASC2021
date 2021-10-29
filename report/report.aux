@@ -16,6 +16,7 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{babskii1971convection}
 \citation{fowler1990solid}
 \citation{tkalvcic2018shear}
 \citation{bolt1970pdp}
@@ -37,11 +38,12 @@
 \newlabel{prantl}{{5}{3}{Governing Equations}{equation.0.5}{}}
 \newlabel{Rayleigh number}{{6}{3}{Governing Equations}{equation.0.6}{}}
 \newlabel{internally heated rayleigh number}{{7}{3}{Governing Equations}{equation.0.7}{}}
-\newlabel{omega}{{8}{3}{Streamfunction-Vorticity formulation}{equation.0.8}{}}
-\newlabel{psi}{{9}{3}{Streamfunction-Vorticity formulation}{equation.0.9}{}}
-\newlabel{cartesian velocities}{{10}{3}{Streamfunction-Vorticity formulation}{equation.0.10}{}}
-\newlabel{adeT sfvt cartesian}{{11}{3}{Streamfunction-Vorticity formulation}{equation.0.11}{}}
-\newlabel{NSE slow + boussinesq sfvt cartesian}{{12}{3}{Streamfunction-Vorticity formulation}{equation.0.12}{}}
+\newlabel{omega}{{8}{3}{Streamfunction-Vorticity Formulation}{equation.0.8}{}}
+\newlabel{psi}{{9}{3}{Streamfunction-Vorticity Formulation}{equation.0.9}{}}
+\newlabel{cartesian velocities}{{10}{3}{Streamfunction-Vorticity Formulation}{equation.0.10}{}}
+\newlabel{adeT sfvt cartesian}{{11}{3}{Streamfunction-Vorticity Formulation}{equation.0.11}{}}
+\newlabel{NSE slow + boussinesq sfvt cartesian}{{12}{3}{Streamfunction-Vorticity Formulation}{equation.0.12}{}}
+\newlabel{polar velocities}{{13}{3}{Streamfunction-Vorticity Formulation}{equation.0.13}{}}
 \citation{press1986numerical}
 \citation{press1986numerical}
 \citation{press1986numerical}
@@ -53,10 +55,9 @@
 \citation{wagner2008practical}
 \citation{mora2017simulation}
 \citation{mora2017simulation}
-\newlabel{polar velocities}{{13}{4}{Streamfunction-Vorticity formulation}{equation.0.13}{}}
-\newlabel{adeT sfvt polar}{{14}{4}{Streamfunction-Vorticity formulation}{equation.0.14}{}}
-\newlabel{NSE slow + boussinesq sfvt polar}{{15}{4}{Streamfunction-Vorticity formulation}{equation.0.15}{}}
-\newlabel{forward time difference}{{16}{4}{Solving the Streamfunction-Vorticity equations}{equation.0.16}{}}
+\newlabel{adeT sfvt polar}{{14}{4}{Streamfunction-Vorticity Formulation}{equation.0.14}{}}
+\newlabel{NSE slow + boussinesq sfvt polar}{{15}{4}{Streamfunction-Vorticity Formulation}{equation.0.15}{}}
+\newlabel{forward time difference}{{16}{4}{Solving The Streamfunction-Vorticity Equations}{equation.0.16}{}}
 \citation{khazaeli2015ghost}
 \citation{khazaeli2015ghost}
 \citation{mora2017simulation}
@@ -78,11 +79,11 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Lattice Boltzmann code simulated on a Cartesian domain with circular boundary. Inside the circular region (yellow) the fluid is simulated while the exterior (purple) contains nothing and is not relevant to the simulation.\relax }}{6}{figure.caption.10}\protected@file@percent }
 \newlabel{TLBM model}{{3}{6}{Lattice Boltzmann code simulated on a Cartesian domain with circular boundary. Inside the circular region (yellow) the fluid is simulated while the exterior (purple) contains nothing and is not relevant to the simulation.\relax }{figure.caption.10}{}}
 \newlabel{RF1}{7}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Cartesian (top) and polar (bottom) advection tests for horizontal (top) and azimuthal (bottom) advection. Advection fields move left to right (top) and clockwise (bottom). Red dot is centroid location, temperature indicated by colour. First column is the initial state, second column is crossing of periodic boundary conditions, third column is time when an exact scheme would return to the initial state, fourth column is advected field after returning to its initial location.\relax }}{7}{figure.caption.12}\protected@file@percent }
-\newlabel{periodic advection figure}{{4}{7}{Cartesian (top) and polar (bottom) advection tests for horizontal (top) and azimuthal (bottom) advection. Advection fields move left to right (top) and clockwise (bottom). Red dot is centroid location, temperature indicated by colour. First column is the initial state, second column is crossing of periodic boundary conditions, third column is time when an exact scheme would return to the initial state, fourth column is advected field after returning to its initial location.\relax }{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Streamfunction-vorticity Cartesian (top) and polar (bottom) advection tests for horizontal (top) and azimuthal (bottom) advection. Advection fields move left to right (top) and clockwise (bottom). Red dot is centroid location, temperature indicated by colour. First column is the initial state, second column is crossing of periodic boundary, third column is time when an exact scheme would return to the initial state, fourth column is advected field after returning to its initial location.\relax }}{7}{figure.caption.12}\protected@file@percent }
+\newlabel{periodic advection figure}{{4}{7}{Streamfunction-vorticity Cartesian (top) and polar (bottom) advection tests for horizontal (top) and azimuthal (bottom) advection. Advection fields move left to right (top) and clockwise (bottom). Red dot is centroid location, temperature indicated by colour. First column is the initial state, second column is crossing of periodic boundary, third column is time when an exact scheme would return to the initial state, fourth column is advected field after returning to its initial location.\relax }{figure.caption.12}{}}
 \newlabel{RF2}{8}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Cartesian (top) and polar (bottom) advection tests for advection back and forth along the secondary diagonal. Red dot is the centroid location, temperature indicated by colour. First column is the initial state, second column is one extreme of the diagonal, the third column is the other extreme and the final column is the state once the centroid has returned to its initial position.\relax }}{8}{figure.caption.13}\protected@file@percent }
-\newlabel{diagonal advection figure}{{5}{8}{Cartesian (top) and polar (bottom) advection tests for advection back and forth along the secondary diagonal. Red dot is the centroid location, temperature indicated by colour. First column is the initial state, second column is one extreme of the diagonal, the third column is the other extreme and the final column is the state once the centroid has returned to its initial position.\relax }{figure.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Streamfunction-vorticity Cartesian (top) and polar (bottom) advection tests for advection back and forth along the secondary diagonal. Red dot is the centroid location, temperature indicated by colour. First column is the initial state, second column is one extreme of the diagonal, the third column is the other extreme and the final column is the state once the centroid has returned to its initial position.\relax }}{8}{figure.caption.13}\protected@file@percent }
+\newlabel{diagonal advection figure}{{5}{8}{Streamfunction-vorticity Cartesian (top) and polar (bottom) advection tests for advection back and forth along the secondary diagonal. Red dot is the centroid location, temperature indicated by colour. First column is the initial state, second column is one extreme of the diagonal, the third column is the other extreme and the final column is the state once the centroid has returned to its initial position.\relax }{figure.caption.13}{}}
 \citation{mora2017simulation}
 \citation{mora2017simulation}
 \citation{mora2017simulation}
@@ -91,8 +92,11 @@
 \newlabel{alg:TLBM}{{1}{9}{Thermal Lattice Boltzmann Algorithm\relax }{algorithm.1}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces  Comparison between Thermal Lattice Boltzmann coded here (top four figures) and Published Thermal Lattice Boltzmann results (bottom figure) \cite  {mora2017simulation}. Headings indicate timestep, red/yellow show hot regions while blue areas are cold. Top and bottom regions are held at constant temperature (no internal heating). All program settings used are similar. $Pr=5000, Ra=10^8$\relax }}{10}{figure.caption.16}\protected@file@percent }
 \newlabel{Lattice Boltzmann Check}{{6}{10}{Comparison between Thermal Lattice Boltzmann coded here (top four figures) and Published Thermal Lattice Boltzmann results (bottom figure) \cite {mora2017simulation}. Headings indicate timestep, red/yellow show hot regions while blue areas are cold. Top and bottom regions are held at constant temperature (no internal heating). All program settings used are similar. $Pr=5000, Ra=10^8$\relax }{figure.caption.16}{}}
+\citation{tritton2012physical}
+\citation{babskii1971convection}
 \@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Simulations of internally heated, self-gravitating convection in Cartesian (left), polar with inner radius 0.1 (middle) and polar with inner radius 0.2 (right) coordinates. Times indicated by headings. Apart from inner radius, simulation settings are common. $Ra_H=10^8, Pr=5000$.\relax }}{12}{figure.caption.21}\protected@file@percent }
 \newlabel{cartesian vs polar}{{8}{12}{Simulations of internally heated, self-gravitating convection in Cartesian (left), polar with inner radius 0.1 (middle) and polar with inner radius 0.2 (right) coordinates. Times indicated by headings. Apart from inner radius, simulation settings are common. $Ra_H=10^8, Pr=5000$.\relax }{figure.caption.21}{}}
+\citation{babskii1971convection}
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Example Initial state showing random fluctuations of the heating field of $10 \%$ throughout with random fluctuations across the hot/cold boundary. \relax }}{13}{figure.caption.20}\protected@file@percent }
 \newlabel{LBM initial state}{{7}{13}{Example Initial state showing random fluctuations of the heating field of $10 \%$ throughout with random fluctuations across the hot/cold boundary. \relax }{figure.caption.20}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces High Rayleigh number $Ra_H=10^8$ (left column) $Ra_H=10^7$ (middle column) $Ra_H=10^6$ (right column) from Thermal Lattice Boltzmann simulations for an internally heated self-gravitating fluid with $Pr=5000$. Headings are simulation timestep\relax }}{14}{figure.caption.24}\protected@file@percent }
@@ -104,22 +108,24 @@
 \bibstyle{abbrv}
 \bibdata{ref.bib}
 \bibcite{adair2015developing}{1}
-\bibcite{bolt1970pdp}{2}
-\bibcite{burkardt2011jacobi}{3}
-\bibcite{earn2017investigation}{4}
-\bibcite{fowler1990solid}{5}
-\bibcite{godunov1959difference}{6}
-\bibcite{goluskin2016internally}{7}
-\bibcite{guinot2003godunov}{8}
-\bibcite{khazaeli2015ghost}{9}
-\bibcite{mora2017simulation}{10}
-\bibcite{press1986numerical}{11}
-\bibcite{qian1992lattice}{12}
-\bibcite{rothman2004lattice}{13}
-\bibcite{spiegelman2006semi}{14}
-\bibcite{tkalvcic2018shear}{15}
-\bibcite{tritton2012physical}{16}
-\bibcite{wagner2008practical}{17}
+\bibcite{babskii1971convection}{2}
+\bibcite{bolt1970pdp}{3}
+\bibcite{burkardt2011jacobi}{4}
+\bibcite{earn2017investigation}{5}
+\bibcite{fowler1990solid}{6}
+\bibcite{godunov1959difference}{7}
+\bibcite{goluskin2016internally}{8}
+\bibcite{guinot2003godunov}{9}
+\bibcite{khazaeli2015ghost}{10}
+\bibcite{mora2020concise}{11}
+\bibcite{mora2017simulation}{12}
+\bibcite{press1986numerical}{13}
+\bibcite{qian1992lattice}{14}
+\bibcite{rothman2004lattice}{15}
+\bibcite{spiegelman2006semi}{16}
+\bibcite{tkalvcic2018shear}{17}
+\bibcite{tritton2012physical}{18}
+\bibcite{wagner2008practical}{19}
 \newlabel{psi disc}{{34}{16}{The Jacobi Method}{equation.0.34}{}}
 \newlabel{psi from omega}{{35}{16}{The Jacobi Method}{equation.0.35}{}}
 \newlabel{psi iterative}{{36}{16}{The Jacobi Method}{equation.0.36}{}}

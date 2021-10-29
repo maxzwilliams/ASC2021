@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  29 OCT 2021 16:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  29 OCT 2021 18:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -445,14 +445,14 @@ e
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(9.67393pt, 578.15999pt, 9.67395pt)
+* h-part:(L,W,R)=(16.90083pt, 563.7062pt, 16.90083pt)
 * v-part:(T,H,B)=(34.48474pt, 758.83499pt, 51.72711pt)
 * \paperwidth=597.50787pt
 * \paperheight=845.04684pt
-* \textwidth=578.15999pt
+* \textwidth=563.7062pt
 * \textheight=758.83499pt
-* \oddsidemargin=-62.59605pt
-* \evensidemargin=-62.59605pt
+* \oddsidemargin=-55.36916pt
+* \evensidemargin=-55.36916pt
 * \topmargin=-74.78525pt
 * \headheight=12.0pt
 * \headsep=25.0pt
@@ -510,164 +510,136 @@ LaTeX Info: Redefining \nameref on input line 32.
 File: introfigure.png Graphic file (type png)
 <use introfigure.png>
 Package pdftex.def Info: introfigure.png  used on input line 35.
-(pdftex.def)             Requested size: 578.15999pt x 168.46931pt.
+(pdftex.def)             Requested size: 563.7062pt x 164.25758pt.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./introfigure.png>]
-<unrap image.jpg, id=36, 1208.515pt x 1777.64125pt>
+<unrap image.jpg, id=38, 1208.515pt x 1777.64125pt>
 File: unrap image.jpg Graphic file (type jpg)
 <use unrap image.jpg>
-Package pdftex.def Info: unrap image.jpg  used on input line 93.
+Package pdftex.def Info: unrap image.jpg  used on input line 92.
 (pdftex.def)             Requested size: 302.128pt x 444.40923pt.
  [2 <./unrap image.jpg>]
-Underfull \hbox (badness 10000) in paragraph at lines 128--132
+Underfull \hbox (badness 10000) in paragraph at lines 127--131
 
  []
 
 
-Overfull \hbox (7.43486pt too wide) in paragraph at lines 151--152
+Overfull \hbox (21.09976pt too wide) in paragraph at lines 154--155
 \OT1/cmr/m/it/10 Two nu-mer-i-cal meth-ods are in-tro-duced for solv-ing the th
-er-mal con-vec-tion prob-lem, the Lat-tice Boltz-mann Method and the streamfunc
+er-mal con-vec-tion prob-lem, the Lat-tice Boltz-mann method and the streamfunc
 tion-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 154--164
+Underfull \hbox (badness 10000) in paragraph at lines 157--167
 
  []
 
-
-Overfull \hbox (177.41695pt too wide) in paragraph at lines 179--191
-\OT1/cmr/m/n/10 allowing us to write equa-tions []2[] and []4[] as: [] 
- []
-
-
-Overfull \hbox (33.05565pt too wide) in paragraph at lines 196--208
-\OT1/cmr/m/n/10 giving: [] 
- []
-
-[3]
-Overfull \hbox (15.0pt too wide) in paragraph at lines 240--243
-[][]
- []
-
-[4]
-<D2Q9Lattice.jpg, id=138, 190.7125pt x 189.70876pt>
+[3] [4]
+<D2Q9Lattice.jpg, id=141, 190.7125pt x 189.70876pt>
 File: D2Q9Lattice.jpg Graphic file (type jpg)
 <use D2Q9Lattice.jpg>
-Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 287.
+Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 292.
 (pdftex.def)             Requested size: 190.71202pt x 189.70828pt.
-
-Overfull \hbox (15.0pt too wide) in paragraph at lines 356--356
-[][] 
- []
-
-[5 <./D2Q9Lattice.jpg>]
-<latticeBoltzmanModel.png, id=172, 339.669pt x 303.534pt>
+ [5 <./D2Q9Lattice.jpg>]
+<latticeBoltzmanModel.png, id=174, 339.669pt x 303.534pt>
 File: latticeBoltzmanModel.png Graphic file (type png)
 <use latticeBoltzmanModel.png>
-Package pdftex.def Info: latticeBoltzmanModel.png  used on input line 377.
+Package pdftex.def Info: latticeBoltzmanModel.png  used on input line 382.
 (pdftex.def)             Requested size: 339.66817pt x 303.53325pt.
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 388.
+put line 393.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-LaTeX Warning: Citation `mora2020concise' on page 6 undefined on input line 425
-.
-
-<combinedPeriodic.png, id=174, 657.1752pt x 263.7855pt>
+<combinedPeriodic.png, id=177, 657.1752pt x 263.7855pt>
 File: combinedPeriodic.png Graphic file (type png)
 <use combinedPeriodic.png>
-Package pdftex.def Info: combinedPeriodic.png  used on input line 434.
+Package pdftex.def Info: combinedPeriodic.png  used on input line 439.
 (pdftex.def)             Requested size: 788.60631pt x 316.54102pt.
 
-Overfull \hbox (29.77132pt too wide) in paragraph at lines 434--435
+Overfull \hbox (29.77132pt too wide) in paragraph at lines 439--440
  [] 
  []
 
-<combinedDiagonal.png, id=175, 653.3208pt x 271.7352pt>
+<combinedDiagonal.png, id=178, 653.3208pt x 271.7352pt>
 File: combinedDiagonal.png Graphic file (type png)
 <use combinedDiagonal.png>
-Package pdftex.def Info: combinedDiagonal.png  used on input line 442.
+Package pdftex.def Info: combinedDiagonal.png  used on input line 447.
 (pdftex.def)             Requested size: 783.98103pt x 326.08058pt.
 
-Overfull \hbox (25.14604pt too wide) in paragraph at lines 442--443
+Overfull \hbox (25.14604pt too wide) in paragraph at lines 447--448
  [] 
  []
 
 [6 <./latticeBoltzmanModel.png>] [7 <./combinedPeriodic.png>] [8 <./combinedDia
 gonal.png>]
-<latticeboltzmancheck.png, id=210, 358.7001pt x 469.755pt>
+<latticeboltzmancheck.png, id=214, 358.7001pt x 469.755pt>
 File: latticeboltzmancheck.png Graphic file (type png)
 <use latticeboltzmancheck.png>
-Package pdftex.def Info: latticeboltzmancheck.png  used on input line 470.
+Package pdftex.def Info: latticeboltzmancheck.png  used on input line 475.
 (pdftex.def)             Requested size: 502.17671pt x 657.65253pt.
  [9]
-Underfull \hbox (badness 10000) in paragraph at lines 481--484
+Underfull \hbox (badness 10000) in paragraph at lines 486--489
 
  []
 
 [10 <./latticeboltzmancheck.png>]
-<initialState.png, id=242, 172.2435pt x 131.0496pt>
+<initialState.png, id=248, 172.2435pt x 131.0496pt>
 File: initialState.png Graphic file (type png)
 <use initialState.png>
-Package pdftex.def Info: initialState.png  used on input line 530.
+Package pdftex.def Info: initialState.png  used on input line 533.
 (pdftex.def)             Requested size: 258.36461pt x 196.5739pt.
  [11]
-<streamfunctionComp.png, id=255, 494.3268pt x 669.9429pt>
+<streamfunctionComp.png, id=261, 494.3268pt x 669.9429pt>
 File: streamfunctionComp.png Graphic file (type png)
 <use streamfunctionComp.png>
-Package pdftex.def Info: streamfunctionComp.png  used on input line 534.
+Package pdftex.def Info: streamfunctionComp.png  used on input line 537.
 (pdftex.def)             Requested size: 494.32558pt x 669.94125pt.
  [12 <./streamfunctionComp.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 558--562
+Underfull \hbox (badness 10000) in paragraph at lines 561--563
 
  []
 
 [13
 
  <./initialState.png>]
-<latticeBoltzmanHighRa.png, id=269, 527.571pt x 702.7053pt>
+<latticeBoltzmanHighRa.png, id=276, 527.571pt x 702.7053pt>
 File: latticeBoltzmanHighRa.png Graphic file (type png)
 <use latticeBoltzmanHighRa.png>
 Package pdftex.def Info: latticeBoltzmanHighRa.png  used on input line 583.
 (pdftex.def)             Requested size: 527.56972pt x 702.7036pt.
  [14 <./latticeBoltzmanHighRa.png>]
-<latticeBoltzmanLowRa.png, id=275, 352.6776pt x 703.428pt>
+<latticeBoltzmanLowRa.png, id=282, 352.6776pt x 703.428pt>
 File: latticeBoltzmanLowRa.png Graphic file (type png)
 <use latticeBoltzmanLowRa.png>
 Package pdftex.def Info: latticeBoltzmanLowRa.png  used on input line 583.
 (pdftex.def)             Requested size: 352.67673pt x 703.42628pt.
  [15
 
- <./latticeBoltzmanLowRa.png>] (./report.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 614.
- [16
+ <./latticeBoltzmanLowRa.png>] (./report.bbl [16
 
-]
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 614.
+ [17]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 614.
  (./report.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 614.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 614.
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-
-
-LaTeX Warning: There were undefined references.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 614.
  ) 
 Here is how much of TeX's memory you used:
- 9045 strings out of 481239
- 140480 string characters out of 5920377
- 426683 words of memory out of 5000000
- 24039 multiletter control sequences out of 15000+600000
+ 9050 strings out of 481239
+ 140573 string characters out of 5920377
+ 427806 words of memory out of 5000000
+ 24041 multiletter control sequences out of 15000+600000
  539848 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,14n,43p,1060b,408s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,14n,43p,1060b,439s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
@@ -690,10 +662,10 @@ ublic/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 tt10.pfb>
-Output written on report.pdf (16 pages, 3916861 bytes).
+Output written on report.pdf (17 pages, 3918478 bytes).
 PDF statistics:
- 396 PDF objects out of 1000 (max. 8388607)
- 329 compressed objects within 4 object streams
- 99 named destinations out of 1000 (max. 500000)
+ 407 PDF objects out of 1000 (max. 8388607)
+ 339 compressed objects within 4 object streams
+ 102 named destinations out of 1000 (max. 500000)
  56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
