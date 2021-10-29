@@ -1,9 +1,19 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{adair2015developing}
+D.~Adair and M.~Jaeger.
+\newblock Developing an understanding of the steps involved in solving
+  navier--stokes equations.
+\newblock 2015.
 
 \bibitem{bolt1970pdp}
 B.~A. Bolt.
 \newblock Pdp and pkikp waves and diffracted pcp waves.
 \newblock {\em Geophysical Journal International}, 20(4):367--382, 1970.
+
+\bibitem{burkardt2011jacobi}
+J.~Burkardt.
+\newblock Jacobi iterative solution of poisson’s equation in 1d, 2011.
 
 \bibitem{earn2017investigation}
 L.~C. Earn, T.~W. Yen, and T.~L. Ken.
@@ -17,11 +27,22 @@ C.~M.~R. Fowler, C.~M.~R. Fowler, and M.~Fowler.
 \newblock {\em The solid earth: an introduction to global geophysics}.
 \newblock Cambridge University Press, 1990.
 
+\bibitem{godunov1959difference}
+S.~K. Godunov.
+\newblock A difference scheme for numerical solution of discontinuous solution
+  of hydrodynamic equations.
+\newblock {\em Math. Sbornik}, 47:271--306, 1959.
+
 \bibitem{goluskin2016internally}
 D.~Goluskin.
 \newblock {\em Internally heated convection and Rayleigh-B{\'e}nard
   convection}.
 \newblock Springer, 2016.
+
+\bibitem{guinot2003godunov}
+V.~Guinot.
+\newblock {\em Godunov-type schemes: an introduction for engineers}.
+\newblock Elsevier, 2003.
 
 \bibitem{khazaeli2015ghost}
 R.~Khazaeli, M.~Ashrafizaadeh, and S.~Mortazavi.
@@ -35,10 +56,20 @@ P.~Mora and D.~A. Yuen.
 \newblock Simulation of plume dynamics by the lattice boltzmann method.
 \newblock {\em Geophysical Journal International}, 210(3):1932--1937, 2017.
 
+\bibitem{press1986numerical}
+W.~H. Press, W.~T. Vetterling, S.~A. Teukolsky, and B.~P. Flannery.
+\newblock {\em Numerical recipes}, volume 818.
+\newblock Cambridge university press Cambridge, 1986.
+
 \bibitem{qian1992lattice}
 Y.-H. Qian, D.~d'Humi{\`e}res, and P.~Lallemand.
 \newblock Lattice bgk models for navier-stokes equation.
 \newblock {\em EPL (Europhysics Letters)}, 17(6):479, 1992.
+
+\bibitem{rothman2004lattice}
+D.~H. Rothman and S.~Zaleski.
+\newblock {\em Lattice-gas cellular automata}.
+\newblock 2004.
 
 \bibitem{spiegelman2006semi}
 M.~Spiegelman and R.~F. Katz.
@@ -51,5 +82,15 @@ H.~Tkalcic and T.-S. Pham.
 \newblock Shear properties of earth’s inner core constrained by a detection
   of j waves in global correlation wavefield.
 \newblock {\em Science}, 362(6412):329--332, 2018.
+
+\bibitem{tritton2012physical}
+D.~J. Tritton.
+\newblock {\em Physical fluid dynamics}.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem{wagner2008practical}
+A.~J. Wagner.
+\newblock A practical introduction to the lattice boltzmann method.
+\newblock {\em Adt. notes for Statistical Mechanics}, 463:663, 2008.
 
 \end{thebibliography}

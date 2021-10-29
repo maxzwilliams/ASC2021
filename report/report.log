@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  28 OCT 2021 19:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2021.6.20)  29 OCT 2021 12:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -374,161 +374,173 @@ Package pdftex.def Info: introfigure.png  used on input line 32.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./introfigure.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 107--111
+Underfull \hbox (badness 10000) in paragraph at lines 112--116
 
  []
 
 
-Overfull \hbox (7.43486pt too wide) in paragraph at lines 137--138
+Overfull \hbox (7.43486pt too wide) in paragraph at lines 139--140
 \OT1/cmr/m/it/10 Two nu-mer-i-cal meth-ods are in-tro-duced for solv-ing the th
 er-mal con-vec-tion prob-lem, the Lat-tice Boltz-mann Method and the streamfunc
 tion-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 140--145
+Underfull \hbox (badness 10000) in paragraph at lines 142--152
 
  []
 
-
-Overfull \hbox (177.41695pt too wide) in paragraph at lines 162--174
+[2]
+Overfull \hbox (177.41695pt too wide) in paragraph at lines 167--179
 \OT1/cmr/m/n/10 allowing us to write equa-tions 2[] and 4[] as: [] 
  []
 
 
-Overfull \hbox (33.05565pt too wide) in paragraph at lines 179--191
+Overfull \hbox (33.05565pt too wide) in paragraph at lines 184--196
 \OT1/cmr/m/n/10 giving: [] 
  []
 
-[2]
-Overfull \hbox (15.0pt too wide) in paragraph at lines 223--226
+
+Overfull \hbox (15.0pt too wide) in paragraph at lines 228--231
 [][]
  []
 
 [3]
-<D2Q9Lattice.jpg, id=32, 190.7125pt x 189.70876pt>
+<D2Q9Lattice.jpg, id=33, 190.7125pt x 189.70876pt>
 File: D2Q9Lattice.jpg Graphic file (type jpg)
 <use D2Q9Lattice.jpg>
-Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 287.
+Package pdftex.def Info: D2Q9Lattice.jpg  used on input line 292.
 (pdftex.def)             Requested size: 190.71202pt x 189.70828pt.
  [4 <./D2Q9Lattice.jpg>]
-Overfull \hbox (15.0pt too wide) in paragraph at lines 356--356
+Overfull \hbox (15.0pt too wide) in paragraph at lines 361--361
 [][] 
  []
 
-[5]
-<combinedPeriodic.png, id=42, 657.1752pt x 263.7855pt>
-File: combinedPeriodic.png Graphic file (type png)
-<use combinedPeriodic.png>
-Package pdftex.def Info: combinedPeriodic.png  used on input line 424.
-(pdftex.def)             Requested size: 788.60631pt x 316.54102pt.
-
-Overfull \hbox (29.77132pt too wide) in paragraph at lines 424--425
- [] 
- []
-
-<combinedDiagonal.png, id=43, 653.3208pt x 271.7352pt>
-File: combinedDiagonal.png Graphic file (type png)
-<use combinedDiagonal.png>
-Package pdftex.def Info: combinedDiagonal.png  used on input line 432.
-(pdftex.def)             Requested size: 783.98103pt x 326.08058pt.
-
-Overfull \hbox (25.14604pt too wide) in paragraph at lines 432--433
- [] 
- []
-
-<unrap image.jpg, id=44, 1208.515pt x 1777.64125pt>
-File: unrap image.jpg Graphic file (type jpg)
-<use unrap image.jpg>
-Package pdftex.def Info: unrap image.jpg  used on input line 478.
-(pdftex.def)             Requested size: 302.128pt x 444.40923pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 484--487
+LaTeX Warning: Citation `mora2020concise' on page 5 undefined on input line 414
+.
+
+<combinedPeriodic.png, id=39, 657.1752pt x 263.7855pt>
+File: combinedPeriodic.png Graphic file (type png)
+<use combinedPeriodic.png>
+Package pdftex.def Info: combinedPeriodic.png  used on input line 429.
+(pdftex.def)             Requested size: 788.60631pt x 316.54102pt.
+
+Overfull \hbox (29.77132pt too wide) in paragraph at lines 429--430
+ [] 
+ []
+
+<combinedDiagonal.png, id=40, 653.3208pt x 271.7352pt>
+File: combinedDiagonal.png Graphic file (type png)
+<use combinedDiagonal.png>
+Package pdftex.def Info: combinedDiagonal.png  used on input line 437.
+(pdftex.def)             Requested size: 783.98103pt x 326.08058pt.
+
+Overfull \hbox (25.14604pt too wide) in paragraph at lines 437--438
+ [] 
+ []
+
+[5] [6 <./combinedPeriodic.png>] [7 <./combinedDiagonal.png>]
+<unrap image.jpg, id=53, 1208.515pt x 1777.64125pt>
+File: unrap image.jpg Graphic file (type jpg)
+<use unrap image.jpg>
+Package pdftex.def Info: unrap image.jpg  used on input line 483.
+(pdftex.def)             Requested size: 302.128pt x 444.40923pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 489--492
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 513--516
-
- []
-
-[6] [7 <./combinedPeriodic.png>] [8 <./combinedDiagonal.png>]
-<latticeboltzmancheck.png, id=57, 358.7001pt x 469.755pt>
+[8]
+<latticeboltzmancheck.png, id=58, 358.7001pt x 469.755pt>
 File: latticeboltzmancheck.png Graphic file (type png)
 <use latticeboltzmancheck.png>
-Package pdftex.def Info: latticeboltzmancheck.png  used on input line 529.
+Package pdftex.def Info: latticeboltzmancheck.png  used on input line 513.
 (pdftex.def)             Requested size: 502.17671pt x 657.65253pt.
  [9 <./unrap image.jpg>] [10 <./latticeboltzmancheck.png>]
-<streamfunctionComp.png, id=65, 494.3268pt x 669.9429pt>
+<streamfunctionComp.png, id=66, 494.3268pt x 669.9429pt>
 File: streamfunctionComp.png Graphic file (type png)
 <use streamfunctionComp.png>
-Package pdftex.def Info: streamfunctionComp.png  used on input line 529.
+Package pdftex.def Info: streamfunctionComp.png  used on input line 513.
 (pdftex.def)             Requested size: 494.32558pt x 669.94125pt.
  [11
 
  <./streamfunctionComp.png>]
-<initialState.png, id=70, 172.2435pt x 131.0496pt>
+Underfull \hbox (badness 10000) in paragraph at lines 518--521
+
+ []
+
+<initialState.png, id=71, 172.2435pt x 131.0496pt>
 File: initialState.png Graphic file (type png)
 <use initialState.png>
-Package pdftex.def Info: initialState.png  used on input line 535.
+Package pdftex.def Info: initialState.png  used on input line 540.
 (pdftex.def)             Requested size: 258.36461pt x 196.5739pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 563--567
+Underfull \hbox (badness 10000) in paragraph at lines 568--572
 
  []
 
 [12
 
  <./initialState.png>]
-<latticeBoltzmanHighRa.png, id=75, 527.571pt x 702.7053pt>
+<latticeBoltzmanHighRa.png, id=76, 527.571pt x 702.7053pt>
 File: latticeBoltzmanHighRa.png Graphic file (type png)
 <use latticeBoltzmanHighRa.png>
-Package pdftex.def Info: latticeBoltzmanHighRa.png  used on input line 578.
+Package pdftex.def Info: latticeBoltzmanHighRa.png  used on input line 572.
 (pdftex.def)             Requested size: 527.56972pt x 702.7036pt.
  [13 <./latticeBoltzmanHighRa.png>]
-<latticeBoltzmanLowRa.png, id=81, 352.6776pt x 703.428pt>
+<latticeBoltzmanLowRa.png, id=82, 352.6776pt x 703.428pt>
 File: latticeBoltzmanLowRa.png Graphic file (type png)
 <use latticeBoltzmanLowRa.png>
-Package pdftex.def Info: latticeBoltzmanLowRa.png  used on input line 578.
+Package pdftex.def Info: latticeBoltzmanLowRa.png  used on input line 572.
 (pdftex.def)             Requested size: 352.67673pt x 703.42628pt.
  [14 <./latticeBoltzmanLowRa.png>] (./report.bbl) [15
 
 
-] (./report.aux) ) 
+] (./report.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 5100 strings out of 481239
- 77930 string characters out of 5920377
- 339550 words of memory out of 5000000
- 20292 multiletter control sequences out of 15000+600000
+ 5108 strings out of 481239
+ 78095 string characters out of 5920377
+ 346582 words of memory out of 5000000
+ 20300 multiletter control sequences out of 15000+600000
  539512 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,12n,46p,1017b,385s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
-2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on report.pdf (15 pages, 3870384 bytes).
+ 41i,12n,42p,1061b,385s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmti10.pfb>
+Output written on report.pdf (15 pages, 3880338 bytes).
 PDF statistics:
- 152 PDF objects out of 1000 (max. 8388607)
- 96 compressed objects within 1 object stream
+ 156 PDF objects out of 1000 (max. 8388607)
+ 99 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  51 words of extra memory for PDF output out of 10000 (max. 10000000)
 
