@@ -1,55 +1,10 @@
-\begin{thebibliography}{10}
-
-\bibitem{adair2015developing}
-D.~Adair and M.~Jaeger.
-\newblock Developing an understanding of the steps involved in solving
-  navier--stokes equations.
-\newblock 2015.
-
-\bibitem{babskii1971convection}
-V.~Babskii and I.~Sklovskaia.
-\newblock On convection onset in a self-gravitating fluid sphere with internal
-  heating: Pmm vol. 35, n= 6, pp. 1000--1014, 1971.
-\newblock {\em Journal of Applied Mathematics and Mechanics}, 35(6):951--965,
-  1971.
-
-\bibitem{bolt1970pdp}
-B.~A. Bolt.
-\newblock Pdp and pkikp waves and diffracted pcp waves.
-\newblock {\em Geophysical Journal International}, 20(4):367--382, 1970.
-
-\bibitem{burkardt2011jacobi}
-J.~Burkardt.
-\newblock Jacobi iterative solution of poisson’s equation in 1d, 2011.
-
-\bibitem{earn2017investigation}
-L.~C. Earn, T.~W. Yen, and T.~L. Ken.
-\newblock The investigation on simple and simpler algorithm through lid driven
-  cavity.
-\newblock {\em Journal of Advanced Research in Fluid Mechanics and Thermal
-  Sciences}, 29(1):10--22, 2017.
-
-\bibitem{fowler1990solid}
-C.~M.~R. Fowler, C.~M.~R. Fowler, and M.~Fowler.
-\newblock {\em The solid earth: an introduction to global geophysics}.
-\newblock Cambridge University Press, 1990.
-
-\bibitem{godunov1959difference}
-S.~K. Godunov.
-\newblock A difference scheme for numerical solution of discontinuous solution
-  of hydrodynamic equations.
-\newblock {\em Math. Sbornik}, 47:271--306, 1959.
+\begin{thebibliography}{1}
 
 \bibitem{goluskin2016internally}
 D.~Goluskin.
 \newblock {\em Internally heated convection and Rayleigh-B{\'e}nard
   convection}.
 \newblock Springer, 2016.
-
-\bibitem{guinot2003godunov}
-V.~Guinot.
-\newblock {\em Godunov-type schemes: an introduction for engineers}.
-\newblock Elsevier, 2003.
 
 \bibitem{khazaeli2015ghost}
 R.~Khazaeli, M.~Ashrafizaadeh, and S.~Mortazavi.
@@ -58,52 +13,9 @@ R.~Khazaeli, M.~Ashrafizaadeh, and S.~Mortazavi.
   geometries.
 \newblock 2015.
 
-\bibitem{mora2020concise}
-P.~Mora, G.~Morra, and D.~A. Yuen.
-\newblock A concise python implementation of the lattice boltzmann method on
-  hpc for geo-fluid flow.
-\newblock {\em Geophysical Journal International}, 220(1):682--702, 2020.
-
 \bibitem{mora2017simulation}
 P.~Mora and D.~A. Yuen.
 \newblock Simulation of plume dynamics by the lattice boltzmann method.
 \newblock {\em Geophysical Journal International}, 210(3):1932--1937, 2017.
-
-\bibitem{press1986numerical}
-W.~H. Press, W.~T. Vetterling, S.~A. Teukolsky, and B.~P. Flannery.
-\newblock {\em Numerical recipes}, volume 818.
-\newblock Cambridge university press Cambridge, 1986.
-
-\bibitem{qian1992lattice}
-Y.-H. Qian, D.~d'Humi{\`e}res, and P.~Lallemand.
-\newblock Lattice bgk models for navier-stokes equation.
-\newblock {\em EPL (Europhysics Letters)}, 17(6):479, 1992.
-
-\bibitem{rothman2004lattice}
-D.~H. Rothman and S.~Zaleski.
-\newblock {\em Lattice-gas cellular automata}.
-\newblock 2004.
-
-\bibitem{spiegelman2006semi}
-M.~Spiegelman and R.~F. Katz.
-\newblock A semi-lagrangian crank-nicolson algorithm for the numerical solution
-  of advection-diffusion problems.
-\newblock {\em Geochemistry, Geophysics, Geosystems}, 7(4), 2006.
-
-\bibitem{tkalvcic2018shear}
-H.~Tkalcic and T.-S. Pham.
-\newblock Shear properties of earth’s inner core constrained by a detection
-  of j waves in global correlation wavefield.
-\newblock {\em Science}, 362(6412):329--332, 2018.
-
-\bibitem{tritton2012physical}
-D.~J. Tritton.
-\newblock {\em Physical fluid dynamics}.
-\newblock Springer Science \& Business Media, 2012.
-
-\bibitem{wagner2008practical}
-A.~J. Wagner.
-\newblock A practical introduction to the lattice boltzmann method.
-\newblock {\em Adt. notes for Statistical Mechanics}, 463:663, 2008.
 
 \end{thebibliography}
